@@ -545,30 +545,51 @@ export const exportDeliveryNoteToPDF = async (deliveryNote: DeliveryNote) => {
 
     // Add transport details
     if (deliveryNote.drivername || deliveryNote.truck_id || deliveryNote.delivery_company) {
-      drawRoundedRect(pdf, 14, currentY, 180, 20, 3, lightPurple);
+      const boxX = 14;
+      const boxWidth = 180;
+      const boxHeight = 24;
+      const boxY = currentY;
 
+      // Draw background box
+      drawRoundedRect(pdf, boxX, boxY, boxWidth, boxHeight, 3, lightPurple);
+
+      // Title
       pdf.setFont("helvetica", "bold");
       pdf.setFontSize(10);
       pdf.setTextColor(darkPurple);
-      pdf.text("detail de transport:", 20, currentY + 7);
+      pdf.text("Détails de transport:", boxX + 4, boxY + 7);
 
-      pdf.setFont("helvetica", "normal");
+      // Table column positions
+      const colWidths = [60, 60, 60];
+      const totalColsWidth = colWidths.reduce((a, b) => a + b, 0);
+      const startX = boxX + (boxWidth - totalColsWidth) / 2; // Centered horizontally
+      const headerY = boxY + 14;
+      const valueY = boxY + 20;
+
+      // Set headers
+      pdf.setFont("helvetica", "bold");
       pdf.setFontSize(9);
-      const transportDetails = [];
+      pdf.setTextColor(0, 0, 0);
 
-      if (deliveryNote.drivername) {
-        transportDetails.push(`Chaufeur: ${deliveryNote.drivername}`);
-      }
-      if (deliveryNote.truck_id) {
-        transportDetails.push(`Matricule: ${deliveryNote.truck_id}`);
-      }
-      if (deliveryNote.delivery_company) {
-        transportDetails.push(`Enterprise de transport: ${deliveryNote.delivery_company}`);
-      }
+      const headers = ["Chauffeur", "Matricule", "Entreprise de transport"];
+      headers.forEach((header, i) => {
+        pdf.text(header, startX + colWidths.slice(0, i).reduce((a, b) => a + b, 0) + 2, headerY);
+      });
 
-      pdf.text(transportDetails.join(' | '), 20, currentY + 15);
-      currentY += 25;
+      // Set values
+      pdf.setFont("helvetica", "normal");
+      const values = [
+        deliveryNote.drivername || "-",
+        deliveryNote.truck_id || "-",
+        deliveryNote.delivery_company || "-"
+      ];
+      values.forEach((val, i) => {
+        pdf.text(val, startX + colWidths.slice(0, i).reduce((a, b) => a + b, 0) + 2, valueY);
+      });
+
+      currentY += boxHeight + 5;
     }
+
   
 
     const tableY = addStylizedTable(
