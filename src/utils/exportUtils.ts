@@ -131,7 +131,8 @@ const addHeader = async (pdf: jsPDF, documentType: string, documentNumber: strin
   
   pdf.setFont("helvetica");
   pdf.setFontSize(8);
-  pdf.text(`${companyInfo?.address || 'Company Address'} \n Tél: ${companyInfo?.phone || 'N/A'} | Email: ${companyInfo?.email || 'info@company.com'}`, 105, pdf.internal.pageSize.height - 20, { align: 'center' });
+  pdf.setTextColor(70, 70, 70);
+  pdf.text(`Addresse: ${companyInfo?.address || 'Company Address'} \n Tél: ${companyInfo?.phone || 'N/A'} | Email: ${companyInfo?.email || 'info@company.com'}`, 105, pdf.internal.pageSize.height - 20, { align: 'center' });
 
   drawRoundedRect(pdf, docTypeXX, docTypeYY, docTypeWidth + 10, 14, 2, primaryColor);
   pdf.text([docTypeText, `        N°: ${documentNumber}`], docTypeXX + 5, docTypeYY + 7);
