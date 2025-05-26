@@ -129,13 +129,15 @@ const addHeader = async (pdf: jsPDF, documentType: string, documentNumber: strin
   const docTypeYY = 50;
      // Amber color for thank you
   
+ 
+
+  drawRoundedRect(pdf, docTypeXX, docTypeYY, docTypeWidth + 10, 14, 2, primaryColor);
+  pdf.text([docTypeText, `        N°: ${documentNumber}`], docTypeXX + 5, docTypeYY + 7);
+  
   pdf.setFont("helvetica");
   pdf.setFontSize(8);
   pdf.setTextColor(70, 70, 70);
   pdf.text(`Addresse: ${companyInfo?.address || 'Company Address'} \n Tél: ${companyInfo?.phone || 'N/A'} | Email: ${companyInfo?.email || 'info@company.com'}`, 105, pdf.internal.pageSize.height - 20, { align: 'center' });
-
-  drawRoundedRect(pdf, docTypeXX, docTypeYY, docTypeWidth + 10, 14, 2, primaryColor);
-  pdf.text([docTypeText, `        N°: ${documentNumber}`], docTypeXX + 5, docTypeYY + 7);
   
   return { yPos: docTypeYY+16, companyInfo };
 };
