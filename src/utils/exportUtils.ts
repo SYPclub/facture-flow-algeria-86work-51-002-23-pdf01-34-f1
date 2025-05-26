@@ -193,9 +193,6 @@ const addClientInfo = (pdf: jsPDF, client: Client | undefined, invoiceDetails: a
     details.push(`Date de création: ${formatDate(invoiceDetails.issuedate)}`);
   }
   
-  if (invoiceDetails.duedate) {
-    details.push(`Valid au: ${formatDate(invoiceDetails.duedate)}`);
-  }
   
   if (invoiceDetails.payment_type) {
     details.push(`Méthode de paiment: ${invoiceDetails.payment_type === 'cash' ? 'Cash' : 'Cheque'}`);
