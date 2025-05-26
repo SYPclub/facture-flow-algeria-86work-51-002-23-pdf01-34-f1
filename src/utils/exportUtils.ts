@@ -129,7 +129,7 @@ const addHeader = async (pdf: jsPDF, documentType: string, documentNumber: strin
   const docTypeYY = 50;
      // Amber color for thank you
   
-  pdf.setFont("helvetica", "bold");
+  pdf.setFont("helvetica");
   pdf.setFontSize(8);
   pdf.text(`${companyInfo?.address || 'Company Address'} \n Tél: ${companyInfo?.phone || 'N/A'} | Email: ${companyInfo?.email || 'info@company.com'}`, 105, pdf.internal.pageSize.height - 20, { align: 'center' });
 
