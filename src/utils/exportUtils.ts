@@ -127,7 +127,12 @@ const addHeader = async (pdf: jsPDF, documentType: string, documentNumber: strin
   const docTypeX = pdf.internal.pageSize.width - 14 - docTypeWidth - 10; // 10 = padding
   const docTypeXX = 80;
   const docTypeYY = 50;
-
+     // Amber color for thank you
+  
+  pdf.setFont("helvetica", "bold");
+  pdf.setFontSize(10);
+  pdf.setTextColor(hexToRgb(accentColor).r, hexToRgb(accentColor).g, hexToRgb(accentColor).b);
+  pdf.text(`Addresse: ${companyInfo?.address || 'Company Address'} \n Tél: ${companyInfo?.phone || 'N/A'} | Email: ${companyInfo?.email || 'info@company.com'}`, 105, pdf.internal.pageSize.height - 20, { align: 'center' });
 
   drawRoundedRect(pdf, docTypeXX, docTypeYY, docTypeWidth + 10, 14, 2, primaryColor);
   pdf.text([docTypeText, `        N°: ${documentNumber}`], docTypeXX + 5, docTypeYY + 7);
@@ -367,14 +372,9 @@ const addAmountInWords = (pdf: jsPDF, amount: number, startY: number) => {
 
 // Add footer with thank you message
 const addFooter = (pdf: jsPDF) => {
-  const accentColor = "#F59E0B";   // Amber color for thank you
   
-  pdf.setFont("helvetica", "bold");
-  pdf.setFontSize(10);
-  pdf.setTextColor(hexToRgb(accentColor).r, hexToRgb(accentColor).g, hexToRgb(accentColor).b);
-  pdf.text("Nous vous remercions pour votre confiance!", 105, pdf.internal.pageSize.height - 20, { align: 'center' });
 };
-
+ 
 // PROFORMA INVOICE EXPORT
 export const exportProformaInvoiceToPDF = async (proforma: ProformaInvoice) => {
   const pdf = new jsPDF();
