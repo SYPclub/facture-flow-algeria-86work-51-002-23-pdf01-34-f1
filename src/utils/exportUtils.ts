@@ -138,7 +138,7 @@ const addHeader = async (pdf: jsPDF, documentType: string, documentNumber: strin
   pdf.setFontSize(8);
   pdf.setTextColor(70, 70, 70);
   pdf.text(`Addresse: ${companyInfo?.address || 'Company Address'} \n Tél: ${companyInfo?.phone || 'N/A'} | Email: ${companyInfo?.email || 'info@company.com'}`, 105, pdf.internal.pageSize.height - 20, { align: 'center' });
-  
+
   return { yPos: docTypeYY+16, companyInfo };
 };
 
@@ -476,7 +476,7 @@ export const exportFinalInvoiceToPDF = async (invoice: FinalInvoice) => {
   for (const chunk of itemChunks) {
     if (pageIndex > 0) pdf.addPage();
 
-    const { yPos } = await addHeader(pdf, "FACTURE", invoice.number, invoice.status);
+    const { yPos } = await addHeader(pdf, "     FACTURE    ", invoice.number, invoice.status);
     currentY = yPos;
 
     if (pageIndex === 0) {
