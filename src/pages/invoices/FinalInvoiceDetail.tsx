@@ -717,7 +717,7 @@ const FinalInvoiceDetail = () => {
                   {formatDate(invoice.issuedate)}
                 </div>
                 <div>
-                  <strong className="font-semibold">Mode de paiement:</strong>{" "}
+                  <strong className="font-semibold">`Mode de paiement: ${invoice.paymentreference}`</strong>{" "}
                   <span className="flex items-center">
                     
                     {paymentMethods[invoice.paymentreference] || 'inconnu'}
