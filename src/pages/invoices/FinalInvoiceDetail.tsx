@@ -732,7 +732,7 @@ const FinalInvoiceDetail = () => {
                   <strong className="font-semibold">Mode de paiement:</strong>{" "}
                   <span className="flex items-center">
                     
-                    {invoice.paymentreference === 1 ? 'espese' : 'ese' }
+                    {invoice.paymentReference === 1 ? 'espese' : 'ese' }
                   </span>
                 </div>
                 <div>
