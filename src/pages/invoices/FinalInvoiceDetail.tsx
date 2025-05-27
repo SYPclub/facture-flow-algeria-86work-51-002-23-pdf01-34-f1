@@ -254,7 +254,7 @@ const FinalInvoiceDetail = () => {
       if (totalPaid > 0) {
         updateData = {
           ...updateData,
-          // Keep the amount_paid from payments
+          // Keep the amount_paid from payments 
           amount_paid: totalPaid,
           // Recalculate client debt
           client_debt: Math.max(0, invoice.total - totalPaid)
@@ -266,7 +266,6 @@ const FinalInvoiceDetail = () => {
           amount_paid: 0,
           client_debt: invoice.total,
           paymentdate: null,
-          paymentreference: null
         };
       }
     }
@@ -499,6 +498,30 @@ const FinalInvoiceDetail = () => {
                 />
                 
                 
+                <FormField
+                  control={form.control}
+                  name="paymentreference"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Mode de paiement</FormLabel>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Sélectionner le mode de paiement" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="cheque">Chèque/virement</SelectItem>
+                          <SelectItem value="cash">Espèce</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
                 <FormField
                   control={form.control}
@@ -705,7 +728,13 @@ const FinalInvoiceDetail = () => {
                   <strong className="font-semibold">Date d'émission:</strong>{" "}
                   {formatDate(invoice.issuedate)}
                 </div>
-                
+                <div>
+                  <strong className="font-semibold">Mode de paiement:</strong>{" "}
+                  <span className="flex items-center">
+                    {getPaymentTypeIcon(invoice.paymentreference || 'cheque')}
+                    {invoice.paymentreference === 'cash' ? 'espèce ' : 'Chèque/virement'}
+                  </span>
+                </div>
                 <div>
                   <strong className="font-semibold">Statut:</strong>{" "}
                   <Badge
@@ -736,7 +765,7 @@ const FinalInvoiceDetail = () => {
                     {invoice.paymentReference && (
                       <div>
                         <strong className="font-semibold">Référence de paiement:</strong>{" "}
-                        {invoice.paymentReference}
+                        
                       </div>
                     )}
                   </>
