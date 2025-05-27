@@ -117,7 +117,13 @@ const addHeader = async (pdf: jsPDF, documentType: string, documentNumber: strin
   ];
   
   pdf.text(companyDetails, 14, 27);
-  
+  pdf.setDrawColor(220, 220, 220);
+      pdf.line(
+        12,
+        48,
+        12,
+        285
+      );
   // Add document type in a styled box on the right
   pdf.setFillColor(hexToRgb(primaryColor).r, hexToRgb(primaryColor).g, hexToRgb(primaryColor).b);
   pdf.setTextColor(255, 255, 255);
@@ -146,6 +152,8 @@ const addHeader = async (pdf: jsPDF, documentType: string, documentNumber: strin
 
 // Add client info section with styled design
 const addClientInfo = (pdf: jsPDF, client: Client | undefined, invoiceDetails: any, startY: number) => {
+  pdf.setTextColor(70, 70, 70);
+  pdf.text(`Le: ${formatDate(invoiceDetails.issuedate)}`, 14 + 5, 110 + 7);
   // Colors
   const lightBlue = "#F1FAEE";  // Light blue background
   const darkBlue = "#E63946";   // Dark blue for accent
@@ -168,12 +176,12 @@ const addClientInfo = (pdf: jsPDF, client: Client | undefined, invoiceDetails: a
   const clientInfo = [
     
     `Address: ${client?.address || 'Address'}`,
-    `RC: ${client?.rc || '-'}`,
-    `NIF: ${client?.taxid || '-'}`,
-    `TIN: ${client?.city || '-'}`,
-    `NIS: ${client?.nis || '-'}`,
-    `AI: ${client?.ai || '-'}`,
-    `RIB: ${client?.rib || '-'} `
+    client?.rc &&`RC: ${client?.rc || '-'}`,
+    client?.taxid && `NIF: ${client.taxid}`,
+    client?.city && `TIN: ${client?.city || '-'}`,
+    client?.nis && `NIS: ${client?.nis || '-'}`,
+    client?.ai && `AI: ${client?.ai || '-'}`,
+    client?.rib && `RIB: ${client?.rib || '-'} `
     
   ];
   
@@ -191,11 +199,11 @@ const addClientInfo = (pdf: jsPDF, client: Client | undefined, invoiceDetails: a
   pdf.setFontSize(10);
   
   const details = [
-    `Tel: ${client?.phone || 'N/A'} `, 
-    `Email: ${client?.email || 'N/A'}`,
+    client?.phone && `Tel: ${client?.phone || 'N/A'} `, 
+    client?.email && `Email: ${client?.email || 'N/A'}`,
     `Méthode de paiment: ${invoiceDetails.payment_type === 'cash' ? 'Espèce' : 'Cheque/virment'}`,
     `Livraison / remarque : ${invoiceDetails.notes || ' ' }`,
-    `B.C: ${invoiceDetails.bc || ' ' }`,
+    invoiceDetails?.bc && `B.C: ${invoiceDetails.bc || ' ' }`,
   ];
   
   pdf.text(details, 115, startY + 13);
