@@ -191,9 +191,10 @@ const addClientInfo = (pdf: jsPDF, client: Client | undefined, invoiceDetails: a
   pdf.setFontSize(10);
   
   const details = [
-    `Tel: ${client?.phone || 'N/A'} \n Email: ${client?.email || 'N/A'}`,
+    `Tel: ${client?.phone || 'N/A'} `, 
+    `Email: ${client?.email || 'N/A'}`,
     `Méthode de paiment: ${invoiceDetails.payment_type === 'cash' ? 'Espèce' : 'Cheque/virment'}`,
-    
+    `Livraison / remarque : ${invoiceDetails.notes || ' ' }`,
   ];
   
   pdf.text(details, 115, startY + 13);
