@@ -514,8 +514,8 @@ const FinalInvoiceDetail = () => {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          <SelectItem value="cheque">Chèque/virement</SelectItem>
-                          <SelectItem value="cash">Espèce</SelectItem>
+                          <SelectItem value="Chèque/virement">Chèque/virement</SelectItem>
+                          <SelectItem value="Espèce">Espèce</SelectItem>
                         </SelectContent>
                       </Select>
                       <FormMessage />
@@ -732,7 +732,7 @@ const FinalInvoiceDetail = () => {
                   <strong className="font-semibold">Mode de paiement:</strong>{" "}
                   <span className="flex items-center">
                     
-                    {invoice.paymentreference === 'cash' ? 'espèce ' : 'Chèque/virement'}
+                    {invoice.paymentreference }
                   </span>
                 </div>
                 <div>
