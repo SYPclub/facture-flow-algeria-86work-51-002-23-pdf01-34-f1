@@ -770,6 +770,10 @@ const FinalInvoiceDetail = () => {
                     </Link>
                   </div>
                 )}
+                <div>
+                  <strong className="font-semibold">Bon de commande:</strong>{" "}
+                  {invoice.bc}
+                </div>
               </CardContent>
             </Card>
           </div>
@@ -825,7 +829,7 @@ const FinalInvoiceDetail = () => {
                   </tr>
                   <tr>
                     <td colSpan={5} className="px-4 py-2 text-right font-semibold">
-                      Taxe Total:
+                      TVA:
                     </td>
                     <td colSpan={3} className="px-4 py-2 text-right">
                       {formatCurrency(invoice.taxTotal)}
