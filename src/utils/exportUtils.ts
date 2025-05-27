@@ -30,11 +30,12 @@ function formatCurrencyInFrenchWords(amount: number): string {
 // Helper for formatting currency
 
 const formatCurrency = (amount: number) => {
-  return amount.toLocaleString('fr-FR', { 
-    style: 'decimal', 
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
-  }) + ' DA';
+  // Format the number with thousand separators and decimal places
+  const formatted = amount.toFixed(2)
+    .replace('.', ',')
+    .replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  
+  return formatted + ' DA';
 };
 
 // Helper for formatting dates
