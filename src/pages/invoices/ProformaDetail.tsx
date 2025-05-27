@@ -977,13 +977,15 @@ const ProformaDetail = () => {
                   {proforma.status}
                 </Badge>
               </div>
-              <div>
-                <strong className="font-semibold">Mode de paiement:</strong>{" "}
-                <span className="flex items-center">
-                  {getPaymentTypeIcon(proforma.payment_type)}
-                  {proforma.payment_type}
-                </span>
-              </div>
+              {proforma?.payment_type && (
+                <div>
+                  <strong className="font-semibold">Mode de paiement:</strong>{" "}
+                  <span className="flex items-center">
+                    {getPaymentTypeIcon(proforma.payment_type)}
+                    {proforma.payment_type === 'cash' ? 'Cash' : 'Cheque'}
+                  </span>
+                </div>
+              )}
               {proforma.finalInvoiceId && (
                 <div>
                   <strong className="font-semibold">Facture finale:</strong>{" "}
