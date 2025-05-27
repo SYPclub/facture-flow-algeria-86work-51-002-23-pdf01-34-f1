@@ -506,7 +506,7 @@ const FinalInvoiceDetail = () => {
                 
                 <FormField
                   control={form.control}
-                  name="paymentreference"
+                  name="paymentReference"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Mode de paiement</FormLabel>
@@ -917,18 +917,11 @@ const FinalInvoiceDetail = () => {
                         Souhaitez-vous ajouter une référence de paiement ?
                       </AlertDialogDescription>
                     </AlertDialogHeader>
-                    <div className="py-4">
-                      <Input
-                        placeholder="Payment reference (optional)"
-                        id="paymentReference"
-                        className="mb-2"
-                      />
-                    </div>
+                    
                     <AlertDialogFooter>
                       <AlertDialogCancel>Annuler</AlertDialogCancel>
                       <AlertDialogAction
                         onClick={() => {
-                          const paymentRef = (document.getElementById('paymentReference') as HTMLInputElement)?.value;
                           const paymentdate = new Date().toISOString().split('T')[0];
                           const data = {
                             status: 'paid',
