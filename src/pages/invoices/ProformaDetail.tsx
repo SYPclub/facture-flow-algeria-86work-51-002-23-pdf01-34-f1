@@ -293,12 +293,13 @@ const ProformaDetail = () => {
         const taxrate = item.taxrate || 0;
         const discount = item.discount || 0;
         
-        const totalExcl = quantity * unitprice * (1 - discount / 100);
+        const totalExcl = (quantity * unitprice ) - discount ;
         const totalTax = totalExcl * (taxrate / 100);
         const total = totalExcl + totalTax;
         
         return {
           ...item,
+          discount,
           totalExcl,
           totalTax,
           total
@@ -306,6 +307,7 @@ const ProformaDetail = () => {
       });
 
       // Calculate invoice totals
+      const totaldiscount = processedItems.reduce((sum, item) => sum + item.discount, 0);
       const subtotal = processedItems.reduce((sum, item) => sum + item.totalExcl, 0);
       const taxTotal = processedItems.reduce((sum, item) => sum + item.totalTax, 0);
       const stampTax = calculateStampTax(data.payment_type, subtotal);
@@ -313,6 +315,7 @@ const ProformaDetail = () => {
 
       // Update the invoice with calculated totals
       await updateProformaInvoice(id || '', {
+        totaldiscount,
         subtotal,
         taxtotal: taxTotal,
         stamp_tax: stampTax,
@@ -323,6 +326,7 @@ const ProformaDetail = () => {
       return await mockDataService.updateProformaInvoice(id || '', {
         ...data,
         items: processedItems,
+        totaldiscount,
         subtotal,
         taxTotal,
         stampTax,
@@ -863,6 +867,10 @@ const ProformaDetail = () => {
                 
                 <div className="mt-4 space-y-2 border-t pt-4 text-right">
                   <div className="flex justify-between">
+                    <span className="font-medium">totale remise:</span>
+                    <span>{formatCurrency(totals.totaldiscount)}</span>
+                  </div>
+                  <div className="flex justify-between">
                     <span className="font-medium">Sous-total:</span>
                     <span>{formatCurrency(totals.subtotal)}</span>
                   </div>
@@ -1063,6 +1071,14 @@ const ProformaDetail = () => {
                   ))}
                 </TableBody>
                 <tfoot>
+                  <tr className="border-t">
+                    <td colSpan={5} className="px-4 py-2 text-right font-semibold">
+                      Remise:
+                    </td>
+                    <td colSpan={3} className="px-4 py-2 text-right">
+                      {formatCurrency(totals.totaldiscount)} //5555
+                    </td>
+                  </tr>
                   <tr className="border-t">
                     <td colSpan={5} className="px-4 py-2 text-right font-semibold">
                       Sous-total:
