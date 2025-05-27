@@ -644,7 +644,7 @@ const ProformaDetail = () => {
               <CardContent className="space-y-2">
                 <div>
                   <strong className="font-semibold">Numéro de la facture:</strong>{" "}
-                  {proforma.number}
+                  {proforma.number}   {proforma.payment_type}
                 </div>
                 <FormField
                   control={form.control}
