@@ -156,7 +156,7 @@ const addClientInfo = (pdf: jsPDF, client: Client | undefined, invoiceDetails: a
   pdf.setTextColor(darkBlue);
   pdf.setFontSize(11);
   pdf.setFont("helvetica", "bold");
-  pdf.text(`Client: ${String(client?.name)?.toUpperCase() ?? 'Client Name'}`, 20, startY + 7);
+  pdf.text(`Client: ${client?.name || 'Client Name'}`, 20, startY + 7);
   
   // Client details
   pdf.setTextColor(darkGray);
