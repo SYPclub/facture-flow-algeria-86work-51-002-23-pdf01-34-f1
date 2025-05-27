@@ -94,13 +94,14 @@ const finalInvoiceFormSchema = z.object({
   paymentdate: z.string().optional(),
   paymentreference: z.string().optional(),
 });
-const paymentMethods = {
-  1: 'espèces',
-  2: 'virement',
-  3: 'carte',
-  // Add more as needed
-};
+
 const FinalInvoiceDetail = () => {
+  const paymentMethods = {
+        1: 'espèces',
+        2: 'virement',
+        3: 'carte',
+        // Add more as needed
+      };
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
