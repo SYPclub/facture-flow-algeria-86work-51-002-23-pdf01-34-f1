@@ -556,25 +556,7 @@ const FinalInvoiceDetail = () => {
                   )}
                 />
 
-                {form.watch('status') === 'paid' && (
-                  <>
-                    
-                    
-                    <FormField
-                      control={form.control}
-                      name="paymentreference"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Référence de paiement</FormLabel>
-                          <FormControl>
-                            <Input {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </>
-                )}
+                
 
                 {invoice.proformaId && (
                   <div>
@@ -764,17 +746,7 @@ const FinalInvoiceDetail = () => {
                   </span>
                 </div>
                 
-                {invoice.status === 'paid' && (
-                  <>
-                    
-                    {invoice.paymentReference && (
-                      <div>
-                        <strong className="font-semibold">Référence de paiement:</strong>{" "}
-                        
-                      </div>
-                    )}
-                  </>
-                )}
+                
 
                 {invoice.proformaId && (
                   <div>
