@@ -1076,7 +1076,7 @@ const ProformaDetail = () => {
                       Remise:
                     </td>
                     <td colSpan={3} className="px-4 py-2 text-right">
-                      {formatCurrency(totals.totaldiscount)} //5555
+                      
                     </td>
                   </tr>
                   <tr className="border-t">
