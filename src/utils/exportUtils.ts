@@ -176,14 +176,14 @@ const addClientInfo = (pdf: jsPDF, client: Client | undefined, invoiceDetails: a
   const clientInfo = [
     
     `Address: ${client?.address || 'Address'}`,
-    client?.rc &&`RC: ${client?.rc || '-'}`,
+    client?.rc && `RC: ${client?.rc || '-'}`,
     client?.taxid && `NIF: ${client.taxid}`,
     client?.city && `TIN: ${client?.city || '-'}`,
     client?.nis && `NIS: ${client?.nis || '-'}`,
     client?.ai && `AI: ${client?.ai || '-'}`,
     client?.rib && `RIB: ${client?.rib || '-'} `
     
-  ];
+  ].filter(Boolean);
   
   pdf.text(clientInfo, 20, startY + 13);
   
