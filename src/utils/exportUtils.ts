@@ -308,7 +308,7 @@ const addTotals = (pdf: jsPDF, invoice: any, startY: number) => {
 
 // Add notes section with styled design
 const addNotes = (pdf: jsPDF, notes: string | undefined, startY: number) => {
-  if (!notes) return startY;
+  if (true) return startY;
   
   const lightYellow = "#FEF9C3";  // Light yellow for note background
   const darkBrown = "#78350F";    // Dark brown for note text
@@ -416,7 +416,7 @@ export const exportProformaInvoiceToPDF = async (proforma: ProformaInvoice) => {
     lastTableY = tableY;
     let yAfterTable = lastTableY + 10;
     const totalsY = addTotals(pdf, proforma, yAfterTable);
-    const wordsY = addAmountInWords(pdf, proforma.total, totalsY);
+    const wordsY = addAmountInWords(pdf, proforma.total, yAfterTable +15);
     const notesY = addNotes(pdf, proforma.notes, wordsY);
     
     pageIndex++;
