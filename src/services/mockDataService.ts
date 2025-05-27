@@ -460,7 +460,7 @@ class MockDataService {
       finalInvoiceId: invoice.finalinvoiceid,
       createdAt: invoice.createdat || new Date().toISOString(),
       updatedAt: invoice.updatedat || new Date().toISOString(),
-      payment_type: invoice.payment_type, // Ajouté
+      payment_type: invoice.payment_type // Ajouté
     };
   }
 
@@ -483,8 +483,8 @@ class MockDataService {
             subtotal: proforma.subtotal,
             taxtotal: proforma.taxTotal,
             total: proforma.total,
-            status: proforma.status || 'draft'
-            payment_type: proforma.payment_type || 'cheque',
+            status: proforma.status || 'draft',
+            payment_type: proforma.payment_type || 'cheque', // Ajouté
           })
           .select()
           .single();
