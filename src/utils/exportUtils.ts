@@ -28,12 +28,13 @@ function formatCurrencyInFrenchWords(amount: number): string {
 }
 
 // Helper for formatting currency
+
 const formatCurrency = (amount: number) => {
   return amount.toLocaleString('fr-DZ', { 
-    style: 'currency', 
-    currency: 'DZD',
-    minimumFractionDigits: 2
-  });
+    style: 'decimal', 
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  }) + ' DA';
 };
 
 // Helper for formatting dates
