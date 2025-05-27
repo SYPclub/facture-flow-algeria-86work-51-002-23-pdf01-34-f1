@@ -487,11 +487,11 @@ const NewProformaInvoice = () => {
                   <TableHeader>
                     <TableRow>
                       <TableHead>Produit</TableHead>
-                      <TableHead className="w-[80px]">Qté</TableHead>
-                      <TableHead className="w-[80px]">unité</TableHead>
+                      <TableHead className="w-[120px]">Qté</TableHead>
+                      <TableHead className="w-[120px]">unité</TableHead>
                       <TableHead className="w-[120px]">Prix unitaire</TableHead>
-                      <TableHead className="w-[80px]">Tax %</TableHead>
-                      <TableHead className="w-[80px]">Remise %</TableHead>
+                      <TableHead className="w-[120px]">Tax %</TableHead>
+                      <TableHead className="w-[120px]">Remise</TableHead>
                       <TableHead className="w-[50px]"></TableHead>
                     </TableRow>
                   </TableHeader>
