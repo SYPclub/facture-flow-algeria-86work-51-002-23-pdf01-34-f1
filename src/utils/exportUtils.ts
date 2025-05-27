@@ -107,11 +107,11 @@ const addHeader = async (pdf: jsPDF, documentType: string, documentNumber: strin
   pdf.setTextColor(70, 70, 70);
   
   const companyDetails = [
-    `Addresse: ${companyInfo?.address || 'Company Address'}  `,
+    `${companyInfo?.address || 'Company Address'}  `,
     `RC: ${companyInfo?.commerceRegNumber || 'N/A'}`,
     `NIF: ${companyInfo?.taxid || 'N/A'}`,
     `NIS: 002004020004183`, `RIB: 00300325000240230052 Badr agence Ain Beida`,
-    `Tél: ${companyInfo?.phone || 'N/A'} | Email: ${companyInfo?.email || 'info@company.com'}`
+    
   ];
   
   pdf.text(companyDetails, 14, 27);
@@ -122,7 +122,7 @@ const addHeader = async (pdf: jsPDF, documentType: string, documentNumber: strin
   pdf.setFont("helvetica", "bold");
   pdf.setFontSize(12);
   
-  const docTypeText = documentType.toUpperCase();
+  const docTypeText = `${documentType.toUpperCase()} N°: ${documentNumber}`;
   const docTypeWidth = pdf.getStringUnitWidth(docTypeText) * 12 / pdf.internal.scaleFactor;
   const docTypeX = pdf.internal.pageSize.width - 14 - docTypeWidth - 10; // 10 = padding
   const docTypeXX = 14;
@@ -132,7 +132,7 @@ const addHeader = async (pdf: jsPDF, documentType: string, documentNumber: strin
  
 
   drawRoundedRect(pdf, docTypeXX, 27, docTypeWidth + 10, 14, 2, primaryColor);
-  pdf.text([`${docTypeText}  N°: ${documentNumber}`], docTypeXX + 5, docTypeYY + 7);
+  pdf.text(docTypeText, docTypeXX + 5, docTypeYY + 7);
   
   pdf.setFont("helvetica");
   pdf.setFontSize(8);
@@ -156,7 +156,7 @@ const addClientInfo = (pdf: jsPDF, client: Client | undefined, invoiceDetails: a
   pdf.setTextColor(darkBlue);
   pdf.setFontSize(11);
   pdf.setFont("helvetica", "bold");
-  pdf.text(`CLIENT: ${client?.name || 'Client Name'}`, 20, startY + 7);
+  pdf.text(`Client: ${String(client?.name)?.toUpperCase() ?? 'Client Name'}`, 20, startY + 7);
   
   // Client details
   pdf.setTextColor(darkGray);
@@ -168,10 +168,11 @@ const addClientInfo = (pdf: jsPDF, client: Client | undefined, invoiceDetails: a
     `Address: ${client?.address || 'Address'}`,
     `RC: ${client?.rc || '-'}`,
     `NIF: ${client?.taxid || '-'}`,
+    `TIN: ${client?.city || '-'}`,
     `NIS: ${client?.nis || '-'}`,
     `AI: ${client?.ai || '-'}`,
-    `RIB: ${client?.rib || '-'}  ville : ${client?.city || 'City'}`,      
-    `Tel: ${client?.phone || 'N/A'} | Email: ${client?.email || 'N/A'}`
+    `RIB: ${client?.rib || '-'} `
+    
   ];
   
   pdf.text(clientInfo, 20, startY + 13);
@@ -187,20 +188,11 @@ const addClientInfo = (pdf: jsPDF, client: Client | undefined, invoiceDetails: a
   pdf.setFont("helvetica", "normal");
   pdf.setFontSize(10);
   
-  const details = [];
-  
-  if (invoiceDetails.issuedate) {
-    details.push(`Date de création: ${formatDate(invoiceDetails.issuedate)}`);
-  }
-  
-  
-  if (invoiceDetails.payment_type) {
-    details.push(`Méthode de paiment: ${invoiceDetails.payment_type === 'cash' ? 'Cash' : 'Cheque'}`);
-  }
-  
-  if (invoiceDetails.deliverydate) {
-    details.push(`Date de livraison: ${formatDate(invoiceDetails.deliverydate)}`);
-  }
+  const details = [
+    `Tel: ${client?.phone || 'N/A'} | Email: ${client?.email || 'N/A'}`,
+    `Méthode de paiment: ${invoiceDetails.payment_type === 'cash' ? 'Cash' : 'Cheque/virment'}`,
+    
+  ];
   
   pdf.text(details, 115, startY + 13);
   
