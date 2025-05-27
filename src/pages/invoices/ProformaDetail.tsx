@@ -127,6 +127,7 @@ const ProformaDetail = () => {
   const canEdit = checkPermission([UserRole.ADMIN, UserRole.ACCOUNTANT]);
   const isEditMode = window.location.pathname.includes('/edit/');
   const [totals, setTotals] = useState({ 
+    totaldiscount:0,
     subtotal: 0, 
     taxTotal: 0, 
     stampTax: 0,
@@ -868,7 +869,7 @@ const ProformaDetail = () => {
                 <div className="mt-4 space-y-2 border-t pt-4 text-right">
                   <div className="flex justify-between">
                     <span className="font-medium">totale remise:</span>
-                    <span></span>
+                    <span>{formatCurrency(totals.totaldiscount)}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="font-medium">Sous-total:</span>
