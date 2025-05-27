@@ -117,12 +117,12 @@ const addHeader = async (pdf: jsPDF, documentType: string, documentNumber: strin
   ];
   
   pdf.text(companyDetails, 14, 27);
-  pdf.setDrawColor(220, 220, 220);
+  pdf.setDrawColor(70,70,70);
       pdf.line(
         12,
         48,
-        285,
-        12
+        200,
+        48
       );
   // Add document type in a styled box on the right
   pdf.setFillColor(hexToRgb(primaryColor).r, hexToRgb(primaryColor).g, hexToRgb(primaryColor).b);
