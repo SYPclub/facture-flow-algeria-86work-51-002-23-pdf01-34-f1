@@ -237,14 +237,7 @@ const addStylizedTable = (pdf: jsPDF, headers: string[], rows: any[][], startY: 
     },
     margin: { left: 14, right: 14 },
     didDrawPage: function(data) {
-      // Add page numbers at the bottom of each page
-      pdf.setFontSize(8);
-      pdf.setTextColor(100, 100, 100);
-      pdf.text(
-        `Page ${pdf.internal.getNumberOfPages()}`,
-        data.settings.margin.left,
-        pdf.internal.pageSize.height - 10
-      );
+      
       
       // Add subtle footer line
       pdf.setDrawColor(220, 220, 220);
