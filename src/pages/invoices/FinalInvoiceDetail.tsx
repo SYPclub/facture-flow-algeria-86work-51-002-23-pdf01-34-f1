@@ -837,7 +837,7 @@ const FinalInvoiceDetail = () => {
                       droit de timbre:
                     </td>
                     <td colSpan={3} className="px-4 py-2 text-right">
-                      {formatCurrency(invoice.stampTax)}
+                      {formatCurrency(invoice.stamp_tax)}
                     </td>
                   </tr>
                   
