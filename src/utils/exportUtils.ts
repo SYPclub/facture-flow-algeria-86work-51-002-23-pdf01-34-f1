@@ -188,13 +188,21 @@ const addClientInfo = (pdf: jsPDF, client: Client | undefined, invoiceDetails: a
   pdf.setFont("helvetica", "normal");
   pdf.setFontSize(10);
   
-  const details = [
-    `Tel: ${client?.phone || 'N/A'} \n  Email: ${client?.email || 'N/A'}`,
-    // `Méthode de paiment: ${invoiceDetails.payment_type === 'cash' ? 'Cash' : 'Cheque/virment'}`,
-    
-  ];
+  const details = [];
   
-
+  if (invoiceDetails.issuedate) {
+    details.push(`Date de création: ${formatDate(invoiceDetails.issuedate)}`);
+  }
+  
+  
+  if (invoiceDetails.payment_type) {
+    details.push(`Méthode de paiment: ${invoiceDetails.payment_type === 'cash' ? 'Cash' : 'Cheque'}`);
+  }
+  
+  if (invoiceDetails.deliverydate) {
+    details.push(`Date de livraison: ${formatDate(invoiceDetails.deliverydate)}`);
+  }
+  
   pdf.text(details, 115, startY + 13);
   
   return startY + 45; // Return next Y position
