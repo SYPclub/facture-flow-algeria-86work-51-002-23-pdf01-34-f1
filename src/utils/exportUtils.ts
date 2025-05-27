@@ -156,7 +156,7 @@ const addClientInfo = (pdf: jsPDF, client: Client | undefined, invoiceDetails: a
   pdf.setTextColor(darkBlue);
   pdf.setFontSize(11);
   pdf.setFont("helvetica", "bold");
-  pdf.text(`Client: ${client?.name.toUpperCase() || 'Client Name'}`, 20, startY + 7);
+  pdf.text(`Client: ${String(client?.name)?.toUpperCase() ?? 'Client Name'}`, 20, startY + 7);
   
   // Client details
   pdf.setTextColor(darkGray);
@@ -188,20 +188,11 @@ const addClientInfo = (pdf: jsPDF, client: Client | undefined, invoiceDetails: a
   pdf.setFont("helvetica", "normal");
   pdf.setFontSize(10);
   
-  const details = [];
-  
-  if (invoiceDetails.issuedate) {
-    details.push(`Date de création: ${formatDate(invoiceDetails.issuedate)}`);
-  }
-  
-  
-  if (invoiceDetails.payment_type) {
-    details.push(`Méthode de paiment: ${invoiceDetails.payment_type === 'cash' ? 'Cash' : 'Cheque'}`);
-  }
-  
-  if (invoiceDetails.deliverydate) {
-    details.push(`Date de livraison: ${formatDate(invoiceDetails.deliverydate)}`);
-  }
+  const details = [
+    `Tel: ${client?.phone || 'N/A'} | Email: ${client?.email || 'N/A'}`,
+    `Méthode de paiment: ${invoiceDetails.payment_type === 'cash' ? 'Cash' : 'Cheque/virment'}`,
+    
+  ];
   
   pdf.text(details, 115, startY + 13);
   
