@@ -155,7 +155,7 @@ const ProformaDetail = () => {
       notes: proforma?.notes || '',
       issuedate: proforma?.issuedate || '',
       duedate: proforma?.duedate || '',
-      payment_type: proforma?.payment_type || 'cheque',
+      payment_type: proforma?.payment_type || '',
       status: proforma?.status || 'draft',
       items: proforma?.items || [],
     },
@@ -164,7 +164,7 @@ const ProformaDetail = () => {
       notes: proforma?.notes || '',
       issuedate: proforma?.issuedate || '',
       duedate: proforma?.duedate || '',
-      payment_type: proforma?.payment_type || 'cheque',
+      payment_type: proforma?.payment_type || '',
       status: proforma?.status || 'draft',
       items: proforma?.items || [],
     }
@@ -980,7 +980,7 @@ const ProformaDetail = () => {
               <div>
                 <strong className="font-semibold">Mode de paiement:</strong>{" "}
                 <span className="flex items-center">
-                  {getPaymentTypeIcon(proforma.payment_type || 'cheque')}
+                  {getPaymentTypeIcon(proforma.payment_type)}
                   {proforma.payment_type === 'cash' ? 'Cash' : 'Cheque'}
                 </span>
               </div>
