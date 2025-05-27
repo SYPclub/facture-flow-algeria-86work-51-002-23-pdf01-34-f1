@@ -933,8 +933,8 @@ const FinalInvoiceDetail = () => {
                             status: 'paid',
                             payment_date: paymentdate,
                             amount_paid: invoice.total,
-                            client_debt: 0,
-                            ...(paymentRef ? { paymentreference: paymentRef } : {})
+                            client_debt: 0
+                            
                           };
                           statusUpdateMutation.mutate(data);
                         }}
