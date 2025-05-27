@@ -349,7 +349,8 @@ class MockDataService {
         status: invoice.status as 'draft' | 'sent' | 'approved' | 'rejected',
         finalInvoiceId: invoice.finalinvoiceid,
         createdAt: invoice.createdat || new Date().toISOString(),
-        updatedAt: invoice.updatedat || new Date().toISOString()
+        updatedAt: invoice.updatedat || new Date().toISOString(),
+        payment_type: invoice.payment_type // Ajouté
       });
     }
     
@@ -458,7 +459,8 @@ class MockDataService {
       status: invoice.status as 'draft' | 'sent' | 'approved' | 'rejected',
       finalInvoiceId: invoice.finalinvoiceid,
       createdAt: invoice.createdat || new Date().toISOString(),
-      updatedAt: invoice.updatedat || new Date().toISOString()
+      updatedAt: invoice.updatedat || new Date().toISOString(),
+      payment_type: invoice.payment_type, // Ajouté
     };
   }
 
@@ -482,6 +484,7 @@ class MockDataService {
             taxtotal: proforma.taxTotal,
             total: proforma.total,
             status: proforma.status || 'draft'
+            payment_type: proforma.payment_type || 'cheque',
           })
           .select()
           .single();
