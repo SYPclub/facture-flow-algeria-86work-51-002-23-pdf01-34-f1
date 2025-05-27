@@ -1057,7 +1057,7 @@ const ProformaDetail = () => {
                       {formatCurrency(proforma.taxTotal)}
                     </td>
                   </tr>
-                  {proforma.payment_type === 'cash' && proforma.stamp_tax > 0 && (
+                  {proforma.payment_type === 'cash'  && (
                     <tr>
                       <td colSpan={5} className="px-4 py-2 text-right font-semibold">
                         droit de timbre:
