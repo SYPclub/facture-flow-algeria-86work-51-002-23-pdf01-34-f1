@@ -127,7 +127,6 @@ const ProformaDetail = () => {
   const canEdit = checkPermission([UserRole.ADMIN, UserRole.ACCOUNTANT]);
   const isEditMode = window.location.pathname.includes('/edit/');
   const [totals, setTotals] = useState({ 
-    totaldiscount:0,
     subtotal: 0, 
     taxTotal: 0, 
     stampTax: 0,
@@ -204,8 +203,7 @@ const ProformaDetail = () => {
     
     let subtotal = 0;
     let taxTotal = 0;
-    let totalDiscount = 0;
-
+    
     items.forEach(item => {
       if (!item.productId) return;
       
@@ -213,10 +211,8 @@ const ProformaDetail = () => {
       const unitprice = item.unitprice || 0;
       const taxrate = item.taxrate || 0;
       const discount = item.discount || 0;
-
-      totalDiscount +=discount;
       
-      const itemSubtotal = (quantity * unitprice) - discount;
+      const itemSubtotal = (quantity * unitprice) -discount;
       const itemTax = itemSubtotal * (taxrate / 100);
       
       subtotal += itemSubtotal;
@@ -226,7 +222,7 @@ const ProformaDetail = () => {
     const stampTax = calculateStampTax(paymentType, subtotal);
     const total = subtotal + taxTotal + stampTax;
     
-    setTotals({ totaldiscount: totalDiscount ,subtotal, taxTotal, stampTax, total });
+    setTotals({ subtotal, taxTotal, stampTax, total });
   };
 
   const addItem = () => {
@@ -297,13 +293,12 @@ const ProformaDetail = () => {
         const taxrate = item.taxrate || 0;
         const discount = item.discount || 0;
         
-        const totalExcl = (quantity * unitprice ) - discount ;
+        const totalExcl = (quantity * unitprice ) -discount ;
         const totalTax = totalExcl * (taxrate / 100);
         const total = totalExcl + totalTax;
         
         return {
           ...item,
-          tdiscount:discount,
           totalExcl,
           totalTax,
           total
@@ -311,7 +306,6 @@ const ProformaDetail = () => {
       });
 
       // Calculate invoice totals
-      const totaldiscount = processedItems.reduce((sum, item) => sum + item.tdiscount, 0);
       const subtotal = processedItems.reduce((sum, item) => sum + item.totalExcl, 0);
       const taxTotal = processedItems.reduce((sum, item) => sum + item.totalTax, 0);
       const stampTax = calculateStampTax(data.payment_type, subtotal);
@@ -319,7 +313,6 @@ const ProformaDetail = () => {
 
       // Update the invoice with calculated totals
       await updateProformaInvoice(id || '', {
-        totaldiscount,
         subtotal,
         taxtotal: taxTotal,
         stamp_tax: stampTax,
@@ -870,10 +863,6 @@ const ProformaDetail = () => {
                 
                 <div className="mt-4 space-y-2 border-t pt-4 text-right">
                   <div className="flex justify-between">
-                    <span className="font-medium">totale remise:</span>
-                    <span>{formatCurrency(totals.totaldiscount)}</span>
-                  </div>
-                  <div className="flex justify-between">
                     <span className="font-medium">Sous-total:</span>
                     <span>{formatCurrency(totals.subtotal)}</span>
                   </div>
@@ -1074,14 +1063,6 @@ const ProformaDetail = () => {
                   ))}
                 </TableBody>
                 <tfoot>
-                  <tr className="border-t">
-                    <td colSpan={5} className="px-4 py-2 text-right font-semibold">
-                      Remise:
-                    </td>
-                    <td colSpan={3} className="px-4 py-2 text-right">
-                      {formatCurrency(totals.totaldiscount)}
-                    </td>
-                  </tr>
                   <tr className="border-t">
                     <td colSpan={5} className="px-4 py-2 text-right font-semibold">
                       Sous-total:
