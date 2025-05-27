@@ -833,13 +833,13 @@ const FinalInvoiceDetail = () => {
                   </tr>
                   {invoice.payment_type === 'cash' && (
                     <tr>
-                    <td colSpan={5} className="px-4 py-2 text-right font-semibold">
-                      droit de timbre:
-                    </td>
-                    <td colSpan={3} className="px-4 py-2 text-right">
-                      {formatCurrency(invoice.stampTax)}
-                    </td>
-                  </tr>
+                      <td colSpan={5} className="px-4 py-2 text-right font-semibold">
+                        droit de timbre:
+                      </td>
+                      <td colSpan={3} className="px-4 py-2 text-right">
+                        {formatCurrency(invoice.stampTax)}
+                      </td>
+                    </tr>
                   )}
                   <tr className="border-t">
                     <td colSpan={5} className="px-4 py-2 text-right font-bold text-lg">
