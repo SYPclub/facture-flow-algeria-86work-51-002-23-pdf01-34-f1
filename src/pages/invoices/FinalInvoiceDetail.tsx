@@ -94,7 +94,12 @@ const finalInvoiceFormSchema = z.object({
   paymentdate: z.string().optional(),
   paymentreference: z.string().optional(),
 });
-
+const paymentMethods = {
+  1: 'espèces',
+  2: 'virement',
+  3: 'carte',
+  // Add more as needed
+};
 const FinalInvoiceDetail = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -732,7 +737,7 @@ const FinalInvoiceDetail = () => {
                   <strong className="font-semibold">Mode de paiement:</strong>{" "}
                   <span className="flex items-center">
                     
-                    {invoice.paymentReference === 1 ? 'espese' : 'ese' }
+                    {paymentMethods[invoice.paymentreference] || 'inconnu'}
                   </span>
                 </div>
                 <div>
