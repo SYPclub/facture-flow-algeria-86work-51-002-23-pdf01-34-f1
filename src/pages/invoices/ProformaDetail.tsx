@@ -758,11 +758,11 @@ const ProformaDetail = () => {
                     <TableHeader>
                       <TableRow>
                         <TableHead>Produit</TableHead>
-                        <TableHead className="w-[80px]">Qté</TableHead>
+                        <TableHead className="w-[120px]">Qté</TableHead>
                         <TableHead className="w-[80px]">unité</TableHead>
                         <TableHead className="w-[120px]">Prix unitaire</TableHead>
-                        <TableHead className="w-[80px]">Tax %</TableHead>
-                        <TableHead className="w-[80px]">remise %</TableHead>
+                        <TableHead className="w-[120px]">Tax %</TableHead>
+                        <TableHead className="w-[120px]">remise </TableHead>
                         <TableHead className="w-[50px]"></TableHead>
                       </TableRow>
                     </TableHeader>
@@ -835,7 +835,7 @@ const ProformaDetail = () => {
                             <Input
                               type="number"
                               min="0"
-                              max="100"
+                              max="100000"
                               value={item.discount || 0}
                               onChange={(e) => {
                                 const items = [...form.getValues('items')];
@@ -1036,7 +1036,7 @@ const ProformaDetail = () => {
                     <TableHead className="text-right">unité</TableHead>
                     <TableHead className="text-right">Prix unitaire</TableHead>
                     <TableHead className="text-right">Tax %</TableHead>
-                    <TableHead className="text-right">Remise %</TableHead>
+                    <TableHead className="text-right">Remise </TableHead>
                     <TableHead className="text-right">Total Excl.</TableHead>
                     <TableHead className="text-right">Montant de l'impôt</TableHead>
                     <TableHead className="text-right">Total inclus.</TableHead>
@@ -1055,7 +1055,7 @@ const ProformaDetail = () => {
                       <TableCell className="text-right">{item.unit}</TableCell>
                       <TableCell className="text-right">{formatCurrency(item.unitprice)}</TableCell>
                       <TableCell className="text-right">{item.taxrate}%</TableCell>
-                      <TableCell className="text-right">{item.discount}%</TableCell>
+                      <TableCell className="text-right">{item.discount}</TableCell>
                       <TableCell className="text-right">{formatCurrency(item.totalExcl)}</TableCell>
                       <TableCell className="text-right">{formatCurrency(item.totalTax)}</TableCell>
                       <TableCell className="text-right font-medium">{formatCurrency(item.total)}</TableCell>
