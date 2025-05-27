@@ -194,29 +194,7 @@ const addClientInfo = (pdf: jsPDF, client: Client | undefined, invoiceDetails: a
     
   ];
   
-  if (invoice.payments && invoice.payments.length > 0) {
-    pdf.setFont("helvetica", "bold");
-    pdf.setFontSize(10);
-    pdf.setTextColor(59, 130, 246); // primaryColor
-    pdf.text("PAYMENT HISTORY:", 14, paymentsY);
-    
-    const paymentRows = invoice.payments.map(payment => [
-      formatDate(payment.payment_date),
-      payment.paymentMethod,
-      payment.reference || 'N/A',
-      formatCurrency(payment.amount)
-    ]);
-    
-    paymentsY = addStylizedTable(
-      pdf,
-      ['Date', 'Method', 'Reference', 'Amount'],
-      paymentRows,
-      paymentsY + 5
-    );
-    
-    paymentsY += 10;
-  }
-  
+
   pdf.text(details, 115, startY + 13);
   
   return startY + 45; // Return next Y position
