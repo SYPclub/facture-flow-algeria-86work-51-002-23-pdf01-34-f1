@@ -350,7 +350,8 @@ class MockDataService {
         finalInvoiceId: invoice.finalinvoiceid,
         createdAt: invoice.createdat || new Date().toISOString(),
         updatedAt: invoice.updatedat || new Date().toISOString(),
-        payment_type: invoice.payment_type // Ajouté
+        payment_type: invoice.payment_type, // Ajouté
+        stamp_tax: invoice.stamp_tax // Ajouté
       });
     }
     
@@ -460,7 +461,8 @@ class MockDataService {
       finalInvoiceId: invoice.finalinvoiceid,
       createdAt: invoice.createdat || new Date().toISOString(),
       updatedAt: invoice.updatedat || new Date().toISOString(),
-      payment_type: invoice.payment_type // Ajouté
+      payment_type: invoice.payment_type, // Ajouté
+      stamp_tax: invoice.stamp_tax // Ajouté
     };
   }
 
@@ -485,6 +487,7 @@ class MockDataService {
             total: proforma.total,
             status: proforma.status || 'draft',
             payment_type: proforma.payment_type || 'cheque', // Ajouté
+            stamp_tax: proforma.stamp_tax // Ajouté
           })
           .select()
           .single();
