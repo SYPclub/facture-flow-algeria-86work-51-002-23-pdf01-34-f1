@@ -831,7 +831,7 @@ const FinalInvoiceDetail = () => {
                       {formatCurrency(invoice.taxTotal)}
                     </td>
                   </tr>
-                  {form.getValues('payment_type') === 'cash' && (
+                  {invoice.payment_type === 'cash' && (
                     <tr>
                     <td colSpan={5} className="px-4 py-2 text-right font-semibold">
                       droit de timbre:
