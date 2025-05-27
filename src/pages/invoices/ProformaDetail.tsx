@@ -981,7 +981,7 @@ const ProformaDetail = () => {
                 <strong className="font-semibold">Mode de paiement:</strong>{" "}
                 <span className="flex items-center">
                   {getPaymentTypeIcon(proforma.payment_type)}
-                  {proforma.payment_type === 'cash' ? 'Cash' : 'Cheque'}
+                  {proforma.payment_type}
                 </span>
               </div>
               {proforma.finalInvoiceId && (
