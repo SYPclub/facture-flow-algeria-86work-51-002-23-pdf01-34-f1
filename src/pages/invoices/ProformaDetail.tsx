@@ -868,7 +868,7 @@ const ProformaDetail = () => {
                 <div className="mt-4 space-y-2 border-t pt-4 text-right">
                   <div className="flex justify-between">
                     <span className="font-medium">totale remise:</span>
-                    <span>{formatCurrency(totals.totaldiscount)}</span>
+                    <span></span>
                   </div>
                   <div className="flex justify-between">
                     <span className="font-medium">Sous-total:</span>
