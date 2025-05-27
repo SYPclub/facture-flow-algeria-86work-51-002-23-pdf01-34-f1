@@ -351,7 +351,8 @@ class MockDataService {
         createdAt: invoice.createdat || new Date().toISOString(),
         updatedAt: invoice.updatedat || new Date().toISOString(),
         payment_type: invoice.payment_type, // Ajouté
-        stamp_tax: invoice.stamp_tax // Ajouté
+        stamp_tax: invoice.stamp_tax, // Ajouté
+        bc: invoice.bc, // Ajouté
       });
     }
     
@@ -462,7 +463,8 @@ class MockDataService {
       createdAt: invoice.createdat || new Date().toISOString(),
       updatedAt: invoice.updatedat || new Date().toISOString(),
       payment_type: invoice.payment_type, // Ajouté
-      stamp_tax: invoice.stamp_tax // Ajouté
+      stamp_tax: invoice.stamp_tax, // Ajouté
+      bc: invoice.bc // Ajouté
     };
   }
 
@@ -487,7 +489,8 @@ class MockDataService {
             total: proforma.total,
             status: proforma.status || 'draft',
             payment_type: proforma.payment_type || 'cheque', // Ajouté
-            stamp_tax: proforma.stamp_tax // Ajouté
+            stamp_tax: proforma.stamp_tax, // Ajouté
+            bc: proforma.bc // Ajouté
           })
           .select()
           .single();
@@ -553,6 +556,7 @@ class MockDataService {
             subtotal: data.subtotal,
             taxtotal: data.taxTotal,
             stamp_tax: data.stampTax,
+            bc:data.bc,
             total: data.total,
             status: data.status
           })
@@ -812,6 +816,9 @@ class MockDataService {
         proformaId: invoice.proformaid,
         paymentDate: invoice.paymentdate,
         paymentReference: invoice.paymentreference,
+        bc: invoice.bc,
+        stamp_tax: invoice.stamp_tax,
+        payment_type: invoice.payment_type,
         createdAt: invoice.createdat || new Date().toISOString(),
         updatedAt: invoice.updatedat || new Date().toISOString()
       });
@@ -923,6 +930,9 @@ class MockDataService {
       proformaId: invoice.proformaid,
       paymentDate: invoice.paymentdate,
       paymentReference: invoice.paymentreference,
+      bc: invoice.bc,
+      stamp_tax: invoice.stamp_tax,
+      payment_type: invoice.payment_type,
       createdAt: invoice.createdat || new Date().toISOString(),
       updatedAt: invoice.updatedat || new Date().toISOString()
     };

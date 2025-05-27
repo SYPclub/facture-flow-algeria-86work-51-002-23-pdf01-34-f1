@@ -90,6 +90,7 @@ const proformaFormSchema = z.object({
   notes: z.string().optional(),
   issuedate: z.string(),
   duedate: z.string(),
+  bc: z.string().optional(),
   payment_type: z.string(),
   status: z.string().optional(),
   items: z.array(
@@ -153,6 +154,7 @@ const ProformaDetail = () => {
     defaultValues: {
       clientid: proforma?.clientid || '',
       notes: proforma?.notes || '',
+      bc: proforma?.bc || '',
       issuedate: proforma?.issuedate || '',
       duedate: proforma?.duedate || '',
       payment_type: proforma?.payment_type || '',
@@ -162,6 +164,7 @@ const ProformaDetail = () => {
     values: {
       clientid: proforma?.clientid || '',
       notes: proforma?.notes || '',
+      bc: proforma?.bc || '',
       issuedate: proforma?.issuedate || '',
       duedate: proforma?.duedate || '',
       payment_type: proforma?.payment_type || '',
@@ -278,6 +281,7 @@ const ProformaDetail = () => {
         issuedate: data.issuedate,
         duedate: data.duedate,
         notes: data.notes,
+        bc: data.bc,
         payment_type: data.payment_type,
         status: data.status
       });
@@ -644,7 +648,7 @@ const ProformaDetail = () => {
               <CardContent className="space-y-2">
                 <div>
                   <strong className="font-semibold">Numéro de la facture:</strong>{" "}
-                  {proforma.number}   {proforma.payment_type}
+                  {proforma.number}   
                 </div>
                 <FormField
                   control={form.control}
@@ -718,6 +722,19 @@ const ProformaDetail = () => {
                           <SelectItem value="cash">Argent liquide</SelectItem>
                         </SelectContent>
                       </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="bc"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Bon de Commande:</FormLabel>
+                      <FormControl>
+                        <Input type="BC .." {...field} />
+                      </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -985,7 +1002,12 @@ const ProformaDetail = () => {
                     {proforma.payment_type === 'cash' ? 'Cash' : 'Cheque'}
                   </span>
                 </div>
+                
               )}
+              <div>
+                <strong className="font-semibold">Bon de Commande:</strong>{" "}
+                {proforma.bc}
+              </div>
               {proforma.finalInvoiceId && (
                 <div>
                   <strong className="font-semibold">Facture finale:</strong>{" "}

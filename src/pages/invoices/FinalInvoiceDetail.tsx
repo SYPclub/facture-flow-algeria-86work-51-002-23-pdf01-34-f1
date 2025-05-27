@@ -93,6 +93,9 @@ const finalInvoiceFormSchema = z.object({
   status: z.string(),
   paymentdate: z.string().optional(),
   paymentreference: z.string().optional(),
+  bc: z.string().optional(),
+  stamp_tax: z.string().optional(),
+  payment_type: z.string().optional(),
 });
 
 const FinalInvoiceDetail = () => {
@@ -160,6 +163,9 @@ const FinalInvoiceDetail = () => {
       status: invoice?.status || 'unpaid',
       paymentdate: invoice?.paymentDate || '',
       paymentreference: invoice?.paymentReference || '',
+      bc: invoice?.bc || '',
+      stamp_tax: invoice?.stamp_tax || '',
+      payment_type: invoice?.payment_type || '',
     },
     values: {
       notes: invoice?.notes || '',
@@ -168,6 +174,9 @@ const FinalInvoiceDetail = () => {
       status: invoice?.status || 'unpaid',
       paymentdate: invoice?.paymentDate || '',
       paymentreference: invoice?.paymentReference || '',
+      bc: invoice?.bc || '',
+      stamp_tax: invoice?.stamp_tax || '',
+      payment_type: invoice?.payment_type || '',
     }
   });
 

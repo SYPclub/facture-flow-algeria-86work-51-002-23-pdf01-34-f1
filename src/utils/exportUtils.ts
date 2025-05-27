@@ -195,6 +195,7 @@ const addClientInfo = (pdf: jsPDF, client: Client | undefined, invoiceDetails: a
     `Email: ${client?.email || 'N/A'}`,
     `Méthode de paiment: ${invoiceDetails.payment_type === 'cash' ? 'Espèce' : 'Cheque/virment'}`,
     `Livraison / remarque : ${invoiceDetails.notes || ' ' }`,
+    `B.C: ${invoiceDetails.bc || ' ' }`,
   ];
   
   pdf.text(details, 115, startY + 13);

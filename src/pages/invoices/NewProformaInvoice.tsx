@@ -59,6 +59,7 @@ const proformaSchema = z.object({
   issuedate: z.string().min(1, 'Issue date is required'),
   duedate: z.string().min(1, 'Due date is required'),
   notes: z.string().optional(),
+  bc: z.string().optional(),
   paymentType: z.enum(['cheque', 'cash']),
   items: z.array(
     z.object({
@@ -266,6 +267,7 @@ const NewProformaInvoice = () => {
         status: 'draft',
         payment_type: data.paymentType,
         stamp_tax: stampTax,
+        bc: data.bc,
         items,
         subtotal,
         taxTotal,
