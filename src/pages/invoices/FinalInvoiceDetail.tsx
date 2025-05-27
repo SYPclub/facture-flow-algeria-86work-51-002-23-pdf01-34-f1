@@ -98,7 +98,7 @@ const finalInvoiceFormSchema = z.object({
 const FinalInvoiceDetail = () => {
   const paymentMethods = {
         1: 'espèces',
-        2: 'virement',
+        2: 'Cheque / Virement',
         3: 'carte',
         // Add more as needed
       };
@@ -718,11 +718,11 @@ const FinalInvoiceDetail = () => {
                 </div>
                 <div>
                   <strong className="font-semibold">Mode de paiement:</strong>{" "}
-                  <span className="flex items-center">
+                  
                     
                     {paymentMethods[parseInt(invoice.paymentReference)] || 'inconnu'}
                     
-                  </span>
+                  
                 </div>
                 <div>
                   <strong className="font-semibold">Statut:</strong>{" "}
