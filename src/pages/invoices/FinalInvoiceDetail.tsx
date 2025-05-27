@@ -731,7 +731,7 @@ const FinalInvoiceDetail = () => {
                 <div>
                   <strong className="font-semibold">Mode de paiement:</strong>{" "}
                   <span className="flex items-center">
-                    {getPaymentTypeIcon(invoice.paymentreference || 'cheque')}
+                    
                     {invoice.paymentreference === 'cash' ? 'espèce ' : 'Chèque/virement'}
                   </span>
                 </div>
