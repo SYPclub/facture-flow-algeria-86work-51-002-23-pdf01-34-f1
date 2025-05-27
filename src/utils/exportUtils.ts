@@ -190,7 +190,7 @@ const addClientInfo = (pdf: jsPDF, client: Client | undefined, invoiceDetails: a
   
   const details = [
     `Tel: ${client?.phone || 'N/A'} \n  Email: ${client?.email || 'N/A'}`,
-    `Méthode de paiment: ${invoiceDetails.payment_type === 'cash' ? 'Cash' : 'Cheque/virment'}`,
+    // `Méthode de paiment: ${invoiceDetails.payment_type === 'cash' ? 'Cash' : 'Cheque/virment'}`,
     
   ];
   
