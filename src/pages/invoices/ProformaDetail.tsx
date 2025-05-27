@@ -330,7 +330,6 @@ const ProformaDetail = () => {
       return await mockDataService.updateProformaInvoice(id || '', {
         ...data,
         items: processedItems,
-        totaldiscount,
         subtotal,
         taxTotal,
         stampTax,
