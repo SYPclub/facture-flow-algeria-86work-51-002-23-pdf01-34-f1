@@ -131,7 +131,7 @@ const addHeader = async (pdf: jsPDF, documentType: string, documentNumber: strin
   
  
 
-  drawRoundedRect(pdf, docTypeXX, docTypeYY, docTypeWidth + 10, 14, 2, primaryColor);
+  drawRoundedRect(pdf, docTypeXX, docTypeYY, docTypeWidth + 5, 14, 2, primaryColor);
   pdf.text(docTypeText, docTypeXX + 5, docTypeYY + 7);
   
   pdf.setFont("helvetica");
