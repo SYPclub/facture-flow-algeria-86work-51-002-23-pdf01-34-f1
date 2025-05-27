@@ -204,7 +204,8 @@ const ProformaDetail = () => {
     
     let subtotal = 0;
     let taxTotal = 0;
-    
+    let totalDiscount = 0;
+
     items.forEach(item => {
       if (!item.productId) return;
       
@@ -212,8 +213,10 @@ const ProformaDetail = () => {
       const unitprice = item.unitprice || 0;
       const taxrate = item.taxrate || 0;
       const discount = item.discount || 0;
+
+      totalDiscount +=discount;
       
-      const itemSubtotal = quantity * unitprice * (1 - discount / 100);
+      const itemSubtotal = (quantity * unitprice) - discount;
       const itemTax = itemSubtotal * (taxrate / 100);
       
       subtotal += itemSubtotal;
@@ -223,7 +226,7 @@ const ProformaDetail = () => {
     const stampTax = calculateStampTax(paymentType, subtotal);
     const total = subtotal + taxTotal + stampTax;
     
-    setTotals({ subtotal, taxTotal, stampTax, total });
+    setTotals({ totaldiscount: totalDiscount ,subtotal, taxTotal, stampTax, total });
   };
 
   const addItem = () => {
@@ -300,7 +303,7 @@ const ProformaDetail = () => {
         
         return {
           ...item,
-          discount,
+          tdiscount:discount,
           totalExcl,
           totalTax,
           total
@@ -308,7 +311,7 @@ const ProformaDetail = () => {
       });
 
       // Calculate invoice totals
-      const totaldiscount = processedItems.reduce((sum, item) => sum + item.discount, 0);
+      const totaldiscount = processedItems.reduce((sum, item) => sum + item.tdiscount, 0);
       const subtotal = processedItems.reduce((sum, item) => sum + item.totalExcl, 0);
       const taxTotal = processedItems.reduce((sum, item) => sum + item.totalTax, 0);
       const stampTax = calculateStampTax(data.payment_type, subtotal);
