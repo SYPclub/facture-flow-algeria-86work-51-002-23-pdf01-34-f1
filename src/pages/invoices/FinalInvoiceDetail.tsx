@@ -721,6 +721,7 @@ const FinalInvoiceDetail = () => {
                   <span className="flex items-center">
                     
                     {paymentMethods[invoice.paymentreference] || 'inconnu'}
+                    {invoice.paymentreference}
                   </span>
                 </div>
                 <div>
