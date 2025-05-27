@@ -447,6 +447,10 @@ const FinalInvoiceDetail = () => {
                   {invoice.client?.taxid}
                 </div>
                 <div>
+                  <strong className="font-semibold">TIN:</strong>{" "}
+                  {invoice.client?.city}
+                </div>
+                <div>
                   <strong className="font-semibold">NIS:</strong>{" "}
                   {invoice.client?.nis}
                 </div>
@@ -478,10 +482,7 @@ const FinalInvoiceDetail = () => {
                   <strong className="font-semibold">Address:</strong>{" "}
                   {invoice.client?.address}
                 </div>
-                <div>
-                  <strong className="font-semibold">Ville:</strong>{" "}
-                  {invoice.client?.city}, {invoice.client?.country}
-                </div>
+                
                 <div>
                   <strong className="font-semibold">Contact:</strong>{" "}
                   {invoice.client?.phone} | {invoice.client?.email}
@@ -670,6 +671,10 @@ const FinalInvoiceDetail = () => {
                   {invoice.client?.taxid} 
                 </div>
                 <div>
+                  <strong className="font-semibold">TIN:</strong>{" "}
+                  {invoice.client?.city}
+                </div>
+                <div>
                   <strong className="font-semibold">NIS:</strong>{" "}
                   {invoice.client?.nis}
                 </div>
@@ -701,10 +706,7 @@ const FinalInvoiceDetail = () => {
                   <strong className="font-semibold">Address:</strong>{" "}
                   {invoice.client?.address}
                 </div>
-                <div>
-                  <strong className="font-semibold">Ville:</strong>{" "}
-                  {invoice.client?.city}, {invoice.client?.country}
-                </div>
+                
                 <div>
                   <strong className="font-semibold">Contact:</strong>{" "}
                   {invoice.client?.phone} | {invoice.client?.email}

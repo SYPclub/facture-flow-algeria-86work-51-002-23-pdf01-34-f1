@@ -601,6 +601,10 @@ const ProformaDetail = () => {
                       {clients.find(c => c.id === field.value)?.taxid } 
                     </div>
                     <div>
+                      <strong className="font-semibold">TIN:</strong>{" "}
+                      {clients.find(c => c.id === field.value)?.city || ''}
+                    </div>
+                    <div>
                       <strong className="font-semibold">NIS:</strong>{" "}
                       {clients.find(c => c.id === field.value)?.nis}
                     </div>
@@ -632,10 +636,7 @@ const ProformaDetail = () => {
                       <strong className="font-semibold">Adresse:</strong>{" "}
                       {clients.find(c => c.id === field.value)?.address || ''}
                     </div>
-                    <div>
-                      <strong className="font-semibold">Ville:</strong>{" "}
-                      {clients.find(c => c.id === field.value)?.city || ''}, {clients.find(c => c.id === field.value)?.country || ''}
-                    </div>
+                    
                   </div>
                 )}
               </CardContent>
@@ -927,6 +928,10 @@ const ProformaDetail = () => {
                 {proforma.client?.taxid}
               </div>
               <div>
+                <strong className="font-semibold">TIN:</strong>{" "}
+                {proforma.client?.city}
+              </div>
+              <div>
                 <strong className="font-semibold">NIS:</strong>{" "}
                 {proforma.client?.taxid}
               </div>
@@ -958,10 +963,7 @@ const ProformaDetail = () => {
                 <strong className="font-semibold">Adresse:</strong>{" "}
                 {proforma.client?.address}
               </div>
-              <div>
-                <strong className="font-semibold">Ville:</strong>{" "}
-                {proforma.client?.city}, {proforma.client?.country}
-              </div>
+              
               <div>
                 <strong className="font-semibold">Contact:</strong>{" "}
                 {proforma.client?.phone} | {proforma.client?.email}
