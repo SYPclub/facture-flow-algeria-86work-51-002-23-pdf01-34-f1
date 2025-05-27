@@ -30,7 +30,7 @@ function formatCurrencyInFrenchWords(amount: number): string {
 // Helper for formatting currency
 
 const formatCurrency = (amount: number) => {
-  return amount.toLocaleString('fr-DZ', { 
+  return amount.toLocaleString('fr-FR', { 
     style: 'decimal', 
     minimumFractionDigits: 2,
     maximumFractionDigits: 2
