@@ -160,7 +160,7 @@ const FinalInvoiceDetail = () => {
       notes: invoice?.notes || '',
       issuedate: invoice?.issuedate || null,
       duedate: invoice?.duedate || null,
-      status: invoice?.status || 'Non-payé',
+      status: invoice?.status || 'NonPayé',
       paymentdate: invoice?.paymentDate || '',
       paymentreference: invoice?.paymentReference || '',
       bc: invoice?.bc || '',
@@ -171,7 +171,7 @@ const FinalInvoiceDetail = () => {
       notes: invoice?.notes || '',
       issuedate: invoice?.issuedate || null,
       duedate: invoice?.duedate || null,
-      status: invoice?.status || 'Non-payé',
+      status: invoice?.status || 'NonPayé',
       paymentdate: invoice?.paymentDate || '',
       paymentreference: invoice?.paymentReference || '',
       bc: invoice?.bc || '',
@@ -248,7 +248,7 @@ const FinalInvoiceDetail = () => {
   });
 
   // Handle status update
-  const handleUpdateStatus = (status: 'Non-payé' | 'payé' | 'partially_paid' | 'annulé' | 'credited', additionalData = {}) => {
+  const handleUpdateStatus = (status: 'NonPayé' | 'payé' | 'partially_paid' | 'annulé' | 'credited', additionalData = {}) => {
     if (!id || !invoice) return;
     
     let updateData = { status, ...additionalData };
@@ -262,8 +262,8 @@ const FinalInvoiceDetail = () => {
       };
     }
     
-    // If reverting to Non-payé, handle payment data
-    if (status === 'Non-payé') {
+    // If reverting to NonPayé, handle payment data
+    if (status === 'NonPayé') {
       // Don't reset amount_paid if there are actual payments, just status
       const totalPaid = payments.reduce((sum, payment) => sum + (payment.amount || 0), 0);
       if (totalPaid > 0) {
@@ -387,7 +387,7 @@ const FinalInvoiceDetail = () => {
 
   // Status styling
   const statusColor = {
-    Non-payé: "bg-amber-500",
+    NonPayé: "bg-amber-500",
     payé: "bg-green-500",
     partially_paid: "bg-blue-500",
     annulé: "bg-red-500",
@@ -405,7 +405,7 @@ const FinalInvoiceDetail = () => {
   } else if (amountPaid > 0) {
     computedStatus = 'partially_paid';
   } else if (invoice.status !== 'annulé' && invoice.status !== 'credited') {
-    computedStatus = 'Non-payé';
+    computedStatus = 'NonPayé';
   }
 
   return (
@@ -555,7 +555,7 @@ const FinalInvoiceDetail = () => {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          <SelectItem value="Non-payé">Non payé</SelectItem>
+                          <SelectItem value="NonPayé">Non payé</SelectItem>
                           <SelectItem value="partially_paid">Partiellement Payé</SelectItem>
                           <SelectItem value="payé">Payé</SelectItem>
                           <SelectItem value="annulé">Annulé</SelectItem>
@@ -926,7 +926,7 @@ const FinalInvoiceDetail = () => {
                 </Button>
               )}
               
-              {computedStatus === 'Non-payé' && canEdit && (
+              {computedStatus === 'NonPayé' && canEdit && (
                 <AlertDialog>
                   <AlertDialogTrigger asChild>
                     
@@ -987,7 +987,7 @@ const FinalInvoiceDetail = () => {
                 </Dialog>
               )}
 
-              {computedStatus === 'Non-payé' && canEdit && (
+              {computedStatus === 'NonPayé' && canEdit && (
                 <AlertDialog>
                   <AlertDialogTrigger asChild>
                     <Button variant="outline" className="bg-red-50 hover:bg-red-100">
@@ -1016,7 +1016,7 @@ const FinalInvoiceDetail = () => {
                 </AlertDialog>
               )}
 
-              {canEdit && computedStatus === 'Non-payé' && (
+              {canEdit && computedStatus === 'NonPayé' && (
                 <AlertDialog>
                   <AlertDialogTrigger asChild>
                     <Button variant="destructive">
@@ -1064,7 +1064,7 @@ const FinalInvoiceDetail = () => {
                     <AlertDialogFooter>
                       <AlertDialogCancel>Annuler</AlertDialogCancel>
                       <AlertDialogAction
-                        onClick={() => handleUpdateStatus('Non-payé')}
+                        onClick={() => handleUpdateStatus('NonPayé')}
                       >
                         Confirmer
                       </AlertDialogAction>

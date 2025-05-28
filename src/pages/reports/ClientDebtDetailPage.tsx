@@ -18,7 +18,7 @@ import {
 import { Badge } from '@/components/ui/badge';
 
 const statusColors = {
-  Non-payé: 'bg-red-100 text-red-800',
+  NonPayé: 'bg-red-100 text-red-800',
   partially_paid: 'bg-amber-100 text-amber-800',
   payé: 'bg-green-100 text-green-800',
   annulé: 'bg-gray-100 text-gray-800',
@@ -65,7 +65,7 @@ const ClientDebtDetailPage = () => {
           totalPaid,
           totalDebt,
           invoiceCount: invoicesData.length,
-          Non-payéCount: invoicesData.filter(inv => (inv.client_debt || 0) > 0).length
+          NonPayéCount: invoicesData.filter(inv => (inv.client_debt || 0) > 0).length
         }
       };
     },
@@ -194,7 +194,7 @@ const ClientDebtDetailPage = () => {
                         {(invoice.client_debt || 0).toLocaleString('fr-DZ', { style: 'currency', currency: 'DZD' })}
                       </TableCell>
                       <TableCell>
-                        <Badge className={statusColors[invoice.status as keyof typeof statusColors] || statusColors.Non-payé}>
+                        <Badge className={statusColors[invoice.status as keyof typeof statusColors] || statusColors.NonPayé}>
                           {invoice.status.replace('_', ' ')}
                         </Badge>
                       </TableCell>

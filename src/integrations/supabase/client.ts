@@ -522,7 +522,7 @@ export const addInvoicePayment = async (invoiceId: string, paymentData: any) => 
     } else if (newAmountPaid > 0 && newAmountPaid < invoice.total) {
       newStatus = 'partially_paid';
     } else if (newAmountPaid <= 0) {
-      newStatus = 'Non-payé';
+      newStatus = 'NonPayé';
     }
     
     // Update the invoice with the new amounts and status
@@ -620,7 +620,7 @@ export const deleteInvoicePayment = async (paymentId: string, invoiceId: string)
     const newClientDebt = invoice.total - newAmountPaid;
     
     // Determine the new status
-    let newStatus = 'Non-payé';
+    let newStatus = 'NonPayé';
     if (newAmountPaid >= invoice.total) {
       newStatus = 'payé';
     } else if (newAmountPaid > 0) {

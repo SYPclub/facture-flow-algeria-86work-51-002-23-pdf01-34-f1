@@ -79,7 +79,7 @@ const FinalInvoicesPage = () => {
     switch (status) {
       case 'payé':
         return 'default';
-      case 'Non-payé':
+      case 'NonPayé':
         return 'secondary';
       case 'annulé':
         return 'destructive';
@@ -102,9 +102,9 @@ const FinalInvoicesPage = () => {
   // Check if a delivery note can be created for this invoice
   const canCreateDeliveryNote = (invoiceId: string) => {
     // This would normally check if a delivery note already exists for this invoice
-    // For demo purposes we're just returning true for all Non-payé/payé invoices
+    // For demo purposes we're just returning true for all NonPayé/payé invoices
     const invoice = finalInvoices.find(i => i.id === invoiceId);
-    return invoice && ['Non-payé', 'payé'].includes(invoice.status);
+    return invoice && ['NonPayé', 'payé'].includes(invoice.status);
   };
 
   // Check if document is owned by current user
@@ -156,7 +156,7 @@ const FinalInvoicesPage = () => {
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuItem onClick={() => setStatusFilter(null)}>Tous</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setStatusFilter('Non-payé')}>Non payé</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setStatusFilter('NonPayé')}>Non payé</DropdownMenuItem>
                 <DropdownMenuItem onClick={() => setStatusFilter('payé')}>Payé</DropdownMenuItem>
                 <DropdownMenuItem onClick={() => setStatusFilter('annulé')}>Annulé</DropdownMenuItem>
                 <DropdownMenuItem onClick={() => setStatusFilter('credited')}>Crédité</DropdownMenuItem>

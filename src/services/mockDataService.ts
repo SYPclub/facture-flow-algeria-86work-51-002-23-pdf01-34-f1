@@ -669,7 +669,7 @@ class MockDataService {
             subtotal: proforma.subtotal,
             taxtotal: proforma.taxTotal,
             total: proforma.total,
-            status: 'Non-payé'
+            status: 'NonPayé'
           })
           .select()
           .single();
@@ -815,7 +815,7 @@ class MockDataService {
         subtotal: invoice.subtotal,
         taxTotal: invoice.taxtotal,
         total: invoice.total,
-        status: invoice.status as 'Non-payé' | 'payé' | 'annulé' | 'credited',
+        status: invoice.status as 'NonPayé' | 'payé' | 'annulé' | 'credited',
         proformaId: invoice.proformaid,
         paymentDate: invoice.paymentdate,
         paymentReference: invoice.paymentreference,
@@ -929,7 +929,7 @@ class MockDataService {
       subtotal: invoice.subtotal,
       taxTotal: invoice.taxtotal,
       total: invoice.total,
-      status: invoice.status as 'Non-payé' | 'payé' | 'annulé' | 'credited',
+      status: invoice.status as 'NonPayé' | 'payé' | 'annulé' | 'credited',
       proformaId: invoice.proformaid,
       paymentDate: invoice.paymentdate,
       paymentReference: invoice.paymentreference,

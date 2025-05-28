@@ -869,7 +869,7 @@ function getStatusColor(status: string): string {
     case 'approved':
     case 'livrée':
       return "#22C55E"; // Green
-    case 'Non-payé':
+    case 'NonPayé':
     case 'sent':
     case 'en-attente-de-livraison':
       return "#3B82F6"; // Blue
