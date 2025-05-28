@@ -559,7 +559,7 @@ const FinalInvoiceDetail = () => {
                           <SelectItem value="partially_paid">Partiellement Payé</SelectItem>
                           <SelectItem value="paid">Payé</SelectItem>
                           <SelectItem value="cancelled">Annulé</SelectItem>
-                          <SelectItem value="credited">Crédité</SelectItem>
+                          <SelectItem value="credited">Archiver</SelectItem>
                         </SelectContent>
                       </Select>
                       <FormMessage />
