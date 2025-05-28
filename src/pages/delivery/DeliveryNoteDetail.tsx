@@ -1,5 +1,6 @@
 
 import React, { useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import {
@@ -80,7 +81,7 @@ const deliveryNoteFormSchema = z.object({
   deliverydate: z.string().optional().nullable(),
   items: z.array(
     z.object({
-      id: z.string(),
+      id: z.string().uuid('Invalid item ID format'),
       productId: z.string().min(1, 'Product is required'),
       quantity: z.coerce.number().min(1, 'Quantity must be at least 1'),
       product: z.object({
@@ -269,7 +270,7 @@ const DeliveryNoteDetail = () => {
     form.setValue('items', [
       ...currentItems,
       {
-        id: Math.random().toString(36).substring(2, 15),
+        id: uuidv4(), 
         productId: '',
         quantity: 1,
         unitprice: 0,
@@ -541,7 +542,7 @@ const DeliveryNoteDetail = () => {
                         </tr>
                       </thead>
                       <tbody>
-                        {form.getValues('items')?.map((item, index) => (
+                        {form.watch('items')?.map((item, index) => (
                           <tr key={item.id || index} className="border-b">
                             <td className="px-4 py-2">
                               <Select
@@ -571,7 +572,7 @@ const DeliveryNoteDetail = () => {
                                 min="1"
                                 value={item.quantity}
                                 onChange={(e) => {
-                                  const items = [...form.getValues('items')];
+                                  const items = [...form.watch('items')];
                                   items[index].quantity = parseInt(e.target.value) || 1;
                                   form.setValue('items', items);
                                 }}
