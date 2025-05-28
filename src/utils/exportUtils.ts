@@ -876,7 +876,7 @@ function getStatusColor(status: string): string {
     case 'cancelled':
     case 'rejected':
       return "#EF4444"; // Red
-    case 'Archiver':
+    case 'credited':
     case 'draft':
     default:
       return "#94A3B8"; // Gray

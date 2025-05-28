@@ -22,7 +22,7 @@ const statusColors = {
   partially_paid: 'bg-amber-100 text-amber-800',
   paid: 'bg-green-100 text-green-800',
   cancelled: 'bg-gray-100 text-gray-800',
-  Archiver: 'bg-blue-100 text-blue-800',
+  credited: 'bg-blue-100 text-blue-800',
 };
 
 const ClientDebtDetailPage = () => {
