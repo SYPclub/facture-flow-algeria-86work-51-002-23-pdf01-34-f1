@@ -865,15 +865,15 @@ export const exportEtat104ToExcel = (
 // Helper function for status colors
 function getStatusColor(status: string): string {
   switch (status) {
-    case 'paid':
+    case 'payé':
     case 'approved':
-    case 'delivered':
+    case 'livrée':
       return "#22C55E"; // Green
-    case 'unpaid':
+    case 'Non-payé':
     case 'sent':
-    case 'pending':
+    case 'en-attente-de-livraison':
       return "#3B82F6"; // Blue
-    case 'cancelled':
+    case 'annulé':
     case 'rejected':
       return "#EF4444"; // Red
     case 'credited':

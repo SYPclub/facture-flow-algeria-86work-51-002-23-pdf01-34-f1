@@ -80,11 +80,11 @@ const DeliveryNotesPage = () => {
   // Get status badge variant
   const getStatusBadgeVariant = (status: string) => {
     switch (status) {
-      case 'delivered':
+      case 'livrée':
         return 'default';
-      case 'pending':
+      case 'en-attente-de-livraison':
         return 'secondary';
-      case 'cancelled':
+      case 'annulé':
         return 'destructive';
       default:
         return 'outline';
@@ -142,9 +142,9 @@ const DeliveryNotesPage = () => {
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuItem onClick={() => setStatusFilter(null)}>Tous</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setStatusFilter('pending')}>En attente</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setStatusFilter('delivered')}>Livré</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setStatusFilter('cancelled')}>Annulé</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setStatusFilter('en-attente-de-livraison')}>En attente</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setStatusFilter('livrée')}>Livré</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setStatusFilter('annulé')}>Annulé</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>

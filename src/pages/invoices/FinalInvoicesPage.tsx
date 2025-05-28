@@ -77,11 +77,11 @@ const FinalInvoicesPage = () => {
   // Get status badge variant
   const getStatusBadgeVariant = (status: string) => {
     switch (status) {
-      case 'paid':
+      case 'payé':
         return 'default';
-      case 'unpaid':
+      case 'Non-payé':
         return 'secondary';
-      case 'cancelled':
+      case 'annulé':
         return 'destructive';
       case 'credited':
         return 'outline';
@@ -102,9 +102,9 @@ const FinalInvoicesPage = () => {
   // Check if a delivery note can be created for this invoice
   const canCreateDeliveryNote = (invoiceId: string) => {
     // This would normally check if a delivery note already exists for this invoice
-    // For demo purposes we're just returning true for all unpaid/paid invoices
+    // For demo purposes we're just returning true for all Non-payé/payé invoices
     const invoice = finalInvoices.find(i => i.id === invoiceId);
-    return invoice && ['unpaid', 'paid'].includes(invoice.status);
+    return invoice && ['Non-payé', 'payé'].includes(invoice.status);
   };
 
   // Check if document is owned by current user
@@ -156,9 +156,9 @@ const FinalInvoicesPage = () => {
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuItem onClick={() => setStatusFilter(null)}>Tous</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setStatusFilter('unpaid')}>Non payé</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setStatusFilter('paid')}>Payé</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setStatusFilter('cancelled')}>Annulé</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setStatusFilter('Non-payé')}>Non payé</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setStatusFilter('payé')}>Payé</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setStatusFilter('annulé')}>Annulé</DropdownMenuItem>
                 <DropdownMenuItem onClick={() => setStatusFilter('credited')}>Crédité</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

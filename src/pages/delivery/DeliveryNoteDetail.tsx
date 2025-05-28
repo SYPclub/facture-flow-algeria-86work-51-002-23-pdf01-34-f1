@@ -198,7 +198,7 @@ const DeliveryNoteDetail = () => {
     mutationFn: () => {
       if (!id) throw new Error('No delivery note ID provided');
       return updateDeliveryNote(id, { 
-        status: 'delivered', 
+        status: 'livrée', 
         deliverydate: new Date().toISOString().split('T')[0] 
       });
     },
@@ -206,11 +206,11 @@ const DeliveryNoteDetail = () => {
       queryClient.invalidateQueries({ queryKey: ['deliveryNotes'] });
       toast({
         title: 'Status Updated',
-        description: 'Delivery note has been marked as delivered'
+        description: 'Delivery note has been marked as livrée'
       });
     },
     onError: (error) => {
-      console.error('Error marking as delivered:', error);
+      console.error('Error marking as livrée:', error);
       toast({
         variant: 'destructive',
         title: 'Update Failed',
@@ -254,11 +254,11 @@ const DeliveryNoteDetail = () => {
   const getStatusBadgeVariant = (status?: string) => {
     if (!status) return 'outline';
     switch (status) {
-      case 'delivered':
+      case 'livrée':
         return 'default';
-      case 'pending':
+      case 'en-attente-de-livraison':
         return 'secondary';
-      case 'cancelled':
+      case 'annulé':
         return 'destructive';
       default:
         return 'outline';
@@ -679,7 +679,7 @@ const DeliveryNoteDetail = () => {
                     <div className="grid grid-cols-2">
                       <span className="text-sm text-muted-foreground">Date de livraison:</span>
                        
-                      <span>{deliveryNote.deliverydate || 'Not delivered yet'}</span>
+                      <span>{deliveryNote.deliverydate || 'Not livrée yet'}</span>
                     </div>
                     <div className="grid grid-cols-2">
                       <span className="text-sm text-muted-foreground">Statut:</span>
@@ -787,7 +787,7 @@ const DeliveryNoteDetail = () => {
               </Button>
               
               
-              {canEdit && deliveryNote.status === 'pending' && (
+              {canEdit && deliveryNote.status === 'en-attente-de-livraison' && (
                 <Button asChild variant="outline">
                   <Link to={`/delivery-notes/edit/${deliveryNote.id}`}>
                     <Edit className="mr-2 h-4 w-4" />
@@ -796,7 +796,7 @@ const DeliveryNoteDetail = () => {
                 </Button>
               )}
               
-              {canEdit && deliveryNote.status === 'pending' && (
+              {canEdit && deliveryNote.status === 'en-attente-de-livraison' && (
                 <AlertDialog>
                   <AlertDialogTrigger asChild>
                     <Button variant="destructive">
@@ -824,7 +824,7 @@ const DeliveryNoteDetail = () => {
                 </AlertDialog>
               )}
               
-              {deliveryNote.status === 'pending' && (
+              {deliveryNote.status === 'en-attente-de-livraison' && (
                 <AlertDialog>
                   <AlertDialogTrigger asChild>
                     <Button>

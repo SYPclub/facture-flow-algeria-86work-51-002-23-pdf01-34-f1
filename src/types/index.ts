@@ -86,7 +86,7 @@ export interface InvoicePayment {
 }
 
 export interface FinalInvoice extends BaseInvoice {
-  status: 'unpaid' | 'paid' | 'partially_paid' | 'cancelled' | 'credited';
+  status: 'Non-payé' | 'payé' | 'partially_paid' | 'annulé' | 'credited';
   proformaId?: string; // Reference to the source proforma invoice
   payment_date?: string;
   paymentreference?: string;
@@ -109,7 +109,7 @@ export interface DeliveryNote {
   deliverydate?: string;
   items: InvoiceItem[];
   notes: string;
-  status: 'pending' | 'delivered' | 'cancelled';
+  status: 'en-attente-de-livraison' | 'livrée' | 'annulé';
   createdAt: string;
   updatedAt: string;
   drivername: string | null;
