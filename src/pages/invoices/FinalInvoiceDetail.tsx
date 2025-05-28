@@ -248,7 +248,7 @@ const FinalInvoiceDetail = () => {
   });
 
   // Handle status update
-  const handleUpdateStatus = (status: 'unpaid' | 'paid' | 'partially_paid' | 'cancelled' | 'credited', additionalData = {}) => {
+  const handleUpdateStatus = (status: 'unpaid' | 'paid' | 'partially_paid' | 'cancelled' | 'Archiver', additionalData = {}) => {
     if (!id || !invoice) return;
     
     let updateData = { status, ...additionalData };
@@ -391,7 +391,7 @@ const FinalInvoiceDetail = () => {
     paid: "bg-green-500",
     partially_paid: "bg-blue-500",
     cancelled: "bg-red-500",
-    credited: "bg-purple-500",
+    Archiver: "bg-purple-500",
   };
 
   // Calculate invoice status based on payments
@@ -404,7 +404,7 @@ const FinalInvoiceDetail = () => {
     computedStatus = 'paid';
   } else if (amountPaid > 0) {
     computedStatus = 'partially_paid';
-  } else if (invoice.status !== 'cancelled' && invoice.status !== 'credited') {
+  } else if (invoice.status !== 'cancelled' && invoice.status !== 'Archiver') {
     computedStatus = 'unpaid';
   }
 
@@ -559,7 +559,7 @@ const FinalInvoiceDetail = () => {
                           <SelectItem value="partially_paid">Partiellement Payé</SelectItem>
                           <SelectItem value="paid">Payé</SelectItem>
                           <SelectItem value="cancelled">Annulé</SelectItem>
-                          <SelectItem value="credited">Archiver</SelectItem>
+                          <SelectItem value="Archiver">Archiver</SelectItem>
                         </SelectContent>
                       </Select>
                       <FormMessage />
@@ -917,7 +917,7 @@ const FinalInvoiceDetail = () => {
               <CardDescription>Gérer cette facture</CardDescription>
             </CardHeader>
             <CardContent className="flex flex-wrap gap-3">
-              {canEdit && invoice.status !== 'credited' && (
+              {canEdit && invoice.status !== 'Archiver' && (
                 <Button asChild variant="outline">
                   <Link to={`/invoices/final/edit/${invoice.id}`}>
                     <Edit className="mr-2 h-4 w-4" />
@@ -962,7 +962,7 @@ const FinalInvoiceDetail = () => {
                 </AlertDialog>
               )}
 
-              {computedStatus !== 'cancelled' && computedStatus !== 'credited' && canEdit && clientDebt > 0 && (
+              {computedStatus !== 'cancelled' && computedStatus !== 'Archiver' && canEdit && clientDebt > 0 && (
                 <Dialog>
                   <DialogTrigger asChild>
                     <Button variant="outline" className="bg-blue-50 hover:bg-blue-100">

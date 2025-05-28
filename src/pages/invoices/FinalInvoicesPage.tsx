@@ -83,7 +83,7 @@ const FinalInvoicesPage = () => {
         return 'secondary';
       case 'cancelled':
         return 'destructive';
-      case 'credited':
+      case 'Archiver':
         return 'outline';
       default:
         return 'outline';
@@ -159,7 +159,7 @@ const FinalInvoicesPage = () => {
                 <DropdownMenuItem onClick={() => setStatusFilter('unpaid')}>Non payé</DropdownMenuItem>
                 <DropdownMenuItem onClick={() => setStatusFilter('paid')}>Payé</DropdownMenuItem>
                 <DropdownMenuItem onClick={() => setStatusFilter('cancelled')}>Annulé</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setStatusFilter('credited')}>Crédité</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setStatusFilter('Archiver')}>Crédité</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>

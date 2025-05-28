@@ -86,7 +86,7 @@ export interface InvoicePayment {
 }
 
 export interface FinalInvoice extends BaseInvoice {
-  status: 'unpaid' | 'paid' | 'partially_paid' | 'cancelled' | 'credited';
+  status: 'unpaid' | 'paid' | 'partially_paid' | 'cancelled' | 'Archiver';
   proformaId?: string; // Reference to the source proforma invoice
   payment_date?: string;
   paymentreference?: string;
