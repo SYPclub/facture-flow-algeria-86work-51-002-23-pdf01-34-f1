@@ -929,10 +929,7 @@ const FinalInvoiceDetail = () => {
               {computedStatus === 'unpaid' && canEdit && (
                 <AlertDialog>
                   <AlertDialogTrigger asChild>
-                    <Button variant="default" className="bg-green-600 hover:bg-green-700">
-                      <Check className="mr-2 h-4 w-4" />
-                      Marquer comme payé
-                    </Button>
+                    
                   </AlertDialogTrigger>
                   <AlertDialogContent>
                     <AlertDialogHeader>
@@ -1080,13 +1077,7 @@ const FinalInvoiceDetail = () => {
                 <Printer className="mr-2 h-4 w-4" />
                 Imprimer / Télécharger
               </Button>
-              <Button 
-                variant="outline" 
-                onClick={() => navigate(`/print/v3/final/${id}`)}
-              >
-                <Printer className="mr-2 h-4 w-4" />
-                Print V3
-              </Button>
+              
             </CardContent>
           </Card>
         </>

@@ -1204,12 +1204,12 @@ const ProformaDetail = () => {
                   <AlertDialogTrigger asChild>
                     <Button variant="outline" className="bg-yellow-50 hover:bg-yellow-100">
                       <Undo className="mr-2 h-4 w-4 text-yellow-600" />
-                      Annuler l'approbation
+                      Annuler la validation d'Admin
                     </Button>
                   </AlertDialogTrigger>
                   <AlertDialogContent>
                     <AlertDialogHeader>
-                      <AlertDialogTitle>Annuler l'approbation</AlertDialogTitle>
+                      <AlertDialogTitle>Annuler la validation d'Admin</AlertDialogTitle>
                       <AlertDialogDescription>
                         Le statut redeviendra alors "envoyé".
                         Êtes-vous sûr de vouloir continuer ?
@@ -1241,12 +1241,12 @@ const ProformaDetail = () => {
                     <AlertDialogTrigger asChild>
                       <Button variant="outline" className="bg-yellow-50 hover:bg-yellow-100">
                         <Undo className="mr-2 h-4 w-4 text-yellow-600" />
-                        Annuler la conversion
+                        Annuler la transformation finale
                       </Button>
                     </AlertDialogTrigger>
                     <AlertDialogContent>
                       <AlertDialogHeader>
-                        <AlertDialogTitle>Annuler la conversion</AlertDialogTitle>
+                        <AlertDialogTitle>Annuler la transformation finale</AlertDialogTitle>
                         <AlertDialogDescription>
                           Cette opération supprimera la facture finale liée et réinitialisera ce formulaire.
                           Etes-vous sûr de vouloir continuer ?
@@ -1270,13 +1270,7 @@ const ProformaDetail = () => {
                 <Printer className="mr-2 h-4 w-4" />
                 Imprimer / Télécharger
               </Button>
-              <Button 
-                variant="outline" 
-                onClick={() => navigate(`/print/v3/proforma/${id}`)}
-              >
-                <Printer className="mr-2 h-4 w-4" />
-                Print V3
-              </Button>
+              
 
               
               {canEdit && proforma.status === 'draft' && (
