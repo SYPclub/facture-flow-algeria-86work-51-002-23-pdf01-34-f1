@@ -597,7 +597,7 @@ const FinalInvoiceDetail = () => {
                       <TableHead className="text-right">Unité</TableHead>
                       <TableHead className="text-right">Prix unitaire</TableHead>
                       <TableHead className="text-right">Tax %</TableHead>
-                      <TableHead className="text-right">Remise %</TableHead>
+                      <TableHead className="text-right">Remise</TableHead>
                       <TableHead className="text-right">Total Excl..</TableHead>
                       <TableHead className="text-right">Montant de l'impôt</TableHead>
                       <TableHead className="text-right">Total inclus.</TableHead>
@@ -616,7 +616,7 @@ const FinalInvoiceDetail = () => {
                         <TableCell className="text-right">{item.unit}</TableCell>
                         <TableCell className="text-right">{formatCurrency(item.unitprice)}</TableCell>
                         <TableCell className="text-right">{item.taxrate}%</TableCell>
-                        <TableCell className="text-right">{item.discount}%</TableCell>
+                        <TableCell className="text-right">{formatCurrency(item.discount)}</TableCell>
                         <TableCell className="text-right">{formatCurrency(item.totalExcl)}</TableCell>
                         <TableCell className="text-right">{formatCurrency(item.totalTax)}</TableCell>
                         <TableCell className="text-right font-medium">{formatCurrency(item.total)}</TableCell>
@@ -794,7 +794,7 @@ const FinalInvoiceDetail = () => {
                     <TableHead className="text-right">unité</TableHead>
                     <TableHead className="text-right">Prix unitaire</TableHead>
                     <TableHead className="text-right">Tax %</TableHead>
-                    <TableHead className="text-right">Remise %</TableHead>
+                    <TableHead className="text-right">Remise</TableHead>
                     <TableHead className="text-right">Total Excl..</TableHead>
                     <TableHead className="text-right">Montant de l'impôt</TableHead>
                     <TableHead className="text-right">Total inclus.</TableHead>
@@ -813,7 +813,7 @@ const FinalInvoiceDetail = () => {
                       <TableCell className="text-right">{item.unit}</TableCell>
                       <TableCell className="text-right">{formatCurrency(item.unitprice)}</TableCell>
                       <TableCell className="text-right">{item.taxrate}%</TableCell>
-                      <TableCell className="text-right">{item.discount}%</TableCell>
+                      <TableCell className="text-right">{formatCurrency(item.discount)}</TableCell>
                       <TableCell className="text-right">{formatCurrency(item.totalExcl)}</TableCell>
                       <TableCell className="text-right">{formatCurrency(item.totalTax)}</TableCell>
                       <TableCell className="text-right font-medium">{formatCurrency(item.total)}</TableCell>
