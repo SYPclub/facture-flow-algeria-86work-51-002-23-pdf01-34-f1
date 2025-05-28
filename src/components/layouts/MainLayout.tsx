@@ -189,12 +189,7 @@ const MainLayout = () => {
               href="/admin/company-info"
               allowedRoles={[UserRole.ADMIN]}
             />
-            <SidebarItem 
-              icon={FileCode} 
-              title="PDF Templates" 
-              href="/admin/pdf-templates"
-              allowedRoles={[UserRole.ADMIN]}
-            />
+            
           </SidebarItem>
         </nav>
 
