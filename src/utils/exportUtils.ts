@@ -393,7 +393,7 @@ export const exportProformaInvoiceToPDF = async (proforma: ProformaInvoice) => {
     item.unit ? item.unit.toString() : '-',
     formatCurrency(item.unitprice),
     `${item.taxrate}%`,
-    `${item.discount}%`,
+    formatCurrency(item.discount),
     formatCurrency(item.totalExcl),
     formatCurrency(item.totalTax),
     formatCurrency(item.total)
@@ -414,7 +414,7 @@ export const exportProformaInvoiceToPDF = async (proforma: ProformaInvoice) => {
 
     const tableY = addStylizedTable(
       pdf,
-      ['No', 'Produit', 'Qty', 'Unité', 'Prix unitaire', 'TVA %', 'remise %', 'Hors taxe', 'TVA', 'Total'],
+      ['No', 'Produit', 'Qty', 'Unité', 'Prix unitaire', 'TVA %', 'remise ', 'Hors taxe', 'TVA', 'Total'],
       chunk,
       currentY + 3
     );
@@ -462,7 +462,7 @@ export const exportFinalInvoiceToPDF = async (invoice: FinalInvoice) => {
     item.quantity.toString(),
     item.unit ? item.unit.toString() : '-',
     formatCurrency(item.unitprice),
-    `${item.taxrate}%`,
+    formatCurrency(item.discount),
     formatCurrency(item.totalExcl),
     formatCurrency(item.totalTax),
     formatCurrency(item.total)
@@ -486,7 +486,7 @@ export const exportFinalInvoiceToPDF = async (invoice: FinalInvoice) => {
 
     const tableY = addStylizedTable(
       pdf,
-      ['No', 'Produit', 'Qty', 'Unité', 'Prix unitaire', 'TVA %', 'Hors taxe', 'TVA', 'Total'],
+      ['No', 'Produit', 'Qty', 'Unité', 'Prix unitaire', 'Remise', 'Hors taxe', 'TVA', 'Total'],
       chunk,
       currentY + 3
     );
