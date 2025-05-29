@@ -570,7 +570,7 @@ export const exportDeliveryNoteToPDF = async (deliveryNote: DeliveryNote) => {
       pdf,
       ['No', 'Produit', 'Quantity', 'Unité', 'Description'],
       chunk,
-      currentY + 10
+      currentY + 4
     );
 
     lastTableY = tableY;
