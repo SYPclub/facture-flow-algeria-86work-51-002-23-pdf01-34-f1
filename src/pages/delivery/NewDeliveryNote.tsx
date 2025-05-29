@@ -213,7 +213,7 @@ const NewDeliveryNote = () => {
         notes: data.notes || '',
         status: 'en-attente-de-livraison',
         // Ensure all transportation fields are properly included
-        drivername: data.drivername.trim() || 'Unknown Driver',
+        drivername: data.drivername.trim() || '-',
         truck_id: data.truck_id || null, 
         delivery_company: data.delivery_company || null,
         driverlisence: data.driverlisence || null,

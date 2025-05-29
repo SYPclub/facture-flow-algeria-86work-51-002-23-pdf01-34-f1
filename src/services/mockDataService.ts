@@ -1338,7 +1338,7 @@ class MockDataService {
             deliverydate: deliveryNote.deliverydate,
             notes: deliveryNote.notes || '',
             status: deliveryNote.status || 'en-attente-de-livraison',
-            drivername: deliveryNote.drivername || 'Unknown Driver',
+            drivername: deliveryNote.drivername || null,
             truck_id: deliveryNote.truck_id || null,
             delivery_company: deliveryNote.delivery_company || null,
             drivertel: deliveryNote.drivertel || null,
