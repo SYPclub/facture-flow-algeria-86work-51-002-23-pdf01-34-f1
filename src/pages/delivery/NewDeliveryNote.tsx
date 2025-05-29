@@ -123,7 +123,7 @@ const NewDeliveryNote = () => {
       finalInvoiceId: '',
       issuedate: getCurrentDate(),
       notes: '',
-      drivername: 'Unknown Driver', // Initialize with a default value
+      drivername: '', // Initialize with a default value
       truck_id: '',
       delivery_company: '',
       driverlisence: '',
@@ -142,7 +142,7 @@ const NewDeliveryNote = () => {
     if (invoice) {
       form.setValue('clientid', invoice.clientid);
       form.setValue('finalInvoiceId', invoice.id);
-      form.setValue('notes', `Delivery for invoice ${invoice.number}`);
+      form.setValue('notes', `BL Facture ${invoice.number}`);
       
       if (invoice.items && invoice.items.length > 0) {
         const items = invoice.items.map(item => ({
