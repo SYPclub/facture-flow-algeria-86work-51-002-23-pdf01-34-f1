@@ -752,7 +752,7 @@ const DeliveryNoteDetail = () => {
                       <Building className="mr-2 h-4 w-4" />
                       Société de livraison:
                     </span>
-                    <span>{deliveryNote.delivery_company || 'Not specified'}</span>
+                    <span>{deliveryNote.delivery_company || '-'}</span>
                   </div>
 
                   <div className="grid grid-cols-2">
@@ -768,14 +768,14 @@ const DeliveryNoteDetail = () => {
                       <Building className="mr-2 h-4 w-4" />
                       N° permi:
                     </span>
-                    <span>{deliveryNote.driverlisence || 'Not specified'}</span>
+                    <span>{deliveryNote.driverlisence || '-'}</span>
                   </div>
                   <div className="grid grid-cols-2">
                     <span className="text-sm text-muted-foreground flex items-center">
                       <Building className="mr-2 h-4 w-4" />
                       N° tel:
                     </span>
-                    <span>{deliveryNote.drivertel || 'Not specified'}</span>
+                    <span>{deliveryNote.drivertel || '-'}</span>
                   </div>
                   
                   <div className="grid grid-cols-2">
