@@ -432,7 +432,7 @@ const NewProformaInvoice = () => {
                           </FormControl>
                           <FormLabel className="flex items-center">
                             <CreditCard className="mr-2 h-4 w-4" />
-                            Cheque
+                            Cheque/virment
                           </FormLabel>
                         </FormItem>
                         <FormItem className="flex items-center space-x-2 space-y-0">
@@ -441,7 +441,7 @@ const NewProformaInvoice = () => {
                           </FormControl>
                           <FormLabel className="flex items-center">
                             <Banknote className="mr-2 h-4 w-4" />
-                            Cash
+                            Espece
                           </FormLabel>
                         </FormItem>
                       </RadioGroup>

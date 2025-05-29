@@ -193,11 +193,12 @@ const addClientInfo = (pdf: jsPDF, client: Client | undefined, invoiceDetails: a
   pdf.text(clientInfo, 20, startY + 13);
   
   // Right side: Invoice details
+  /*
   pdf.setTextColor(darkBlue);
   pdf.setFontSize(11);
   pdf.setFont("helvetica", "bold");
   pdf.text("Information de la facture:", 115, startY + 7);
-  
+  */
   // Create array of invoice details
   pdf.setTextColor(darkGray);
   pdf.setFont("helvetica", "normal");
