@@ -437,7 +437,7 @@ const FinalInvoiceDetail = () => {
               <CardHeader>
                 <CardTitle>Client Information</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-2">
+              <CardContent className="p-6 pt-0 grid gap-4 sm:grid-cols-3">
                 <div>
                   <strong className="font-semibold">Nom:</strong>{" "}
                   {invoice.client?.name}
@@ -494,7 +494,7 @@ const FinalInvoiceDetail = () => {
               <CardHeader>
                 <CardTitle>Détails de la facture</CardTitle>
               </CardHeader>
-              <CardContent className="grid gap-4 sm:grid-cols-5">
+              <CardContent className="grid gap-4 sm:grid-cols-3">
                 <div>
                   <strong className="font-semibold">Numéro de la facture:</strong>{" "}
                   {invoice.number}
@@ -730,7 +730,7 @@ const FinalInvoiceDetail = () => {
               <CardHeader>
                 <CardTitle>Détails de la facture</CardTitle>
               </CardHeader>
-              <CardContent className="grid gap-4 sm:grid-cols-5">
+              <CardContent className="grid gap-4 sm:grid-cols-3">
                 <div>
                   <strong className="font-semibold">Numéro de la facture:</strong>{" "}
                   {invoice.number}
