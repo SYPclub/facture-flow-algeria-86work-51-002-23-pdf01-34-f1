@@ -494,7 +494,7 @@ const FinalInvoiceDetail = () => {
               <CardHeader>
                 <CardTitle>Détails de la facture</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-2">
+              <CardContent className="grid gap-4 sm:grid-cols-5">
                 <div>
                   <strong className="font-semibold">Numéro de la facture:</strong>{" "}
                   {invoice.number}
@@ -512,7 +512,19 @@ const FinalInvoiceDetail = () => {
                     </FormItem>
                   )}
                 />
-                
+                <FormField
+                  control={form.control}
+                  name="bc"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Bon de Commande:</FormLabel>
+                      <FormControl>
+                        <Input type="BC .." {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
                 
                 <FormField
                   control={form.control}
@@ -718,7 +730,7 @@ const FinalInvoiceDetail = () => {
               <CardHeader>
                 <CardTitle>Détails de la facture</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-2">
+              <CardContent className="grid gap-4 sm:grid-cols-5">
                 <div>
                   <strong className="font-semibold">Numéro de la facture:</strong>{" "}
                   {invoice.number}
