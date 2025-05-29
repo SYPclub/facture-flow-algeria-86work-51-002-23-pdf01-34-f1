@@ -368,6 +368,8 @@ export const updateDeliveryNote = async (id: string, data: any) => {
       deliveryNoteData.drivername = deliveryNoteData.drivername || 'Unknown Driver';
       deliveryNoteData.truck_id = deliveryNoteData.truck_id || null;
       deliveryNoteData.delivery_company = deliveryNoteData.delivery_company || null;
+      deliveryNoteData.driverlisence = deliveryNoteData.driverlisence || null;
+      deliveryNoteData.drivertel = deliveryNoteData.drivertel || null;
       
       console.log('Updating delivery note with data:', deliveryNoteData);
       

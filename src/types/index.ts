@@ -115,6 +115,8 @@ export interface DeliveryNote {
   drivername: string | null;
   truck_id?: string | null;
   delivery_company?: string | null;
+  driverlisence?: string | null;
+  drivertel?: string | null;
   created_by_userid: string; // Required field for user who created the document
 }
 

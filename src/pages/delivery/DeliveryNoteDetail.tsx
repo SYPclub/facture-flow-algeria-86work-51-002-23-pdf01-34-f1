@@ -77,6 +77,8 @@ const deliveryNoteFormSchema = z.object({
   drivername: z.string().optional(),
   truck_id: z.string().optional(),
   delivery_company: z.string().optional(),
+  driverlisence: z.string().optional(),
+  drivertel: z.string().optional(),
   issuedate: z.string(),
   deliverydate: z.string().optional().nullable(),
   items: z.array(
@@ -137,6 +139,8 @@ const DeliveryNoteDetail = () => {
       drivername: '',
       truck_id: '',
       delivery_company: '',
+      driverlisence: '',
+      drivertel: '',
       issuedate: '',
       deliverydate: null,
       items: []
@@ -152,6 +156,8 @@ const DeliveryNoteDetail = () => {
         drivername: deliveryNote.drivername || '',
         truck_id: deliveryNote.truck_id || null,
         delivery_company: deliveryNote.delivery_company || '',
+        driverlisence: deliveryNote.driverlisence || '',
+        drivertel: deliveryNote.drivertel || '',
         issuedate: deliveryNote.issuedate || '',
         deliverydate: deliveryNote.deliverydate || null,
         items: deliveryNote.items || []
@@ -168,6 +174,8 @@ const DeliveryNoteDetail = () => {
         drivername,
         truck_id,
         delivery_company,
+        drivertel,
+        driverlisence,
         issuedate,
         deliverydate, // Now correctly handled in updateDeliveryNote
         items // This will be handled separately in the updateDeliveryNote function
@@ -478,10 +486,50 @@ const DeliveryNoteDetail = () => {
                   <div className="space-y-4">
                     <FormField
                       control={form.control}
+                      name="delivery_company"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Société de livraison (facultatif)</FormLabel>
+                          <FormControl>
+                            <Input {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
                       name="drivername"
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>Nom du conducteur</FormLabel>
+                          <FormControl>
+                            <Input {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="driverlisence"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>N° permi </FormLabel>
+                          <FormControl>
+                            <Input {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="drivertel"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>N° tel chaufeur</FormLabel>
                           <FormControl>
                             <Input {...field} />
                           </FormControl>
@@ -504,19 +552,7 @@ const DeliveryNoteDetail = () => {
                       )}
                     />
                     
-                    <FormField
-                      control={form.control}
-                      name="delivery_company"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Société de livraison (facultatif)</FormLabel>
-                          <FormControl>
-                            <Input {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+                    
                   </div>
                 </CardContent>
               </Card>
@@ -713,11 +749,33 @@ const DeliveryNoteDetail = () => {
                 <div className="space-y-2">
                   <div className="grid grid-cols-2">
                     <span className="text-sm text-muted-foreground flex items-center">
+                      <Building className="mr-2 h-4 w-4" />
+                      Société de livraison:
+                    </span>
+                    <span>{deliveryNote.delivery_company || 'Not specified'}</span>
+                  </div>
+
+                  <div className="grid grid-cols-2">
+                    <span className="text-sm text-muted-foreground flex items-center">
                       <User className="mr-2 h-4 w-4" />
                       Conducteur:
                     </span>
-                    <span> d :{deliveryNote.drivername?.trim() ? deliveryNote.drivername : 'Non spécifié'}</span>
+                    <span> {deliveryNote.drivername?.trim() ? deliveryNote.drivername : 'Non spécifié'}</span>
 
+                  </div>
+                  <div className="grid grid-cols-2">
+                    <span className="text-sm text-muted-foreground flex items-center">
+                      <Building className="mr-2 h-4 w-4" />
+                      N° permi:
+                    </span>
+                    <span>{deliveryNote.driverlisence || 'Not specified'}</span>
+                  </div>
+                  <div className="grid grid-cols-2">
+                    <span className="text-sm text-muted-foreground flex items-center">
+                      <Building className="mr-2 h-4 w-4" />
+                      N° tel:
+                    </span>
+                    <span>{deliveryNote.drivertel || 'Not specified'}</span>
                   </div>
                   
                   <div className="grid grid-cols-2">
@@ -728,13 +786,7 @@ const DeliveryNoteDetail = () => {
                     <span>{deliveryNote.truck_id || 'Non spécifié'}</span>
                   </div>
                   
-                  <div className="grid grid-cols-2">
-                    <span className="text-sm text-muted-foreground flex items-center">
-                      <Building className="mr-2 h-4 w-4" />
-                      Société de livraison:
-                    </span>
-                    <span>{deliveryNote.delivery_company || 'Not specified'}</span>
-                  </div>
+                  
                 </div>
               </CardContent>
             </Card>

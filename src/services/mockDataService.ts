@@ -1078,6 +1078,8 @@ class MockDataService {
         drivername: note.drivername,
         truck_id: note.truck_id,
         delivery_company: note.delivery_company,
+        drivertel: note.drivertel,
+        driverlisence: note.driverlisence,
         items,
         notes: note.notes || '',
         status: note.status as 'en-attente-de-livraison' | 'livrée' | 'annulé',
@@ -1197,6 +1199,8 @@ class MockDataService {
       drivername: note.drivername,
       truck_id: note.truck_id,
       delivery_company: note.delivery_company,
+      drivertel: note.drivertel,
+      driverlisence: note.driverlisence,
       items,
       notes: note.notes || '',
       status: note.status as 'en-attente-de-livraison' | 'livrée' | 'annulé',
@@ -1303,6 +1307,8 @@ class MockDataService {
         drivername: note.drivername,
         truck_id: note.truck_id,
         delivery_company: note.delivery_company,
+        drivertel: note.drivertel,
+        driverlisence: note.driverlisence,
         items,
         notes: note.notes || '',
         status: note.status as 'en-attente-de-livraison' | 'livrée' | 'annulé',
@@ -1334,7 +1340,9 @@ class MockDataService {
             status: deliveryNote.status || 'en-attente-de-livraison',
             drivername: deliveryNote.drivername || 'Unknown Driver',
             truck_id: deliveryNote.truck_id || null,
-            delivery_company: deliveryNote.delivery_company || null
+            delivery_company: deliveryNote.delivery_company || null,
+            drivertel: deliveryNote.drivertel || null,
+            driverlisence: deliveryNote.driverlisence || null
           })
           .select()
           .single();

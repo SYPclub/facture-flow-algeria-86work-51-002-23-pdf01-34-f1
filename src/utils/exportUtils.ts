@@ -582,10 +582,12 @@ export const exportDeliveryNoteToPDF = async (deliveryNote: DeliveryNote) => {
       pdf.setFont("helvetica", "normal");
       pdf.setFontSize(pdfFontSize);
 
-      const labels = ["Entreprise de transport","Chauffeur", "Matricule" ];
+      const labels = ["Entreprise de transport","Chauffeur","N° permi","N° tel", "Matricule" ];
       const values = [
         deliveryNote.delivery_company || "-",
         deliveryNote.drivername || "-",
+        deliveryNote.driverlisence || "-",
+        deliveryNote.drivertel || "-",
         deliveryNote.truck_id || "-",
         
       ];
