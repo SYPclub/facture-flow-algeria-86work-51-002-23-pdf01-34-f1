@@ -673,7 +673,7 @@ const FinalInvoiceDetail = () => {
               <CardHeader>
                 <CardTitle>Informations sur le client</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-2">
+              <CardContent className="grid gap-4 sm:grid-cols-3">
                 <div>
                   <strong className="font-semibold">Nom:</strong>{" "}
                   {invoice.client?.name}

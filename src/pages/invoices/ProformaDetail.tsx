@@ -918,7 +918,7 @@ const ProformaDetail = () => {
             <CardHeader>
               <CardTitle>Informations sur le client</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-2">
+            <CardContent className="grid gap-4 sm:grid-cols-3">
               <div>
                 <strong className="font-semibold">Nom:</strong>{" "}
                 {proforma.client?.name}
