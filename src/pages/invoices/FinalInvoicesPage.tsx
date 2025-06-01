@@ -207,53 +207,56 @@ const FinalInvoicesPage = () => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {filteredInvoices.map((invoice) => (
-                    <TableRow key={invoice.id} className={isOwnedByCurrentUser(invoice) ? "bg-muted/20" : ""}>
-                      <TableCell className="font-mono font-medium">
-                        {invoice.number}
-                      </TableCell>
-                      <TableCell>
-                        {invoice.client?.name || 'Unknown Client'}
-                      </TableCell>
-                      <TableCell className="hidden md:table-cell">
-                        {invoice.issuedate}
-                      </TableCell>
-                      <TableCell>
-                        <Badge variant={getStatusBadgeVariant(invoice.status)}>
-                          {invoice.status.charAt(0).toUpperCase() + invoice.status.slice(1)}
-                        </Badge>
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex items-center gap-1 text-xs">
-                          <span className={isOwnedByCurrentUser(invoice) ? "font-medium" : ""}>
-                            {getCreatorEmailDisplay(invoice)}
-                          </span>
-                        </div>
-                      </TableCell>
-                      <TableCell className="text-right">
-                        {formatCurrency(invoice.total)}
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex justify-end space-x-2">
-                          <Link 
-                            to={`/invoices/final/${invoice.id}`}
-                            className="rounded-md px-2 py-1 text-sm font-medium text-primary hover:underline"
-                          >
-                            View
-                          </Link>
-                          {canCreateDeliveryNote(invoice.id) && checkPermission([UserRole.ADMIN, UserRole.ACCOUNTANT, UserRole.SALESPERSON]) && (
+                  {[...filteredInvoices]
+                    .sort((a, b) => new Date(b.issuedate).getTime() - new Date(a.issuedate).getTime())
+
+                    .map((invoice) => (
+                      <TableRow key={invoice.id} className={isOwnedByCurrentUser(invoice) ? "bg-muted/20" : ""}>
+                        <TableCell className="font-mono font-medium">
+                          {invoice.number}
+                        </TableCell>
+                        <TableCell>
+                          {invoice.client?.name || 'Unknown Client'}
+                        </TableCell>
+                        <TableCell className="hidden md:table-cell">
+                          {invoice.issuedate}
+                        </TableCell>
+                        <TableCell>
+                          <Badge variant={getStatusBadgeVariant(invoice.status)}>
+                            {invoice.status.charAt(0).toUpperCase() + invoice.status.slice(1)}
+                          </Badge>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-1 text-xs">
+                            <span className={isOwnedByCurrentUser(invoice) ? "font-medium" : ""}>
+                              {getCreatorEmailDisplay(invoice)}
+                            </span>
+                          </div>
+                        </TableCell>
+                        <TableCell className="text-right">
+                          {formatCurrency(invoice.total)}
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex justify-end space-x-2">
                             <Link 
-                              to={`/delivery-notes/new?invoiceId=${invoice.id}`}
-                              className="flex items-center rounded-md px-2 py-1 text-sm font-medium text-primary hover:underline"
+                              to={`/invoices/final/${invoice.id}`}
+                              className="rounded-md px-2 py-1 text-sm font-medium text-primary hover:underline"
                             >
-                              <Truck className="mr-1 h-3 w-3" />
-                              Delivery
+                              View
                             </Link>
-                          )}
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  ))}
+                            {canCreateDeliveryNote(invoice.id) && checkPermission([UserRole.ADMIN, UserRole.ACCOUNTANT, UserRole.SALESPERSON]) && (
+                              <Link 
+                                to={`/delivery-notes/new?invoiceId=${invoice.id}`}
+                                className="flex items-center rounded-md px-2 py-1 text-sm font-medium text-primary hover:underline"
+                              >
+                                <Truck className="mr-1 h-3 w-3" />
+                                Delivery
+                              </Link>
+                            )}
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    ))}
                 </TableBody>
               </Table>
             </div>
