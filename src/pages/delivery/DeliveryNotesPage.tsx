@@ -201,7 +201,7 @@ const DeliveryNotesPage = () => {
                 </TableHeader>
                 <TableBody>
                   {[...filteredDeliveryNotes]
-                    .sort((a, b) => new Date(a.issuedate).getTime() - new Date(b.issuedate).getTime())
+                    .sort((a, b) => new Date(b.issuedate).getTime() - new Date(a.issuedate).getTime())
                     .map((note) => (
                       <TableRow key={note.id} className={isOwnedByCurrentUser(note) ? "bg-muted/20" : ""}>
                         <TableCell className="font-mono font-medium">
