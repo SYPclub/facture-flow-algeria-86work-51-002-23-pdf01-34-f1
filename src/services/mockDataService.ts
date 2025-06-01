@@ -1082,7 +1082,7 @@ class MockDataService {
         driverlisence: note.driverlisence,
         items,
         notes: note.notes || '',
-        status: note.status as 'en-attente-de-livraison' | 'livrée' | 'annulé',
+        status: note.status as 'en_attente_de_livraison' | 'livrée' | 'annulé',
         createdAt: note.createdat || new Date().toISOString(),
         updatedAt: note.updatedat || new Date().toISOString()
       });
@@ -1203,7 +1203,7 @@ class MockDataService {
       driverlisence: note.driverlisence,
       items,
       notes: note.notes || '',
-      status: note.status as 'en-attente-de-livraison' | 'livrée' | 'annulé',
+      status: note.status as 'en_attente_de_livraison' | 'livrée' | 'annulé',
       createdAt: note.createdat || new Date().toISOString(),
       updatedAt: note.updatedat || new Date().toISOString()
     };
@@ -1311,7 +1311,7 @@ class MockDataService {
         driverlisence: note.driverlisence,
         items,
         notes: note.notes || '',
-        status: note.status as 'en-attente-de-livraison' | 'livrée' | 'annulé',
+        status: note.status as 'en_attente_de_livraison' | 'livrée' | 'annulé',
         createdAt: note.createdat || new Date().toISOString(),
         updatedAt: note.updatedat || new Date().toISOString()
       });
@@ -1337,7 +1337,7 @@ class MockDataService {
             issuedate: deliveryNote.issuedate,
             deliverydate: deliveryNote.deliverydate,
             notes: deliveryNote.notes || '',
-            status: deliveryNote.status || 'en-attente-de-livraison',
+            status: deliveryNote.status || 'en_attente_de_livraison',
             drivername: deliveryNote.drivername || null,
             truck_id: deliveryNote.truck_id || null,
             delivery_company: deliveryNote.delivery_company || null,

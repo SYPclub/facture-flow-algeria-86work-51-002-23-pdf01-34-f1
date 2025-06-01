@@ -264,7 +264,7 @@ const DeliveryNoteDetail = () => {
     switch (status) {
       case 'livrée':
         return 'default';
-      case 'en-attente-de-livraison':
+      case 'en_attente_de_livraison':
         return 'secondary';
       case 'annulé':
         return 'destructive';
@@ -839,7 +839,7 @@ const DeliveryNoteDetail = () => {
               </Button>
               
               
-              {canEdit && deliveryNote.status === 'en-attente-de-livraison' && (
+              {canEdit && deliveryNote.status === 'en_attente_de_livraison' && (
                 <Button asChild variant="outline">
                   <Link to={`/delivery-notes/edit/${deliveryNote.id}`}>
                     <Edit className="mr-2 h-4 w-4" />
@@ -848,7 +848,7 @@ const DeliveryNoteDetail = () => {
                 </Button>
               )}
               
-              {canEdit && deliveryNote.status === 'en-attente-de-livraison' && (
+              {canEdit && deliveryNote.status === 'en_attente_de_livraison' && (
                 <AlertDialog>
                   <AlertDialogTrigger asChild>
                     <Button variant="destructive">
@@ -876,7 +876,7 @@ const DeliveryNoteDetail = () => {
                 </AlertDialog>
               )}
               
-              {deliveryNote.status === 'en-attente-de-livraison' && (
+              {deliveryNote.status === 'en_attente_de_livraison' && (
                 <AlertDialog>
                   <AlertDialogTrigger asChild>
                     <Button>

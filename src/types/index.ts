@@ -109,7 +109,7 @@ export interface DeliveryNote {
   deliverydate?: string;
   items: InvoiceItem[];
   notes: string;
-  status: 'en-attente-de-livraison' | 'livrée' | 'annulé';
+  status: 'en_attente_de_livraison' | 'livrée' | 'annulé';
   createdAt: string;
   updatedAt: string;
   drivername: string | null;

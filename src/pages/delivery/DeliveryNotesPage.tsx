@@ -82,7 +82,7 @@ const DeliveryNotesPage = () => {
     switch (status) {
       case 'livrée':
         return 'default';
-      case 'en-attente-de-livraison':
+      case 'en_attente_de_livraison':
         return 'secondary';
       case 'annulé':
         return 'destructive';
@@ -142,7 +142,7 @@ const DeliveryNotesPage = () => {
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuItem onClick={() => setStatusFilter(null)}>Tous</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setStatusFilter('en-attente-de-livraison')}>En attente</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setStatusFilter('en_attente_de_livraison')}>En attente</DropdownMenuItem>
                 <DropdownMenuItem onClick={() => setStatusFilter('livrée')}>Livré</DropdownMenuItem>
                 <DropdownMenuItem onClick={() => setStatusFilter('annulé')}>Annulé</DropdownMenuItem>
               </DropdownMenuContent>

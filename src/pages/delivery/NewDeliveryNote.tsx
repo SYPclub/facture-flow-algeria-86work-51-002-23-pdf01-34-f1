@@ -211,7 +211,7 @@ const NewDeliveryNote = () => {
         issuedate: data.issuedate || getCurrentDate(),
         deliverydate: null, // Default to null
         notes: data.notes || '',
-        status: 'en-attente-de-livraison',
+        status: 'en_attente_de_livraison',
         // Ensure all transportation fields are properly included
         drivername: data.drivername.trim() || '-',
         truck_id: data.truck_id || null, 
