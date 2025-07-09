@@ -13,7 +13,7 @@ export interface Client {
   createdAt: string;
   updatedAt: string;
   // New fields
-  rc:string | null;
+  rc: string | null;
   nis: string | null;
   ai: string | null;
   rib: string | null;
@@ -88,8 +88,8 @@ export interface InvoicePayment {
 export interface FinalInvoice extends BaseInvoice {
   status: 'NonPayé' | 'payé' | 'partially_paid' | 'annulé' | 'credited';
   proformaId?: string; // Reference to the source proforma invoice
-  payment_date?: string;
-  paymentreference?: string;
+  paymentDate?: string;
+  paymentReference?: string;
   bc?: string;
   payment_type?: string;
   stamp_tax?: string;

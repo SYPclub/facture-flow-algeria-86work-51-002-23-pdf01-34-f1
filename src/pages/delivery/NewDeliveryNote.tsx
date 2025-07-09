@@ -453,9 +453,8 @@ const NewDeliveryNote = () => {
                   name="truck_id"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="flex items-center">
-                        <Truck className="mr-2 h-4 w-4" />
-                        ID du camion
+                      <FormLabel >
+                        matricule du camion
                       </FormLabel>
                       <FormControl>
                         <Input placeholder="Saisir le numéro d'identification du camion ou la plaque d'immatriculation" {...field} />

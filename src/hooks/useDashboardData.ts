@@ -90,7 +90,14 @@ export const useDashboardData = () => {
             country: invoice.clients.country,
             city: invoice.clients.city,
             createdAt: invoice.clients.createdat,
-            updatedAt: invoice.clients.updatedat
+            updatedAt: invoice.clients.updatedat,
+            rc: null,
+            nis: null,
+            ai: null,
+            rib: null,
+            ccp: null,
+            contact: null,
+            telcontact: null
           } : undefined,
           issuedate: invoice.issuedate,
           duedate: invoice.duedate,
@@ -103,7 +110,8 @@ export const useDashboardData = () => {
           finalInvoiceId: invoice.finalinvoiceid,
           payment_type: invoice.payment_type,
           stamp_tax: invoice.stamp_tax,
-          bc:invoice.bc,
+          bc: invoice.bc,
+          created_by_userid: invoice.created_by_userid || '',
           createdAt: invoice.createdat,
           updatedAt: invoice.updatedat
         }));
@@ -122,7 +130,14 @@ export const useDashboardData = () => {
             country: invoice.clients.country,
             city: invoice.clients.city,
             createdAt: invoice.clients.createdat,
-            updatedAt: invoice.clients.updatedat
+            updatedAt: invoice.clients.updatedat,
+            rc: null,
+            nis: null,
+            ai: null,
+            rib: null,
+            ccp: null,
+            contact: null,
+            telcontact: null
           } : undefined,
           issuedate: invoice.issuedate,
           duedate: invoice.duedate,
@@ -136,10 +151,13 @@ export const useDashboardData = () => {
           paymentDate: invoice.paymentdate,
           paymentReference: invoice.paymentreference,
           payment_type: invoice.payment_type,
-          stamp_tax: invoice.stamp_tax,
-          bc:invoice.bc,
+          stamp_tax: invoice.stamp_tax?.toString(),
+          bc: invoice.bc,
+          created_by_userid: invoice.created_by_userid || '',
           createdAt: invoice.createdat,
-          updatedAt: invoice.updatedat
+          updatedAt: invoice.updatedat,
+          amount_paid: invoice.amount_paid || 0,
+          client_debt: invoice.client_debt || 0
         }));
         
         setStats({

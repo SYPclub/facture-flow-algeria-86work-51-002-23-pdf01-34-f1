@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { getUserEmailsById } from '@/utils/supabaseHelpers';
 import { getUserEmailById } from '@/utils/supabaseHelpers';
@@ -32,34 +31,36 @@ import { Badge } from '@/components/ui/badge';
 import { mockDataService } from '@/services/mockDataService';
 import { useAuth, UserRole } from '@/contexts/AuthContext';
 import { FileText, ChevronDown, Plus, Search, Truck, User } from 'lucide-react';
+import NewFinalInvoiceButton from '@/components/invoices/NewFinalInvoiceButton';
 
 const FinalInvoicesPage = () => {
   const { checkPermission, user } = useAuth();
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<string | null>(null);
   const [creatorEmails, setCreatorEmails] = useState<Record<string, string>>({});
-  // Fetch final invoices
+
   const { data: finalInvoices = [], isLoading, error } = useQuery({
     queryKey: ['finalInvoices'],
     queryFn: () => mockDataService.getFinalInvoices(),
   });
+
   useEffect(() => {
-      const fetchCreatorEmails = async () => {
-        if (finalInvoices.length === 0) return;
-        
-        // Get unique user IDs from notes
-        const userIds = [...new Set(finalInvoices
-          .filter(invoice => invoice.created_by_userid)
-          .map(invoice => invoice.created_by_userid))];
-        if (userIds.length === 0) return;
-        
-        // Fetch emails for all creators at once
-        const emailsMap = await getUserEmailsById(userIds);
-        setCreatorEmails(emailsMap);
-      };
+    const fetchCreatorEmails = async () => {
+      if (finalInvoices.length === 0) return;
       
-      fetchCreatorEmails();
-    }, [finalInvoices]);
+      // Get unique user IDs from notes
+      const userIds = [...new Set(finalInvoices
+        .filter(invoice => invoice.created_by_userid)
+        .map(invoice => invoice.created_by_userid))];
+      if (userIds.length === 0) return;
+      
+      // Fetch emails for all creators at once
+      const emailsMap = await getUserEmailsById(userIds);
+      setCreatorEmails(emailsMap);
+    };
+    
+    fetchCreatorEmails();
+  }, [finalInvoices]);
 
   // Filter invoices based on search query and status filter
   const filteredInvoices = finalInvoices.filter((invoice) => {
@@ -121,7 +122,6 @@ const FinalInvoicesPage = () => {
     return creatorEmails[userId] || 'Loading...';
   };
 
-
   return (
     <div className="space-y-6">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -131,13 +131,7 @@ const FinalInvoicesPage = () => {
             Gérer vos factures formelles
           </p>
         </div>
-        {checkPermission([UserRole.ADMIN, UserRole.ACCOUNTANT]) && (
-          <Button asChild>
-            <Link to="/invoices/final/new">
-              <Plus className="mr-2 h-4 w-4" /> Nouvelle facture
-            </Link>
-          </Button>
-        )}
+        <NewFinalInvoiceButton />
       </div>
 
       <Card>
@@ -208,8 +202,7 @@ const FinalInvoicesPage = () => {
                 </TableHeader>
                 <TableBody>
                   {[...filteredInvoices]
-                    .sort((a, b) => new Date(b.issuedate).getTime() - new Date(a.issuedate).getTime())
-
+                    .sort((a, b) => new Date(b.createdat) > new Date(a.createdat) ? 1 : -1)
                     .map((invoice) => (
                       <TableRow key={invoice.id} className={isOwnedByCurrentUser(invoice) ? "bg-muted/20" : ""}>
                         <TableCell className="font-mono font-medium">
