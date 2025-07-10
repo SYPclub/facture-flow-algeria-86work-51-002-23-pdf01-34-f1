@@ -485,7 +485,7 @@ export const exportFinalInvoiceToPDF = async (invoice: FinalInvoice) => {
 
     const tableY = addStylizedTable(
       pdf,
-      ['No', 'code' , 'Produit', 'Qty', 'Unité', 'Prix unitaire',  'Prix HT'],
+      ['No', 'code' , 'Produit', 'Qté', 'Unité', 'Prix unitaire',  'Prix HT'],
       chunk,
       currentY + 3
     );
