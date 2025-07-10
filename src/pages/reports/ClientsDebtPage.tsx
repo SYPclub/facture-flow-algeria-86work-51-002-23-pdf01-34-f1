@@ -65,7 +65,7 @@ const ClientsDebtPage = () => {
   return (
     <div className="container mx-auto py-6">
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-3xl font-bold">Rapport sur la dette des clients</h1>
+        <h1 className="text-3xl font-bold">Rapport sur la créance des clients</h1>
       </div>
       
       <Card className="mb-6">
@@ -99,7 +99,7 @@ const ClientsDebtPage = () => {
                   <TableRow>
                     <TableHead>Client</TableHead>
                     <TableHead>NIF</TableHead>
-                    <TableHead>Total de la dette</TableHead>
+                    <TableHead>Total de la créance</TableHead>
                     <TableHead>Factures impayées</TableHead>
                     <TableHead>Actions</TableHead>
                   </TableRow>
@@ -108,7 +108,7 @@ const ClientsDebtPage = () => {
                   {filteredClients?.length === 0 ? (
                     <TableRow>
                       <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
-                        Aucun client n'a été trouvé avec une dette
+                        Aucun client n'a été trouvé avec une créance
                       </TableCell>
                     </TableRow>
                   ) : (

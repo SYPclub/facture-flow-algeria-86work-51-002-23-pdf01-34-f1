@@ -860,7 +860,7 @@ const FinalInvoiceDetail = () => {
                   {formatCurrency(amountPaid)}
                 </div>
                 <div>
-                  <strong className="font-semibold">Dette restante:</strong>{" "}
+                  <strong className="font-semibold">créance:</strong>{" "}
                   <span className={clientDebt <= 0 ? "text-green-600 font-medium" : "text-amber-600 font-medium"}>
                     {formatCurrency(clientDebt > 0 ? clientDebt : 0)}
                   </span>

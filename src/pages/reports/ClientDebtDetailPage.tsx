@@ -105,7 +105,7 @@ const ClientDebtDetailPage = () => {
       <div className="mb-6">
         <Button variant="outline" asChild size="sm">
           <Link to="/reports/clients-debt">
-            <ChevronRight className="h-4 w-4 mr-2 rotate-180" /> Retour à la dette des clients
+            <ChevronRight className="h-4 w-4 mr-2 rotate-180" /> Retour à la créance des clients
           </Link>
         </Button>
       </div>
@@ -142,7 +142,7 @@ const ClientDebtDetailPage = () => {
         
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm text-muted-foreground">Total de la dette</CardTitle>
+            <CardTitle className="text-sm text-muted-foreground">Total de la créance</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-2xl font-bold text-red-600">
@@ -166,7 +166,7 @@ const ClientDebtDetailPage = () => {
                   <TableHead>Date d'échéance</TableHead>
                   <TableHead>Montant</TableHead>
                   <TableHead>Payé</TableHead>
-                  <TableHead>Dette</TableHead>
+                  <TableHead>créance</TableHead>
                   <TableHead>Statut</TableHead>
                   <TableHead>Actions</TableHead>
                 </TableRow>

@@ -156,7 +156,7 @@ const PaymentForm = ({
           </div>
           <div>
             <span className="text-sm text-muted-foreground mr-2">
-              Dette restante:
+              créance :
             </span>
             <span className="font-medium">{formatCurrency(remainingDebt)}</span>
           </div>
@@ -178,7 +178,7 @@ const PaymentForm = ({
               <span className="font-medium text-green-600">{formatCurrency(previewAmountPaid)}</span>
             </div>
             <div>
-              <span className="mr-2">Dette restante:</span>
+              <span className="mr-2">créance:</span>
               <span className={`font-medium ${previewRemainingDebt > 0 ? 'text-amber-600' : 'text-green-600'}`}>
                 {formatCurrency(previewRemainingDebt)}
               </span>
@@ -209,7 +209,7 @@ const PaymentForm = ({
                       field.onChange(Math.round(remainingDebt * 100) / 100);
                       toast({
                         title: "Paiement maximum",
-                        description: "Le paiement ne peut excéder la dette restante",
+                        description: "Le paiement ne peut excéder la créance restante",
                         variant: "default",
                       });
                     }
