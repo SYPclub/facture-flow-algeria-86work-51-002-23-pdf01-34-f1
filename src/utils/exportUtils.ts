@@ -274,7 +274,7 @@ const addTotals = (pdf: jsPDF, invoice: any, startY: number, tdiscount: number) 
   pdf.setTextColor(darkGray);
   pdf.setFontSize(9);
   pdf.text("Remise:", pdf.internal.pageSize.width - 75, startY + 10);
-  pdf.text("sous-total:", pdf.internal.pageSize.width - 75, startY + 17);
+  pdf.text("Prix HT:", pdf.internal.pageSize.width - 75, startY + 17);
   pdf.text("TVA:", pdf.internal.pageSize.width - 75, startY + 24);
   
   let nextY = startY + 30;
@@ -390,15 +390,13 @@ export const exportProformaInvoiceToPDF = async (proforma: ProformaInvoice) => {
   let counter = 0;
   const itemRows = proforma.items.map(item => [
     (++counter).toString(),
-    `${item.product?.name || ''}\n${item.product?.code || ''}`,
+    item.product?.code.toString(),
+    `${item.product?.name || ''}\n${item.product?.description || ''}`,
     item.quantity.toString(),
     item.unit ? item.unit.toString() : '-',
     formatCurrency(item.unitprice),
     `${item.taxrate}%`,
-    formatCurrency(item.discount),
     formatCurrency(item.totalExcl),
-    formatCurrency(item.totalTax),
-    formatCurrency(item.total)
   ]);
   const tdiscount = proforma.items.reduce((acc, item) => acc + (item.discount || 0), 0);
   const itemChunks = chunkArray(itemRows, maxRowsPerPage);
@@ -417,7 +415,7 @@ export const exportProformaInvoiceToPDF = async (proforma: ProformaInvoice) => {
 
     const tableY = addStylizedTable(
       pdf,
-      ['No', 'Produit', 'Qty', 'Unité', 'Prix unitaire', 'TVA %', 'remise ', 'Hors taxe', 'TVA', 'Total'],
+      ['No', 'code' , 'Produit', 'Qté', 'Unité', 'Prix unitaire', 'TVA %',  'Prix HT'],
       chunk,
       currentY + 3
     );
