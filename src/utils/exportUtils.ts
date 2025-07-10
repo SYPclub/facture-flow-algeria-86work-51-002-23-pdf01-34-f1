@@ -281,7 +281,7 @@ const addTotals = (pdf: jsPDF, invoice: any, startY: number, tdiscount: number) 
   
   // Add stamp tax line if applicable invoice.payment_type === 'cash' && invoice.stamp_tax > 0
   if (true) {
-    pdf.text("Tembre:", pdf.internal.pageSize.width - 75, nextY);
+    pdf.text("Droit de timbre:", pdf.internal.pageSize.width - 75, nextY);
     pdf.text(`${formatCurrency(invoice.stamp_tax) || '-'}`, pdf.internal.pageSize.width - 20, nextY, { align: 'right' });
     nextY += 10;
   }
