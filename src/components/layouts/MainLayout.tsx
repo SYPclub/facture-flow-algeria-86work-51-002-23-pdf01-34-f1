@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import { Outlet } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useAuth, UserRole } from '@/contexts/AuthContext';
@@ -12,86 +12,42 @@ import {
   UserCog, 
   Home, 
   LogOut, 
-  Menu, 
-  X,
-  ChevronDown,
-  ChevronRight,
   Building,
-  FileCode
+  ChevronDown,
+  ChevronRight
 } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarHeader,
+  SidebarInset,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
+  SidebarProvider,
+  SidebarTrigger,
+  useSidebar,
+} from '@/components/ui/sidebar';
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from '@/components/ui/collapsible';
 
-interface SidebarItemProps {
-  icon: React.ElementType;
-  title: string;
-  href?: string;
-  children?: React.ReactNode;
-  allowedRoles?: UserRole[];
-}
-
-const SidebarItem = ({ 
-  icon: Icon, 
-  title, 
-  href, 
-  children,
-  allowedRoles 
-}: SidebarItemProps) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const { user, checkPermission } = useAuth();
-  
-  // Check permissions for this menu item
-  if (allowedRoles && !checkPermission(allowedRoles)) {
-    return null;
-  }
-
-  const hasChildren = Boolean(children);
-  
-  if (hasChildren) {
-    return (
-      <div className="mb-1">
-        <button 
-          onClick={() => setIsOpen(!isOpen)}
-          className={cn(
-            "flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-all",
-            "hover:bg-primary/10 hover:text-primary",
-          )}
-        >
-          <Icon className="h-5 w-5" />
-          <span className="flex-1">{title}</span>
-          {isOpen ? (
-            <ChevronDown className="h-4 w-4" />
-          ) : (
-            <ChevronRight className="h-4 w-4" />
-          )}
-        </button>
-        {isOpen && (
-          <div className="ml-4 mt-1 space-y-1 border-l pl-2">{children}</div>
-        )}
-      </div>
-    );
-  }
-
-  return (
-    <Link
-      to={href || "#"}
-      className={cn(
-        "flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-all",
-        "hover:bg-primary/10 hover:text-primary",
-      )}
-    >
-      <Icon className="h-5 w-5" />
-      <span>{title}</span>
-    </Link>
-  );
-};
-
-const MainLayout = () => {
-  const { user, logout } = useAuth();
-  const [sidebarOpen, setSidebarOpen] = useState(true);
-
-  const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
+const AppSidebar = () => {
+  const { user, logout, checkPermission } = useAuth();
+  const location = useLocation();
+  const { state } = useSidebar();
 
   const userInitials = user?.name
     ? user.name
@@ -101,162 +57,214 @@ const MainLayout = () => {
         .toUpperCase()
     : '?';
 
+  const menuItems = [
+    {
+      title: 'Tableau de bord',
+      url: '/',
+      icon: Home,
+      allowedRoles: [UserRole.ADMIN, UserRole.ACCOUNTANT, UserRole.SALESPERSON, UserRole.VIEWER]
+    },
+    {
+      title: 'Factures',
+      icon: FileText,
+      allowedRoles: [UserRole.ADMIN, UserRole.ACCOUNTANT, UserRole.SALESPERSON, UserRole.VIEWER],
+      items: [
+        {
+          title: 'Factures pro forma',
+          url: '/invoices/proforma',
+          allowedRoles: [UserRole.ADMIN, UserRole.ACCOUNTANT, UserRole.SALESPERSON, UserRole.VIEWER]
+        },
+        {
+          title: 'Factures finales',
+          url: '/invoices/final',
+          allowedRoles: [UserRole.ADMIN, UserRole.ACCOUNTANT, UserRole.VIEWER]
+        }
+      ]
+    },
+    {
+      title: 'bon de livraison',
+      url: '/delivery-notes',
+      icon: Truck,
+      allowedRoles: [UserRole.ADMIN, UserRole.ACCOUNTANT, UserRole.SALESPERSON, UserRole.VIEWER]
+    },
+    {
+      title: 'Clients',
+      url: '/clients',
+      icon: Users,
+      allowedRoles: [UserRole.ADMIN, UserRole.ACCOUNTANT, UserRole.SALESPERSON, UserRole.VIEWER]
+    },
+    {
+      title: 'Produits',
+      url: '/products',
+      icon: Package,
+      allowedRoles: [UserRole.ADMIN, UserRole.ACCOUNTANT, UserRole.VIEWER]
+    },
+    {
+      title: 'État 104',
+      url: '/reports/etat104',
+      icon: FileSpreadsheet,
+      allowedRoles: [UserRole.ADMIN, UserRole.ACCOUNTANT, UserRole.VIEWER]
+    },
+    {
+      title: 'dette du client',
+      url: '/reports/clients-debt',
+      icon: FileSpreadsheet,
+      allowedRoles: [UserRole.ADMIN, UserRole.ACCOUNTANT, UserRole.VIEWER]
+    },
+    {
+      title: 'Administrateur',
+      icon: UserCog,
+      allowedRoles: [UserRole.ADMIN],
+      items: [
+        {
+          title: 'Utilisateurs',
+          url: '/admin/users',
+          allowedRoles: [UserRole.ADMIN]
+        },
+        {
+          title: 'Informations sur l\'entreprise',
+          url: '/admin/company-info',
+          allowedRoles: [UserRole.ADMIN]
+        }
+      ]
+    }
+  ];
+
+  const isActive = (url: string) => location.pathname === url;
+
   return (
-    <div className="flex min-h-screen bg-gray-50">
-      {/* Sidebar */}
-      <aside
-        className={cn(
-          "fixed inset-y-0 left-0 z-50 flex w-64 flex-col border-r border-white bg-white transition-all duration-300 ease-in-out lg:relative",
-          sidebarOpen ? "translate-x-0" : "-translate-x-full lg:w-20"
-        )}
-      >
-        <div className={cn("flex h-16 items-center border-b border-white px-4", !sidebarOpen && "justify-center")}>
-          <h2 className={cn("text-xl font-bold text-primary", !sidebarOpen && "hidden")}>FactureFlow</h2>
-          {!sidebarOpen && <FileText className="h-6 w-6 text-primary" />}
+    <Sidebar variant="sidebar" className="border-r">
+      <SidebarHeader>
+        <div className="flex h-16 items-center px-4">
+          <h2 className={cn(
+            "text-xl font-bold text-primary transition-opacity duration-200",
+            state === "collapsed" && "opacity-0"
+          )}>
+            FactureFlow
+          </h2>
+          {state === "collapsed" && (
+            <FileText className="h-6 w-6 text-primary mx-auto" />
+          )}
         </div>
+      </SidebarHeader>
 
-        {/* Sidebar content */}
-        <nav className="flex flex-1 flex-col gap-1 overflow-y-auto p-4">
-          <SidebarItem icon={Home} title="Tableau de bord" href="/" />
-          
-          <SidebarItem 
-            icon={FileText} 
-            title="Factures"
-            allowedRoles={[UserRole.ADMIN, UserRole.ACCOUNTANT, UserRole.SALESPERSON, UserRole.VIEWER]}
-          >
-            <SidebarItem 
-              icon={FileText} 
-              title="Factures pro forma" 
-              href="/invoices/proforma"
-              allowedRoles={[UserRole.ADMIN, UserRole.ACCOUNTANT, UserRole.SALESPERSON, UserRole.VIEWER]}
-            />
-            <SidebarItem 
-              icon={FileText} 
-              title="Factures finales" 
-              href="/invoices/final"
-              allowedRoles={[UserRole.ADMIN, UserRole.ACCOUNTANT, UserRole.VIEWER]}
-            />
-          </SidebarItem>
-          
-          <SidebarItem 
-            icon={Truck} 
-            title="bon de livraison" 
-            href="/delivery-notes"
-            allowedRoles={[UserRole.ADMIN, UserRole.ACCOUNTANT, UserRole.SALESPERSON, UserRole.VIEWER]}
-          />
-          
-          <SidebarItem 
-            icon={Users} 
-            title="Clients" 
-            href="/clients"
-            allowedRoles={[UserRole.ADMIN, UserRole.ACCOUNTANT, UserRole.SALESPERSON, UserRole.VIEWER]}
-          />
-          
-          <SidebarItem 
-            icon={Package} 
-            title="Produits" 
-            href="/products"
-            allowedRoles={[UserRole.ADMIN, UserRole.ACCOUNTANT, UserRole.VIEWER]}
-          />
-          
-          <SidebarItem 
-            icon={FileSpreadsheet} 
-            title="État 104" 
-            href="/reports/etat104"
-            allowedRoles={[UserRole.ADMIN, UserRole.ACCOUNTANT, UserRole.VIEWER]}
-          />
-          <SidebarItem 
-            icon={FileSpreadsheet} 
-            title="dette du client" 
-            href="/reports/clients-debt"
-            allowedRoles={[UserRole.ADMIN, UserRole.ACCOUNTANT, UserRole.VIEWER]}
-          />
-          
-          <SidebarItem 
-            icon={UserCog} 
-            title="Administrateur"
-            allowedRoles={[UserRole.ADMIN]}
-          >
-            <SidebarItem 
-              icon={Users} 
-              title="Utilisateurs" 
-              href="/admin/users"
-              allowedRoles={[UserRole.ADMIN]}
-            />
-            <SidebarItem 
-              icon={Building} 
-              title="Informations sur l'entreprise" 
-              href="/admin/company-info"
-              allowedRoles={[UserRole.ADMIN]}
-            />
-            
-          </SidebarItem>
-        </nav>
+      <SidebarContent>
+        <SidebarGroup>
+          <SidebarMenu>
+            {menuItems.map((item) => {
+              if (!checkPermission(item.allowedRoles)) return null;
 
-        {/* User section */}
-        <div className={cn(
-          "mt-auto border-t p-4",
-          !sidebarOpen && "flex flex-col items-center"
-        )}>
-          <div className={cn("flex items-center justify-between", !sidebarOpen && "flex-col")}>
-            <div className={cn("flex items-center gap-2", !sidebarOpen && "flex-col")}>
+              if (item.items) {
+                const hasActiveChild = item.items.some(child => 
+                  child.url && isActive(child.url)
+                );
+
+                return (
+                  <Collapsible key={item.title} defaultOpen={hasActiveChild}>
+                    <SidebarMenuItem>
+                      <CollapsibleTrigger asChild>
+                        <SidebarMenuButton>
+                          <item.icon className="h-5 w-5" />
+                          <span>{item.title}</span>
+                          <ChevronRight className="ml-auto h-4 w-4 transition-transform group-data-[state=open]:rotate-90" />
+                        </SidebarMenuButton>
+                      </CollapsibleTrigger>
+                      <CollapsibleContent>
+                        <SidebarMenuSub>
+                          {item.items.map((subItem) => {
+                            if (!checkPermission(subItem.allowedRoles)) return null;
+                            
+                            return (
+                              <SidebarMenuSubItem key={subItem.title}>
+                                <SidebarMenuSubButton 
+                                  asChild 
+                                  isActive={subItem.url ? isActive(subItem.url) : false}
+                                >
+                                  <Link to={subItem.url || '#'}>
+                                    <span>{subItem.title}</span>
+                                  </Link>
+                                </SidebarMenuSubButton>
+                              </SidebarMenuSubItem>
+                            );
+                          })}
+                        </SidebarMenuSub>
+                      </CollapsibleContent>
+                    </SidebarMenuItem>
+                  </Collapsible>
+                );
+              }
+
+              return (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton 
+                    asChild 
+                    isActive={item.url ? isActive(item.url) : false}
+                  >
+                    <Link to={item.url || '#'}>
+                      <item.icon className="h-5 w-5" />
+                      <span>{item.title}</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              );
+            })}
+          </SidebarMenu>
+        </SidebarGroup>
+      </SidebarContent>
+
+      <SidebarFooter>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <div className="flex items-center gap-2 px-2 py-1">
               <Avatar className="h-8 w-8">
                 <AvatarFallback className="bg-primary text-white">
                   {userInitials}
                 </AvatarFallback>
               </Avatar>
-              {sidebarOpen && (
-                <div className="overflow-hidden">
+              {state === "expanded" && (
+                <div className="flex-1 overflow-hidden">
                   <p className="truncate text-sm font-medium">{user?.name}</p>
                   <p className="truncate text-xs text-muted-foreground">{user?.email}</p>
                 </div>
               )}
+              <Button
+                variant="ghost"
+                size="icon"
+                className="ml-auto text-muted-foreground hover:text-foreground"
+                onClick={logout}
+              >
+                <LogOut className="h-5 w-5" />
+              </Button>
             </div>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="ml-auto text-muted-foreground hover:text-foreground"
-              onClick={logout}
-            >
-              <LogOut className="h-5 w-5" />
-            </Button>
-          </div>
-        </div>
-      </aside>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
+    </Sidebar>
+  );
+};
 
-      {/* Main content */}
-      <div className="flex flex-1 flex-col">
-        {/* Header */}
-        <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-white bg-white px-4 shadow-sm">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={toggleSidebar}
-            className="mr-2 shrink-0 lg:hidden"
-          >
-            <Menu className="h-5 w-5" />
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={toggleSidebar}
-            className="mr-2 hidden shrink-0 lg:flex"
-          >
-            {sidebarOpen ? <ChevronRight className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
-          </Button>
-          <div className="ml-auto flex items-center gap-4">
-            <span className="text-sm font-medium">
-              {user?.role.charAt(0).toUpperCase() + user?.role.slice(1)}
-            </span>
-          </div>
-        </header>
+const MainLayout = () => {
+  const { user } = useAuth();
 
-        {/* Page content */}
-        <main className="flex-1 overflow-y-auto p-4 lg:p-8">
-          <Outlet />
-        </main>
+  return (
+    <SidebarProvider>
+      <div className="flex min-h-screen w-full">
+        <AppSidebar />
+        <SidebarInset>
+          <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b bg-background px-4 shadow-sm">
+            <SidebarTrigger className="mr-2" />
+            <div className="ml-auto flex items-center gap-4">
+              <span className="text-sm font-medium">
+                {user?.role.charAt(0).toUpperCase() + user?.role.slice(1)}
+              </span>
+            </div>
+          </header>
+          <main className="flex-1 overflow-y-auto p-4 lg:p-8">
+            <Outlet />
+          </main>
+        </SidebarInset>
       </div>
-    </div>
+    </SidebarProvider>
   );
 };
 
