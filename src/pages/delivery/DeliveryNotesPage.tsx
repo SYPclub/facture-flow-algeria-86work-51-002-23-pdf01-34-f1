@@ -94,7 +94,7 @@ const DeliveryNotesPage = () => {
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
   const paginatedDeliveryNotes = filteredDeliveryNotes
-    .sort((a, b) => new Date(b.issuedate).getTime() - new Date(a.issuedate).getTime())
+    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
     .slice(startIndex, endIndex);
 
   // Reset to page 1 when filters change
