@@ -96,7 +96,7 @@ const FinalInvoicesPage = () => {
 
   // Sort invoices
   const sortedInvoices = [...filteredInvoices]
-    .sort((b, b) => new Date(b.createdat) > new Date(a.createdat) ? 1 : -1);
+    .sort((b, a) => new Date(b.createdat) > new Date(a.createdat) ? 1 : -1);
 
   // Calculate pagination
   const totalItems = sortedInvoices.length;
