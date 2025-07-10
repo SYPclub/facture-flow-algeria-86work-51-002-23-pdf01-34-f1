@@ -91,7 +91,7 @@ const ProformaInvoicesPage = () => {
   const endIndex = startIndex + pageSize;
   const paginatedInvoices = filteredInvoices
     .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
-    .slice(startIndex, endIndex);
+    .slice(startIndex, endIndex); 
 
   // Reset to page 1 when filters change
   useEffect(() => {

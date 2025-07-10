@@ -89,7 +89,7 @@ const DeliveryNotesPage = () => {
     return matchesSearch && matchesStatus;
   });
 
-  // Pagination calculations
+  // Pagination calculations 
   const totalPages = Math.ceil(filteredDeliveryNotes.length / pageSize);
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
