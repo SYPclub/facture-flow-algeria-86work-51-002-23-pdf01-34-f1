@@ -1,8 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { getUserEmailsById } from '@/utils/supabaseHelpers';
-import { getUserEmailById } from '@/utils/supabaseHelpers';
-
 import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import {
@@ -47,13 +45,14 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { mockDataService } from '@/services/mockDataService';
 import { useAuth, UserRole } from '@/contexts/AuthContext';
-import { FileText, ChevronDown, Plus, Search, Truck, User } from 'lucide-react';
+import { FileText, ChevronDown, Search, Truck, ArrowUpDown } from 'lucide-react';
 import NewFinalInvoiceButton from '@/components/invoices/NewFinalInvoiceButton';
 
 const FinalInvoicesPage = () => {
   const { checkPermission, user } = useAuth();
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<string | null>(null);
+  const [sortBy, setSortBy] = useState<string>('newest');
   const [creatorEmails, setCreatorEmails] = useState<Record<string, string>>({});
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
@@ -84,19 +83,36 @@ const FinalInvoicesPage = () => {
   // Filter invoices based on search query and status filter
   const filteredInvoices = finalInvoices.filter((invoice) => {
     const query = searchQuery.toLowerCase();
+    const creatorEmail = creatorEmails[invoice.created_by_userid] || '';
+    
     const matchesSearch = 
       invoice.number.toLowerCase().includes(query) ||
       (invoice.client?.name?.toLowerCase().includes(query) || '') ||
-      (invoice.notes?.toLowerCase().includes(query) || '');
+      (invoice.notes?.toLowerCase().includes(query) || '') ||
+      creatorEmail.toLowerCase().includes(query);
       
     const matchesStatus = statusFilter ? invoice.status === statusFilter : true;
     
     return matchesSearch && matchesStatus;
   });
 
-  // Sort invoices
-  const sortedInvoices = [...filteredInvoices]
-    .sort((a, b) => new Date(b.issuedate).getTime() - new Date(a.issuedate).getTime());
+  // Sort invoices based on selected sort option
+  const sortedInvoices = [...filteredInvoices].sort((a, b) => {
+    switch (sortBy) {
+      case 'number':
+        return a.number.localeCompare(b.number);
+      case 'date':
+        return new Date(a.issuedate).getTime() - new Date(b.issuedate).getTime();
+      case 'amount':
+        return a.total - b.total;
+      case 'newest':
+        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+      case 'oldest':
+        return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+      default:
+        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+    }
+  });
 
   // Calculate pagination
   const totalItems = sortedInvoices.length;
@@ -108,7 +124,7 @@ const FinalInvoicesPage = () => {
   // Reset to first page when filters change
   useEffect(() => {
     setCurrentPage(1);
-  }, [searchQuery, statusFilter, pageSize]);
+  }, [searchQuery, statusFilter, sortBy, pageSize]);
   
   // Get status badge variant
   const getStatusBadgeVariant = (status: string) => {
@@ -184,7 +200,24 @@ const FinalInvoicesPage = () => {
             <CardTitle>Liste des factures finales</CardTitle>
             <CardDescription>Factures formelles émises aux clients</CardDescription>
           </div>
-          <div className="mt-4 sm:mt-0">
+          <div className="mt-4 sm:mt-0 flex gap-2">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="sm">
+                  <ArrowUpDown className="mr-2 h-4 w-4" />
+                  Trier par: {sortBy === 'newest' ? 'Plus récent' : 
+                            sortBy === 'oldest' ? 'Plus ancien' :
+                            sortBy === 'number' ? 'Numéro' :
+                            sortBy === 'date' ? 'Date' :
+                            sortBy === 'amount' ? 'Montant' : 'Plus récent'}
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuItem onClick={() => setSortBy('newest')}>Plus récent</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setSortBy('oldest')}>Plus ancien</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setSortBy('amount')}>Montant</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" size="sm">
@@ -207,7 +240,7 @@ const FinalInvoicesPage = () => {
             <div className="flex items-center gap-2 flex-1">
               <Search className="h-4 w-4 text-muted-foreground" />
               <Input
-                placeholder="Recherche de factures..."
+                placeholder="Recherche par numéro, client, notes, créateur..."
                 className="max-w-sm"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
