@@ -459,14 +459,12 @@ export const exportFinalInvoiceToPDF = async (invoice: FinalInvoice) => {
   let counter = 0;
   const itemRows = invoice.items.map(item => [
     (++counter).toString(),
-    `${item.product?.name || ''}\n${item.product?.code || ''}`,
+    item.product?.code.toString(),
+    `${item.product?.name || ''}\n${item.product?.description || ''}`,
     item.quantity.toString(),
     item.unit ? item.unit.toString() : '-',
     formatCurrency(item.unitprice),
-    formatCurrency(item.discount),
-    formatCurrency(item.totalExcl),
-    formatCurrency(item.totalTax),
-    formatCurrency(item.total)
+    formatCurrency(item.totalExcl)
   ]);
   const tdiscount = invoice.items.reduce((acc, item) => acc + (item.discount || 0), 0);
   const itemChunks = chunkArray(itemRows, maxRowsPerPage);
@@ -487,7 +485,7 @@ export const exportFinalInvoiceToPDF = async (invoice: FinalInvoice) => {
 
     const tableY = addStylizedTable(
       pdf,
-      ['No', 'Produit', 'Qty', 'Unité', 'Prix unitaire', 'Remise', 'Hors taxe', 'TVA', 'Total'],
+      ['No', 'code' , 'Produit', 'Qty', 'Unité', 'Prix unitaire',  'Prix HT'],
       chunk,
       currentY + 3
     );
