@@ -27,6 +27,16 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import { Badge } from '@/components/ui/badge';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from '@/components/ui/pagination';
 import { getUserEmailsById } from '@/utils/supabaseHelpers';
 import { mockDataService } from '@/services/mockDataService';
 import { useAuth, UserRole } from '@/contexts/AuthContext';
@@ -37,6 +47,8 @@ const DeliveryNotesPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<string | null>(null);
   const [creatorEmails, setCreatorEmails] = useState<Record<string, string>>({});
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
   
   const canCreate = checkPermission([UserRole.ADMIN, UserRole.ACCOUNTANT, UserRole.SALESPERSON]);
   
@@ -76,6 +88,46 @@ const DeliveryNotesPage = () => {
     
     return matchesSearch && matchesStatus;
   });
+
+  // Pagination calculations
+  const totalPages = Math.ceil(filteredDeliveryNotes.length / pageSize);
+  const startIndex = (currentPage - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+  const paginatedDeliveryNotes = filteredDeliveryNotes
+    .sort((a, b) => new Date(b.issuedate).getTime() - new Date(a.issuedate).getTime())
+    .slice(startIndex, endIndex);
+
+  // Reset to page 1 when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchQuery, statusFilter, pageSize]);
+
+  // Generate page numbers for pagination
+  const getPageNumbers = () => {
+    const delta = 2;
+    const range = [];
+    const rangeWithDots = [];
+
+    for (let i = Math.max(2, currentPage - delta); i <= Math.min(totalPages - 1, currentPage + delta); i++) {
+      range.push(i);
+    }
+
+    if (currentPage - delta > 2) {
+      rangeWithDots.push(1, '...');
+    } else {
+      rangeWithDots.push(1);
+    }
+
+    rangeWithDots.push(...range);
+
+    if (currentPage + delta < totalPages - 1) {
+      rangeWithDots.push('...', totalPages);
+    } else {
+      if (totalPages > 1) rangeWithDots.push(totalPages);
+    }
+
+    return rangeWithDots;
+  };
   
   // Get status badge variant
   const getStatusBadgeVariant = (status: string) => {
@@ -150,14 +202,35 @@ const DeliveryNotesPage = () => {
           </div>
         </CardHeader>
         <CardContent>
-          <div className="mb-4 flex items-center gap-2">
-            <Search className="h-4 w-4 text-muted-foreground" />
-            <Input
-              placeholder="Recherche de bons de livraison..."
-              className="max-w-sm"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
+          <div className="mb-4 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex items-center gap-2">
+              <Search className="h-4 w-4 text-muted-foreground" />
+              <Input
+                placeholder="Recherche de bons de livraison..."
+                className="max-w-sm"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-muted-foreground">Afficher:</span>
+              <Select value={pageSize.toString()} onValueChange={(value) => setPageSize(Number(value))}>
+                <SelectTrigger className="w-20">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="5">5</SelectItem>
+                  <SelectItem value="10">10</SelectItem>
+                  <SelectItem value="30">30</SelectItem>
+                  <SelectItem value="50">50</SelectItem>
+                </SelectContent>
+              </Select>
+              <span className="text-sm text-muted-foreground">entrées</span>
+            </div>
+          </div>
+          
+          <div className="mb-4 text-sm text-muted-foreground">
+            Affichage de {startIndex + 1} à {Math.min(endIndex, filteredDeliveryNotes.length)} sur {filteredDeliveryNotes.length} résultats
           </div>
 
           {isLoading ? (
@@ -200,52 +273,99 @@ const DeliveryNotesPage = () => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {[...filteredDeliveryNotes]
-                    .sort((a, b) => new Date(b.issuedate).getTime() - new Date(a.issuedate).getTime())
-                    .map((note) => (
-                      <TableRow key={note.id} className={isOwnedByCurrentUser(note) ? "bg-muted/20" : ""}>
-                        <TableCell className="font-mono font-medium">
-                          {note.number}
-                        </TableCell>
-                        <TableCell>
-                          {note.client?.name || 'Client inconnu'}
-                        </TableCell>
-                        <TableCell>
-                          <Link 
-                            to={`/invoices/final/${note.finalInvoiceId}`}
-                            className="text-sm text-primary hover:underline"
-                          >
-                            F-{note.finalInvoiceId?.padStart(4, '0')}
-                          </Link>
-                        </TableCell>
-                        <TableCell className="hidden md:table-cell">
-                          {note.issuedate}
-                        </TableCell>
-                        <TableCell>
-                          <Badge variant={getStatusBadgeVariant(note.status)}>
-                            {note.status.charAt(0).toUpperCase() + note.status.slice(1)}
-                          </Badge>
-                        </TableCell>
-                        <TableCell>
-                          <div className="flex items-center gap-1 text-xs">
-                            <span className={isOwnedByCurrentUser(note) ? "font-medium" : ""}>
-                              {getCreatorEmailDisplay(note)}
-                            </span>
-                          </div>
-                        </TableCell>
-                        <TableCell className="text-right">
-                          <Link
-                            to={`/delivery-notes/${note.id}`}
-                            className="rounded-md px-2 py-1 text-sm font-medium text-primary hover:underline"
-                          >
-                            View Details
-                          </Link>
-                        </TableCell>
-                      </TableRow>
-                    ))}
+                  {paginatedDeliveryNotes.map((note) => (
+                    <TableRow key={note.id} className={isOwnedByCurrentUser(note) ? "bg-muted/20" : ""}>
+                      <TableCell className="font-mono font-medium">
+                        {note.number}
+                      </TableCell>
+                      <TableCell>
+                        {note.client?.name || 'Client inconnu'}
+                      </TableCell>
+                      <TableCell>
+                        <Link 
+                          to={`/invoices/final/${note.finalInvoiceId}`}
+                          className="text-sm text-primary hover:underline"
+                        >
+                          F-{note.finalInvoiceId?.padStart(4, '0')}
+                        </Link>
+                      </TableCell>
+                      <TableCell className="hidden md:table-cell">
+                        {note.issuedate}
+                      </TableCell>
+                      <TableCell>
+                        <Badge variant={getStatusBadgeVariant(note.status)}>
+                          {note.status.charAt(0).toUpperCase() + note.status.slice(1)}
+                        </Badge>
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex items-center gap-1 text-xs">
+                          <span className={isOwnedByCurrentUser(note) ? "font-medium" : ""}>
+                            {getCreatorEmailDisplay(note)}
+                          </span>
+                        </div>
+                      </TableCell>
+                      <TableCell className="text-right">
+                        <Link
+                          to={`/delivery-notes/${note.id}`}
+                          className="rounded-md px-2 py-1 text-sm font-medium text-primary hover:underline"
+                        >
+                          View Details
+                        </Link>
+                      </TableCell>
+                    </TableRow>
+                  ))}
                 </TableBody>
 
               </Table>
+            </div>
+          )}
+          
+          {filteredDeliveryNotes.length > 0 && totalPages > 1 && (
+            <div className="mt-4">
+              <Pagination>
+                <PaginationContent>
+                  <PaginationItem>
+                    <PaginationPrevious 
+                      href="#"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        if (currentPage > 1) setCurrentPage(currentPage - 1);
+                      }}
+                      className={currentPage <= 1 ? "pointer-events-none opacity-50" : ""}
+                    />
+                  </PaginationItem>
+                  
+                  {getPageNumbers().map((pageNum, index) => (
+                    <PaginationItem key={index}>
+                      {pageNum === '...' ? (
+                        <PaginationEllipsis />
+                      ) : (
+                        <PaginationLink
+                          href="#"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setCurrentPage(Number(pageNum));
+                          }}
+                          isActive={currentPage === pageNum}
+                        >
+                          {pageNum}
+                        </PaginationLink>
+                      )}
+                    </PaginationItem>
+                  ))}
+                  
+                  <PaginationItem>
+                    <PaginationNext 
+                      href="#"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+                      }}
+                      className={currentPage >= totalPages ? "pointer-events-none opacity-50" : ""}
+                    />
+                  </PaginationItem>
+                </PaginationContent>
+              </Pagination>
             </div>
           )}
         </CardContent>

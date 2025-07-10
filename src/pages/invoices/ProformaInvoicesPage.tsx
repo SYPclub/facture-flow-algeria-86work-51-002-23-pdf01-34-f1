@@ -28,6 +28,16 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import { Badge } from '@/components/ui/badge';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from '@/components/ui/pagination';
 import { mockDataService } from '@/services/mockDataService';
 import { useAuth, UserRole } from '@/contexts/AuthContext';
 import { FileText, ChevronDown, Plus, Search, User } from 'lucide-react';
@@ -37,6 +47,8 @@ const ProformaInvoicesPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<string | null>(null);
   const [creatorEmails, setCreatorEmails] = useState<Record<string, string>>({});
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
   // Fetch proforma invoices
   const { data: proformaInvoices = [], isLoading, error } = useQuery({
     queryKey: ['proformaInvoices'],
@@ -72,6 +84,46 @@ const ProformaInvoicesPage = () => {
     
     return matchesSearch && matchesStatus;
   });
+
+  // Pagination calculations
+  const totalPages = Math.ceil(filteredInvoices.length / pageSize);
+  const startIndex = (currentPage - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+  const paginatedInvoices = filteredInvoices
+    .sort((a, b) => new Date(b.issuedate).getTime() - new Date(a.issuedate).getTime())
+    .slice(startIndex, endIndex);
+
+  // Reset to page 1 when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchQuery, statusFilter, pageSize]);
+
+  // Generate page numbers for pagination
+  const getPageNumbers = () => {
+    const delta = 2;
+    const range = [];
+    const rangeWithDots = [];
+
+    for (let i = Math.max(2, currentPage - delta); i <= Math.min(totalPages - 1, currentPage + delta); i++) {
+      range.push(i);
+    }
+
+    if (currentPage - delta > 2) {
+      rangeWithDots.push(1, '...');
+    } else {
+      rangeWithDots.push(1);
+    }
+
+    rangeWithDots.push(...range);
+
+    if (currentPage + delta < totalPages - 1) {
+      rangeWithDots.push('...', totalPages);
+    } else {
+      if (totalPages > 1) rangeWithDots.push(totalPages);
+    }
+
+    return rangeWithDots;
+  };
   
   // Get status badge variant
   const getStatusBadgeVariant = (status: string) => {
@@ -156,14 +208,35 @@ const ProformaInvoicesPage = () => {
           </div>
         </CardHeader>
         <CardContent>
-          <div className="mb-4 flex items-center gap-2">
-            <Search className="h-4 w-4 text-muted-foreground" />
-            <Input
-              placeholder="Recherche de factures pro forma..."
-              className="max-w-sm"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
+          <div className="mb-4 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex items-center gap-2">
+              <Search className="h-4 w-4 text-muted-foreground" />
+              <Input
+                placeholder="Recherche de factures pro forma..."
+                className="max-w-sm"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-muted-foreground">Afficher:</span>
+              <Select value={pageSize.toString()} onValueChange={(value) => setPageSize(Number(value))}>
+                <SelectTrigger className="w-20">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="5">5</SelectItem>
+                  <SelectItem value="10">10</SelectItem>
+                  <SelectItem value="30">30</SelectItem>
+                  <SelectItem value="50">50</SelectItem>
+                </SelectContent>
+              </Select>
+              <span className="text-sm text-muted-foreground">entrées</span>
+            </div>
+          </div>
+          
+          <div className="mb-4 text-sm text-muted-foreground">
+            Affichage de {startIndex + 1} à {Math.min(endIndex, filteredInvoices.length)} sur {filteredInvoices.length} résultats
           </div>
 
           {isLoading ? (
@@ -198,47 +271,93 @@ const ProformaInvoicesPage = () => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {[...filteredInvoices]
-                    .sort((a, b) => new Date(b.issuedate).getTime() - new Date(a.issuedate).getTime())
-                    .map((invoice) => (
-
-                      <TableRow key={invoice.id} className={isOwnedByCurrentUser(invoice) ? "bg-muted/20" : ""}>
-                        <TableCell className="font-mono font-medium">
-                          {invoice.number}
-                        </TableCell>
-                        <TableCell>
-                          {invoice.client?.name || 'Client inconnu'}
-                        </TableCell>
-                        <TableCell className="hidden md:table-cell">
-                          {invoice.issuedate}
-                        </TableCell>
-                        <TableCell>
-                          <Badge variant={getStatusBadgeVariant(invoice.status)}>
-                            {invoice.status.charAt(0).toUpperCase() + invoice.status.slice(1)}
-                          </Badge>
-                        </TableCell>
-                        <TableCell>
-                          <div className="flex items-center gap-1 text-xs">
-                            <span className={isOwnedByCurrentUser(invoice) ? "font-medium" : ""}>
-                              {getCreatorEmailDisplay(invoice)}
-                            </span>
-                          </div>
-                        </TableCell>
-                        <TableCell className="text-right">
-                          {formatCurrency(invoice.total)}
-                        </TableCell>
-                        <TableCell className="text-right">
-                          <Link
-                            to={`/invoices/proforma/${invoice.id}`}
-                            className="rounded-md px-2 py-1 text-sm font-medium text-primary hover:underline"
-                          >
-                            Voir 
-                          </Link>
-                        </TableCell>
-                      </TableRow>
-                    ))}
+                  {paginatedInvoices.map((invoice) => (
+                    <TableRow key={invoice.id} className={isOwnedByCurrentUser(invoice) ? "bg-muted/20" : ""}>
+                      <TableCell className="font-mono font-medium">
+                        {invoice.number}
+                      </TableCell>
+                      <TableCell>
+                        {invoice.client?.name || 'Client inconnu'}
+                      </TableCell>
+                      <TableCell className="hidden md:table-cell">
+                        {invoice.issuedate}
+                      </TableCell>
+                      <TableCell>
+                        <Badge variant={getStatusBadgeVariant(invoice.status)}>
+                          {invoice.status.charAt(0).toUpperCase() + invoice.status.slice(1)}
+                        </Badge>
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex items-center gap-1 text-xs">
+                          <span className={isOwnedByCurrentUser(invoice) ? "font-medium" : ""}>
+                            {getCreatorEmailDisplay(invoice)}
+                          </span>
+                        </div>
+                      </TableCell>
+                      <TableCell className="text-right">
+                        {formatCurrency(invoice.total)}
+                      </TableCell>
+                      <TableCell className="text-right">
+                        <Link
+                          to={`/invoices/proforma/${invoice.id}`}
+                          className="rounded-md px-2 py-1 text-sm font-medium text-primary hover:underline"
+                        >
+                          Voir 
+                        </Link>
+                      </TableCell>
+                    </TableRow>
+                  ))}
                 </TableBody>
               </Table>
+            </div>
+          )}
+          
+          {filteredInvoices.length > 0 && totalPages > 1 && (
+            <div className="mt-4">
+              <Pagination>
+                <PaginationContent>
+                  <PaginationItem>
+                    <PaginationPrevious 
+                      href="#"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        if (currentPage > 1) setCurrentPage(currentPage - 1);
+                      }}
+                      className={currentPage <= 1 ? "pointer-events-none opacity-50" : ""}
+                    />
+                  </PaginationItem>
+                  
+                  {getPageNumbers().map((pageNum, index) => (
+                    <PaginationItem key={index}>
+                      {pageNum === '...' ? (
+                        <PaginationEllipsis />
+                      ) : (
+                        <PaginationLink
+                          href="#"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setCurrentPage(Number(pageNum));
+                          }}
+                          isActive={currentPage === pageNum}
+                        >
+                          {pageNum}
+                        </PaginationLink>
+                      )}
+                    </PaginationItem>
+                  ))}
+                  
+                  <PaginationItem>
+                    <PaginationNext 
+                      href="#"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+                      }}
+                      className={currentPage >= totalPages ? "pointer-events-none opacity-50" : ""}
+                    />
+                  </PaginationItem>
+                </PaginationContent>
+              </Pagination>
             </div>
           )}
         </CardContent>
