@@ -180,13 +180,13 @@ const NewFinalInvoice = () => {
         if (numberError) {
           console.error('Error generating invoice number:', numberError);
           // Fallback to timestamp-based number if database function fails
-          invoiceNumber = `facture D'avoir : FIN-${Date.now()}`;
+          invoiceNumber = ` FIN-${Date.now()} (facture D'avoir)`;
         } else {
-          invoiceNumber = `facture D'avoir : ${generatedNumber}`;
+          invoiceNumber = ` ${generatedNumber} (facture D'avoir)`;
         }
       } catch (error) {
         console.error('Database function not available, using fallback:', error);
-        invoiceNumber = `facture D'avoir : FIN-${Date.now()}`;
+        invoiceNumber = ` FIN-${Date.now()} (facture D'avoir)`;
       }
 
       const invoiceId = uuidv4();
