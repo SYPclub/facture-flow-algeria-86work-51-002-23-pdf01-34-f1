@@ -32,15 +32,15 @@ import { supabase } from "@/integrations/supabase/client";
 
 const clientSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
-  address: z.string().min(5, 'Address must be at least 5 characters'),
-  taxid: z.string().min(5, 'Tax ID must be at least 5 characters'),
-  phone: z.string().min(8, 'Phone number must be at least 8 characters'),
-  email: z.string().email('Invalid email address'),
+  address: z.string().optional().nullable(),
+  taxid: z.string().optional().nullable(),
+  phone: z.string().optional().nullable(),
+  email: z.string().optional().nullable(),
   country: z.string().min(2, 'Country must be at least 2 characters'),
-  city: z.string().min(2, 'City must be at least 2 characters'),
+  city: z.string().optional().nullable(),
   // New fields - all optional
   nis: z.string().optional().nullable(),
-  rc: z.string().optional().nullable(),
+  rc: z.string().min(8, 'numero de register au moin 8 character'),
   ai: z.string().optional().nullable(),
   rib: z.string().optional().nullable(),
   ccp: z.string().optional().nullable(),
