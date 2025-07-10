@@ -25,6 +25,7 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from '@/components/ui/use-toast';
 import { mockDataService } from '@/services/mockDataService';
+import { supabase } from '@/integrations/supabase/client';
 import { 
   useAuth, 
   UserRole 
@@ -56,6 +57,7 @@ import { getCurrentDate, generateId } from '@/types';
 
 const deliveryNoteSchema = z.object({
   clientid: z.string().min(1, 'Client is required'),
+  deliveryNoteNumber: z.string().optional(),
   finalInvoiceId: z.string().optional(),
   issuedate: z.string().min(1, 'Issue date is required'),
   notes: z.string().optional(),
@@ -91,6 +93,7 @@ const NewDeliveryNote = () => {
   
   // Added state to force re-render when items update
   const [itemsState, setItemsState] = useState<any[]>([]);
+  const [isGeneratingNumber, setIsGeneratingNumber] = useState(false);
   
   const queryParams = new URLSearchParams(location.search);
   const invoiceId = queryParams.get('invoiceId');
@@ -120,6 +123,7 @@ const NewDeliveryNote = () => {
     resolver: zodResolver(deliveryNoteSchema),
     defaultValues: {
       clientid: '',
+      deliveryNoteNumber: '',
       finalInvoiceId: '',
       issuedate: getCurrentDate(),
       notes: '',
@@ -157,16 +161,19 @@ const NewDeliveryNote = () => {
     }
   }, [invoice, form]);
   
-  // Update itemsState when form values change
+  // Generate delivery note number when client changes
   useEffect(() => {
     const subscription = form.watch((value, { name }) => {
+      if (name === 'clientid' && value.clientid) {
+        generateDeliveryNoteNumber(value.clientid);
+      }
       if (name?.includes('items')) {
         setItemsState([...form.getValues('items')]);
       }
     });
     
     return () => subscription.unsubscribe();
-  }, [form]);
+  }, [form, clients]);
 
   const addItem = () => {
     const currentItems = form.getValues('items') || [];
@@ -202,11 +209,50 @@ const NewDeliveryNote = () => {
     setItemsState([...items]);
   };
 
+  const generateDeliveryNoteNumber = async (clientId: string) => {
+    try {
+      setIsGeneratingNumber(true);
+      const client = clients.find(c => c.id === clientId);
+      if (!client?.code) {
+        console.error('Client code not found');
+        return;
+      }
+
+      const { data, error } = await supabase.rpc('generate_delivery_note_number', {
+        p_client_code: client.code
+      });
+
+      if (error) {
+        console.error('Error generating delivery note number:', error);
+        toast({
+          variant: 'destructive',
+          title: 'Error',
+          description: 'Failed to generate delivery note number'
+        });
+        return;
+      }
+
+      if (data) {
+        form.setValue('deliveryNoteNumber', data);
+      }
+    } catch (error) {
+      console.error('Error calling generate_delivery_note_number:', error);
+      toast({
+        variant: 'destructive',
+        title: 'Error',
+        description: 'Failed to generate delivery note number'
+      });
+    } finally {
+      setIsGeneratingNumber(false);
+    }
+  };
+
   const createMutation = useMutation({
     mutationFn: async (data: DeliveryNoteFormValues) => {
       // Always ensure non-empty values for required fields
-      const deliveryNote = {
+        const deliveryNote = {
         clientid: data.clientid,
+        number: data.deliveryNoteNumber || '',
         finalInvoiceId: data.finalInvoiceId || null,
         issuedate: data.issuedate || getCurrentDate(),
         deliverydate: null, // Default to null
@@ -334,6 +380,25 @@ const NewDeliveryNote = () => {
                         ))}
                       </SelectContent>
                     </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="deliveryNoteNumber"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Numéro bon de livraison</FormLabel>
+                    <FormControl>
+                      <Input 
+                        {...field} 
+                        placeholder="Sera généré automatiquement"
+                        disabled={isGeneratingNumber}
+                        readOnly
+                      />
+                    </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}

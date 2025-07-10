@@ -1333,8 +1333,8 @@ class MockDataService {
       await beginTransaction();
       
       try {
-        const { data: numberData, error: numberError } = await supabase.rpc('generate_delivery_note_number');
-        if (numberError) throw numberError;
+        // Use the number provided from the form (already generated)
+        const deliveryNoteNumber = deliveryNote.number || 'BL-' + Date.now();
         
         // Make sure transportation fields are explicitly included and properly formatted
         const { data: createdNote, error: noteError } = await supabase
@@ -1342,7 +1342,7 @@ class MockDataService {
           .insert({
             clientid: deliveryNote.clientid,
             finalinvoiceid: deliveryNote.finalInvoiceId,
-            number: numberData || deliveryNote.number,
+            number: deliveryNoteNumber,
             issuedate: deliveryNote.issuedate,
             deliverydate: deliveryNote.deliverydate,
             notes: deliveryNote.notes || '',
