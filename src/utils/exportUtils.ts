@@ -543,10 +543,10 @@ export const exportDeliveryNoteToPDF = async (deliveryNote: DeliveryNote) => {
   let counter = 0;
   const itemRows = deliveryNote.items.map(item => [
     (++counter).toString(),
-    `${item.product?.name || 'N/A'}\n${item.product?.code || 'N/A'}`,
+    item.product?.code.toString(),
+    `${item.product?.name || 'N/A'}\n${item.product?.description || ''}`,
     item.quantity.toString(),
-    item.unit ? item.unit.toString() : 'N/A',
-    item.product?.description || ''
+    item.unit ? item.unit.toString() : 'N/A'
   ]);
   const itemChunks = chunkArray(itemRows, maxRowsPerPage);
 
@@ -568,7 +568,7 @@ export const exportDeliveryNoteToPDF = async (deliveryNote: DeliveryNote) => {
    
     const tableY = addStylizedTable(
       pdf,
-      ['No', 'Produit', 'Quantity', 'Unité', 'Description'],
+      ['No','code', 'Produit', 'Quantité', 'Unité'],
       chunk,
       currentY + 4
     );
