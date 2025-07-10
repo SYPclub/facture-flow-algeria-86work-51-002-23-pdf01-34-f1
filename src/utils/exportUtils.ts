@@ -616,7 +616,7 @@ export const exportDeliveryNoteToPDF = async (deliveryNote: DeliveryNote) => {
       pdf.setFont("helvetica", "bold");
       pdf.setFontSize(10);
       pdf.setTextColor("#4F46E5"); // darkPurple
-      pdf.text("Détails de transport:", boxX + 2, boxY + 6);
+      pdf.text("", boxX + 2, boxY + 6);
 
       // Draw content rows
       pdf.setFont("helvetica", "normal");
