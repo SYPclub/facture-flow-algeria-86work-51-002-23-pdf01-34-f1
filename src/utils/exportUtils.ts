@@ -294,7 +294,7 @@ const addTotals = (pdf: jsPDF, invoice: any, startY: number, tdiscount: number) 
   pdf.setFont("helvetica", "bold");
   pdf.setTextColor(hexToRgb(primaryColor).r, hexToRgb(primaryColor).g, hexToRgb(primaryColor).b);
   pdf.setFontSize(12);
-  pdf.text("Total:", pdf.internal.pageSize.width - 75, nextY + 5);
+  pdf.text("Total TTC:", pdf.internal.pageSize.width - 75, nextY + 5);
   
   // Add the amount values aligned to the right
   pdf.setFont("helvetica", "normal");
