@@ -274,7 +274,7 @@ const addTotals = (pdf: jsPDF, invoice: any, startY: number, tdiscount: number) 
   pdf.setTextColor(darkGray);
   pdf.setFontSize(9);
   pdf.text("Remise:", pdf.internal.pageSize.width - 75, startY + 10);
-  pdf.text("Prix HT:", pdf.internal.pageSize.width - 75, startY + 17);
+  pdf.text("Prix Hors Taxe:", pdf.internal.pageSize.width - 75, startY + 17);
   pdf.text("TVA:", pdf.internal.pageSize.width - 75, startY + 24);
   
   let nextY = startY + 30;
