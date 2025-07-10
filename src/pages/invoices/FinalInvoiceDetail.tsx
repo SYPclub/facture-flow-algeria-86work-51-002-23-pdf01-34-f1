@@ -59,6 +59,8 @@ import {
   Trash2,
   Undo,
   Plus,
+  Truck,
+  X,
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { toast } from '@/hooks/use-toast';
@@ -112,6 +114,8 @@ const FinalInvoiceDetail = () => {
   const canEdit = checkPermission([UserRole.ADMIN, UserRole.ACCOUNTANT]);
   const isEditMode = window.location.pathname.includes('/edit/');
   const [isPaymentDialogOpen, setIsPaymentDialogOpen] = useState(false);
+  const [isAddDeliveryNoteOpen, setIsAddDeliveryNoteOpen] = useState(false);
+  const [selectedDeliveryNoteId, setSelectedDeliveryNoteId] = useState<string>('');
   const [paymentSummary, setPaymentSummary] = useState({
     amountPaid: 0,
     clientDebt: 0
@@ -129,6 +133,20 @@ const FinalInvoiceDetail = () => {
     queryKey: ['invoicePayments', id],
     queryFn: () => getInvoicePayments(id!),
     enabled: !!id,
+  });
+
+  // Get associated delivery notes
+  const { data: deliveryNotes = [] } = useQuery({
+    queryKey: ['deliveryNotes', id],
+    queryFn: () => mockDataService.getDeliveryNotesByFinalInvoiceId(id!),
+    enabled: !!id,
+  });
+
+  // Get all available delivery notes for adding
+  const { data: allDeliveryNotes = [] } = useQuery({
+    queryKey: ['allDeliveryNotes'],
+    queryFn: () => mockDataService.getDeliveryNotes(),
+    enabled: isAddDeliveryNoteOpen,
   });
 
   // Calculate payment summary
@@ -287,6 +305,83 @@ const FinalInvoiceDetail = () => {
     
     statusUpdateMutation.mutate(updateData);
   };
+
+  // Add delivery note to invoice mutation
+  const addDeliveryNoteMutation = useMutation({
+    mutationFn: async (deliveryNoteId: string) => {
+      const { error } = await supabase
+        .from('delivery_notes')
+        .update({ finalinvoiceid: id })
+        .eq('id', deliveryNoteId);
+      
+      if (error) throw error;
+      return { success: true };
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['deliveryNotes', id] });
+      queryClient.invalidateQueries({ queryKey: ['allDeliveryNotes'] });
+      setIsAddDeliveryNoteOpen(false);
+      setSelectedDeliveryNoteId('');
+      toast({
+        title: 'Bon de livraison ajouté',
+        description: 'Le bon de livraison a été associé à cette facture'
+      });
+    },
+    onError: (error) => {
+      console.error('Error adding delivery note:', error);
+      toast({
+        variant: 'destructive',
+        title: 'Erreur',
+        description: 'Impossible d\'ajouter le bon de livraison'
+      });
+    }
+  });
+
+  // Remove delivery note from invoice mutation
+  const removeDeliveryNoteMutation = useMutation({
+    mutationFn: async (deliveryNoteId: string) => {
+      const { error } = await supabase
+        .from('delivery_notes')
+        .update({ finalinvoiceid: null })
+        .eq('id', deliveryNoteId);
+      
+      if (error) throw error;
+      return { success: true };
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['deliveryNotes', id] });
+      queryClient.invalidateQueries({ queryKey: ['allDeliveryNotes'] });
+      toast({
+        title: 'Bon de livraison retiré',
+        description: 'Le bon de livraison a été dissocié de cette facture'
+      });
+    },
+    onError: (error) => {
+      console.error('Error removing delivery note:', error);
+      toast({
+        variant: 'destructive',
+        title: 'Erreur',
+        description: 'Impossible de retirer le bon de livraison'
+      });
+    }
+  });
+
+  // Handle adding delivery note
+  const handleAddDeliveryNote = () => {
+    if (selectedDeliveryNoteId) {
+      addDeliveryNoteMutation.mutate(selectedDeliveryNoteId);
+    }
+  };
+
+  // Handle removing delivery note
+  const handleRemoveDeliveryNote = (deliveryNoteId: string) => {
+    removeDeliveryNoteMutation.mutate(deliveryNoteId);
+  };
+
+  // Filter available delivery notes (not already linked to any final invoice)
+  const availableDeliveryNotes = allDeliveryNotes.filter(note => 
+    !note.finalInvoiceId && note.clientId === invoice?.clientId
+  );
 
   // Mark as payé handler 
   const handleMarkAsPaid = () => {
@@ -791,6 +886,125 @@ const FinalInvoiceDetail = () => {
               </CardContent>
             </Card>
           </div>
+
+          {/* Delivery Notes Section */}
+          <Card>
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <div>
+                  <CardTitle className="flex items-center gap-2">
+                    <Truck className="h-5 w-5" />
+                    Bons de livraison associés
+                  </CardTitle>
+                  <CardDescription>
+                    Bons de livraison liés à cette facture ({deliveryNotes.length})
+                  </CardDescription>
+                </div>
+                <Dialog open={isAddDeliveryNoteOpen} onOpenChange={setIsAddDeliveryNoteOpen}>
+                  <DialogTrigger asChild>
+                    <Button variant="outline" size="sm">
+                      <Plus className="h-4 w-4 mr-2" />
+                      Ajouter
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-md">
+                    <DialogHeader>
+                      <DialogTitle>Ajouter un bon de livraison</DialogTitle>
+                    </DialogHeader>
+                    <div className="space-y-4">
+                      <div>
+                        <label className="text-sm font-medium">Sélectionner un bon de livraison</label>
+                        <Select value={selectedDeliveryNoteId} onValueChange={setSelectedDeliveryNoteId}>
+                          <SelectTrigger className="w-full">
+                            <SelectValue placeholder="Choisir un bon de livraison..." />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {availableDeliveryNotes.map((note) => (
+                              <SelectItem key={note.id} value={note.id}>
+                                {note.number} - {note.deliveryDate ? 
+                                  formatDate(note.deliveryDate) : 'En attente'
+                                }
+                              </SelectItem>
+                            ))}
+                            {availableDeliveryNotes.length === 0 && (
+                              <SelectItem value="none" disabled>
+                                Aucun bon de livraison disponible
+                              </SelectItem>
+                            )}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div className="flex justify-end gap-2">
+                        <Button variant="outline" onClick={() => setIsAddDeliveryNoteOpen(false)}>
+                          Annuler
+                        </Button>
+                        <Button 
+                          onClick={handleAddDeliveryNote}
+                          disabled={!selectedDeliveryNoteId || addDeliveryNoteMutation.isPending}
+                        >
+                          {addDeliveryNoteMutation.isPending ? 'Ajout...' : 'Ajouter'}
+                        </Button>
+                      </div>
+                    </div>
+                  </DialogContent>
+                </Dialog>
+              </div>
+            </CardHeader>
+            <CardContent>
+              {deliveryNotes.length > 0 ? (
+                <div className="space-y-3">
+                  {deliveryNotes.map((deliveryNote) => (
+                    <div key={deliveryNote.id} className="flex items-center justify-between p-4 border rounded-lg bg-card">
+                      <div className="flex items-center gap-3">
+                        <FileText className="h-4 w-4 text-muted-foreground" />
+                        <div>
+                          <div className="font-medium">
+                            Bon N° {deliveryNote.number}
+                          </div>
+                          <div className="text-sm text-muted-foreground">
+                            {deliveryNote.deliveryDate ? 
+                              `Livré le ${formatDate(deliveryNote.deliveryDate)}` : 
+                              'En attente de livraison'
+                            }
+                          </div>
+                          {deliveryNote.driverName && (
+                            <div className="text-sm text-muted-foreground">
+                              Chauffeur: {deliveryNote.driverName}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Badge variant={deliveryNote.status === 'livrée' ? 'default' : 'secondary'}>
+                          {deliveryNote.status === 'livrée' ? 'Livré' : 
+                           deliveryNote.status === 'en_attente_de_livraison' ? 'En attente' : 'Annulé'}
+                        </Badge>
+                        <Button variant="outline" size="sm" asChild>
+                          <Link to={`/delivery-notes/${deliveryNote.id}`}>
+                            Voir détails
+                          </Link>
+                        </Button>
+                        <Button 
+                          variant="outline" 
+                          size="sm"
+                          onClick={() => handleRemoveDeliveryNote(deliveryNote.id)}
+                          disabled={removeDeliveryNoteMutation.isPending}
+                        >
+                          <X className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center text-muted-foreground py-8">
+                  <Truck className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                  <p>Aucun bon de livraison associé à cette facture</p>
+                  <p className="text-sm mt-2">Utilisez le bouton "Ajouter" ci-dessus pour associer des bons de livraison</p>
+                </div>
+              )}
+            </CardContent>
+          </Card>
 
           <Card>
             <CardHeader>
