@@ -31,7 +31,9 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { supabase } from "@/integrations/supabase/client";
 
 const clientSchema = z.object({
+
   name: z.string().min(2, 'Name must be at least 2 characters'),
+  code: z.string().min(2, 'Name must be at least 2 characters'),
   address: z.string().optional().nullable(),
   taxid: z.string().optional().nullable(),
   phone: z.string().optional().nullable(),
@@ -40,7 +42,7 @@ const clientSchema = z.object({
   city: z.string().optional().nullable(),
   // New fields - all optional
   nis: z.string().optional().nullable(),
-  rc: z.string().min(8, 'numero de register au moin 8 character'),
+  rc: z.string().optional().nullable(),
   ai: z.string().optional().nullable(),
   rib: z.string().optional().nullable(),
   ccp: z.string().optional().nullable(),
@@ -75,6 +77,7 @@ const ClientDetail = () => {
     defaultValues: isNewClient 
       ? {
           name: '',
+          code: '',
           address: '',
           taxid: '',
           phone: '',
@@ -91,6 +94,7 @@ const ClientDetail = () => {
         }
       : {
           name: client?.name || '',
+          code: client?.code || '',
           address: client?.address || '',
           taxid: client?.taxid || '',
           phone: client?.phone || '',
@@ -110,13 +114,14 @@ const ClientDetail = () => {
   React.useEffect(() => {
     if (!isNewClient && client) {
       form.reset({
-        name: client.name,
-        address: client.address,
-        taxid: client.taxid,
-        phone: client.phone,
-        email: client.email,
-        country: client.country,
-        city: client.city,
+        name: client.name || '',
+        code: client.code || '', 
+        address: client.address || '',
+        taxid: client.taxid || '',
+        phone: client.phone || '',
+        email: client.email || '',
+        country: client.country ,
+        city: client.city || '',
         nis: client.nis || '',
         ai: client.ai || '',
         rib: client.rib || '',
@@ -132,12 +137,13 @@ const ClientDetail = () => {
     mutationFn: (data: ClientFormValues) => {
       const newClient = {
         name: data.name,
-        address: data.address,
-        taxid: data.taxid,
-        phone: data.phone,
-        email: data.email,
+        code: data.code || null,
+        address: data.address || null,
+        taxid: data.taxid || null,
+        phone: data.phone || null,
+        email: data.email || null,
         country: data.country,
-        city: data.city,
+        city: data.city || null,
         nis: data.nis || null,
         ai: data.ai || null,
         rib: data.rib || null,
@@ -169,12 +175,13 @@ const ClientDetail = () => {
     mutationFn: (data: ClientFormValues) => {
       const updatedClient = {
         name: data.name,
-        address: data.address,
-        taxid: data.taxid,
-        phone: data.phone,
-        email: data.email,
-        country: data.country,
-        city: data.city,
+        code: data.code || null,
+        address: data.address || null,
+        taxid: data.taxid || null,
+        phone: data.phone || null,
+        email: data.email || null,
+        country: data.country ,
+        city: data.city || null,
         nis: data.nis || null,
         ai: data.ai || null,
         rib: data.rib || null,
@@ -330,7 +337,7 @@ const ClientDetail = () => {
         <CardContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              <div className="grid gap-4 sm:grid-cols-3">
+              <div className="grid gap-4 sm:grid-cols-4">
                 <FormField
                   control={form.control}
                   name="name"
@@ -340,6 +347,23 @@ const ClientDetail = () => {
                       <FormControl>
                         <Input 
                           placeholder="Saisir le nom de l'entreprise" 
+                          {...field} 
+                          disabled={!isEditing && !isNewClient}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="code"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Code de client</FormLabel>
+                      <FormControl>
+                        <Input 
+                          placeholder="Saisir le codage clientele" 
                           {...field} 
                           disabled={!isEditing && !isNewClient}
                         />
@@ -612,6 +636,7 @@ const ClientDetail = () => {
                         setIsEditing(false);
                         form.reset({
                           name: client?.name || '',
+                          code: client?.code || '',
                           address: client?.address || '',
                           taxid: client?.taxid || '',
                           phone: client?.phone || '',

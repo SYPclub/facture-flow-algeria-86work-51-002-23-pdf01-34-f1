@@ -83,6 +83,7 @@ export const useDashboardData = () => {
           client: invoice.clients ? {
             id: invoice.clients.id,
             name: invoice.clients.name,
+            code: invoice.clients.code,
             address: invoice.clients.address,
             taxid: invoice.clients.taxid,
             phone: invoice.clients.phone,
@@ -123,6 +124,7 @@ export const useDashboardData = () => {
           client: invoice.clients ? {
             id: invoice.clients.id,
             name: invoice.clients.name,
+            code: invoice.clients.code,
             address: invoice.clients.address,
             taxid: invoice.clients.taxid,
             phone: invoice.clients.phone,

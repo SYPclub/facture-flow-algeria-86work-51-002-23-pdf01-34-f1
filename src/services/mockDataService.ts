@@ -50,6 +50,7 @@ class MockDataService {
         .from('clients')
         .insert([{
           name: clientData.name,
+          code: clientData.code,
           address: clientData.address,
           taxid: clientData.taxid,
           phone: clientData.phone,
@@ -83,6 +84,7 @@ class MockDataService {
         .from('clients')
         .update({
           name: clientData.name,
+          code: clientData.code,
           address: clientData.address,
           taxid: clientData.taxid,
           phone: clientData.phone,
@@ -314,6 +316,7 @@ class MockDataService {
       const client = invoice.clients ? {
         id: invoice.clients.id,
         name: invoice.clients.name,
+        code: invoice.clients.code,
         address: invoice.clients.address,
         taxid: invoice.clients.taxid,
         phone: invoice.clients.phone,
@@ -426,6 +429,7 @@ class MockDataService {
     const client = invoice.clients ? {
       id: invoice.clients.id,
       name: invoice.clients.name,
+      code: invoice.clients.code,
       address: invoice.clients.address,
       taxid: invoice.clients.taxid,
       phone: invoice.clients.phone,
@@ -783,6 +787,7 @@ class MockDataService {
       const client = invoice.clients ? {
         id: invoice.clients.id,
         name: invoice.clients.name,
+        code: invoice.clients.code,
         address: invoice.clients.address,
         taxid: invoice.clients.taxid,
         phone: invoice.clients.phone,
@@ -897,6 +902,7 @@ class MockDataService {
     const client = invoice.clients ? {
       id: invoice.clients.id,
       name: invoice.clients.name,
+      code: invoice.clients.code,
       address: invoice.clients.address,
       taxid: invoice.clients.taxid,
       phone: invoice.clients.phone,
@@ -1035,6 +1041,7 @@ class MockDataService {
       const client = note.clients ? {
         id: note.clients.id,
         name: note.clients.name,
+        code: note.clients.code,
         address: note.clients.address,
         taxid: note.clients.taxid,
         phone: note.clients.phone,
@@ -1158,6 +1165,7 @@ class MockDataService {
     const client = note.clients ? {
       id: note.clients.id,
       name: note.clients.name,
+      code: note.clients.code,
       address: note.clients.address,
       taxid: note.clients.taxid,
       phone: note.clients.phone,
@@ -1277,6 +1285,7 @@ class MockDataService {
       const client = note.clients ? {
         id: note.clients.id,
         name: note.clients.name,
+        code: note.clients.code,
         address: note.clients.address,
         taxid: note.clients.taxid,
         phone: note.clients.phone,
