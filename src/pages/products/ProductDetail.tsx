@@ -96,7 +96,7 @@ const ProductDetail = () => {
       name: '',
       description: '',
       unitprice: 0,
-      taxrate: 0,
+      taxrate: 19,
       stockquantity: 0,
       unit: '', // Default value for unit
     },
@@ -471,7 +471,7 @@ const ProductDetail = () => {
                     <FormItem>
                       <FormLabel>Taux d'imposition (%)</FormLabel>
                       <FormControl>
-                        <Input  type="number"  {...field} defaultValue={field.value ?? 19} />
+                        <Input  type="number" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
