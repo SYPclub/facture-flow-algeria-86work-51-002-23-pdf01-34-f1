@@ -123,23 +123,19 @@ const UsersPage = () => {
     <div className="space-y-6">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">User Management</h1>
+          <h1 className="text-3xl font-bold tracking-tight">Gestion des utilisateurs</h1>
           <p className="text-muted-foreground">
-            Manage system users and their permissions
+            Gérer l'accès et les autorisations des utilisateurs.
           </p>
         </div>
-        <Button asChild>
-          <Link to="/admin/users/new">
-            <Plus className="mr-2 h-4 w-4" /> Add New User
-          </Link>
-        </Button>
+        
       </div>
 
       <Card>
         <CardHeader>
-          <CardTitle>System Users</CardTitle>
+          <CardTitle>Utilisateurs du système</CardTitle>
           <CardDescription>
-            Manage access and permissions for users.
+            Gérer l'accès et les autorisations des utilisateurs.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -172,10 +168,10 @@ const UsersPage = () => {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Name</TableHead>
+                    <TableHead>Nom</TableHead>
                     <TableHead>Email</TableHead>
                     <TableHead>Role</TableHead>
-                    <TableHead>Status</TableHead>
+                    <TableHead>Statut</TableHead>
                     <TableHead className="text-right">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
@@ -201,7 +197,7 @@ const UsersPage = () => {
                           to={`/admin/users/${user.id}`}
                           className="rounded-md px-2 py-1 text-sm font-medium text-primary hover:underline"
                         >
-                          Edit User
+                          Modifier l'utilisateur
                         </Link>
                       </TableCell>
                     </TableRow>
