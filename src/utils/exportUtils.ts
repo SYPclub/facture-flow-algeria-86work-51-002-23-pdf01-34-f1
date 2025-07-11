@@ -219,7 +219,7 @@ const addClientInfo = (pdf: jsPDF, client: Client | undefined, invoiceDetails: a
     `Livraison / remarque : ${invoiceDetails.notes || ' ' }`,
     invoiceDetails?.bc && `B.C: ${invoiceDetails.bc || ' ' }`,
   ].filter(Boolean);
-    // Render paymentText
+    // Render paymentText 
   
   
   pdf.text(details, 115, startY + 13);
