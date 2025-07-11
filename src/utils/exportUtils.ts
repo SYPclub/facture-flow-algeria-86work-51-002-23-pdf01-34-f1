@@ -203,14 +203,24 @@ const addClientInfo = (pdf: jsPDF, client: Client | undefined, invoiceDetails: a
   pdf.setTextColor(darkGray);
   pdf.setFont("helvetica", "normal");
   pdf.setFontSize(10);
-  
-  const details = [
+  if (invoiceDetails === "deliveryNote") {
+    const details = [
     client?.phone && `Tel: ${client?.phone || 'N/A'} `, 
     client?.email && `Email: ${client?.email || 'N/A'}`,
-    `${invoiceDetails === 'deliveryNote' ? '' : `Mode de paiment: ${invoiceDetails.payment_type === 'cash' ? 'Espèce' : 'Cheque/virment'}`}`,
     `Livraison / remarque : ${invoiceDetails.notes || ' ' }`,
     invoiceDetails?.bc && `B.C: ${invoiceDetails.bc || ' ' }`,
   ].filter(Boolean);
+
+  } else {
+    const details = [
+    client?.phone && `Tel: ${client?.phone || 'N/A'} `, 
+    client?.email && `Email: ${client?.email || 'N/A'}`,
+    `Mode de paiment: ${invoiceDetails.payment_type === 'cash' ? 'Espèce' : 'Cheque/virment'}`,
+    `Livraison / remarque : ${invoiceDetails.notes || ' ' }`,
+    invoiceDetails?.bc && `B.C: ${invoiceDetails.bc || ' ' }`,
+  ].filter(Boolean);
+    // Render paymentText
+  
   
   pdf.text(details, 115, startY + 13);
   
