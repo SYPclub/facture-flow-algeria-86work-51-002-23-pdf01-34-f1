@@ -23,7 +23,7 @@ import ProformaDetail from "@/pages/invoices/ProformaDetail";
 import NewProformaInvoice from "@/pages/invoices/NewProformaInvoice";
 import FinalInvoicesPage from "@/pages/invoices/FinalInvoicesPage";
 import FinalInvoiceDetail from "@/pages/invoices/FinalInvoiceDetail";
-import NewFinalInvoice from "@/pages/invoices/NewFinalInvoice";
+import NewFinalInvoice from "@/pages/invoices/NewFinalInvoice"; s
 import NNewFinalInvoice from "@/pages/invoices/NNewFinalInvoice";
 import DeliveryNotesPage from "@/pages/delivery/DeliveryNotesPage";
 import DeliveryNoteDetail from "@/pages/delivery/DeliveryNoteDetail";
