@@ -234,7 +234,7 @@ const addStylizedTable = (pdf: jsPDF, headers: string[], rows: any[][], startY: 
       lineColor: [41, 98, 255]
     },
     bodyStyles: {
-      fontSize: 7,
+      fontSize: 8,
       lineWidth: 0.1,
       lineColor: [220, 220, 220]
     },
@@ -600,7 +600,7 @@ export const exportDeliveryNoteToPDF = async (deliveryNote: DeliveryNote) => {
       const col2Width = maxValueWidth + linePadding;
 
       const tableWidth = col1Width + col2Width + 5;
-      const tableHeight = (labels.length * rowSpacing) + 10;
+      const tableHeight = (labels.length * rowSpacing) + 6;
 
       const boxX = 14;
       const boxY = lastTableY +7;
