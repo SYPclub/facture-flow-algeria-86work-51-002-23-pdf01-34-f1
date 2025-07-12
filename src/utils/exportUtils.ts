@@ -234,7 +234,7 @@ const addStylizedTable = (pdf: jsPDF, headers: string[], rows: any[][], startY: 
       lineColor: [41, 98, 255]
     },
     bodyStyles: {
-      fontSize: 9,
+      fontSize: 7,
       lineWidth: 0.1,
       lineColor: [220, 220, 220]
     },
