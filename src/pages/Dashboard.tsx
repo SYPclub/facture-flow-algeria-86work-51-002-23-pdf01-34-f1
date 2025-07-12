@@ -162,9 +162,15 @@ const Dashboard = () => {
               
               {checkPermission([UserRole.ADMIN, UserRole.ACCOUNTANT]) && (
                 <Button asChild variant="outline" className="justify-start">
-                  <Link to="/invoices/final/new">
+                  <Link to="/invoices/final/nnew">
                     <FileText className="mr-2 h-4 w-4" />
                     Créer une nouvelle facture finale
+                  </Link>
+                </Button>
+                <Button asChild variant="outline" className="justify-start">
+                  <Link to="/invoices/final/new">
+                    <FileText className="mr-2 h-4 w-4" />
+                    Créer une nouvelle facture d'avoir
                   </Link>
                 </Button>
               )}

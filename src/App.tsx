@@ -23,7 +23,7 @@ import ProformaDetail from "@/pages/invoices/ProformaDetail";
 import NewProformaInvoice from "@/pages/invoices/NewProformaInvoice";
 import FinalInvoicesPage from "@/pages/invoices/FinalInvoicesPage";
 import FinalInvoiceDetail from "@/pages/invoices/FinalInvoiceDetail";
-import NewFinalInvoice from "@/pages/invoices/NewFinalInvoice"; s
+import NewDFinalaInvoice from "@/pages/invoices/NewDFinalaInvoice"; 
 import NNewFinalInvoice from "@/pages/invoices/NNewFinalInvoice";
 import DeliveryNotesPage from "@/pages/delivery/DeliveryNotesPage";
 import DeliveryNoteDetail from "@/pages/delivery/DeliveryNoteDetail";
@@ -74,7 +74,7 @@ const App = () => (
               <Route path="/invoices/proforma/edit/:id" element={<ProformaDetail />} />
               
               <Route path="/invoices/final" element={<FinalInvoicesPage />} />
-              <Route path="/invoices/final/new" element={<NewFinalInvoice />} />
+              <Route path="/invoices/final/new" element={<NewDFinalaInvoice />} />
               <Route path="/invoices/final/nnew" element={<NNewFinalInvoice />} />
               <Route path="/invoices/final/:id" element={<FinalInvoiceDetail />} />
               <Route path="/invoices/final/edit/:id" element={<FinalInvoiceDetail />} />

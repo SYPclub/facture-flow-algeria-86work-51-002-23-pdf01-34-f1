@@ -67,7 +67,7 @@ const finalInvoiceSchema = z.object({
 
 type FormData = z.infer<typeof finalInvoiceSchema>;
 
-const NewFinalInvoice = () => {
+const NewDFinalaInvoice = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { user } = useAuth();
@@ -597,4 +597,4 @@ const NewFinalInvoice = () => {
   );
 };
 
-export default NewFinalInvoice;
+export default NewDFinalaInvoice;
