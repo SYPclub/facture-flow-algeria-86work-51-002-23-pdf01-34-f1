@@ -620,7 +620,7 @@ export const exportDeliveryNoteToPDF = async (deliveryNote: DeliveryNote) => {
       pdf.setTextColor(0, 0, 0);
 
       labels.forEach((label, i) => {
-        const rowY = boxY + 10 + (i * rowSpacing);
+        const rowY = boxY + 6 + (i * rowSpacing);
         pdf.text(label, boxX + 2, rowY);
         pdf.text(values[i], boxX + col1Width + 2, rowY);
       });
