@@ -15,12 +15,12 @@ const NewFinalInvoiceButton = () => {
   return (
     <>
       <Button asChild>
-        <Link to="/invoices/final/new">
+        <Link to="/invoices/final/nnew">
           <Plus className="mr-2 h-4 w-4" /> Nouvelle facture
         </Link>
       </Button>
       <Button asChild>
-        <Link to="/invoices/final/nnew">
+        <Link to="/invoices/final/new">
           <Plus className="mr-2 h-4 w-4" /> Nouvelle facture D'avoir
         </Link>
       </Button>
