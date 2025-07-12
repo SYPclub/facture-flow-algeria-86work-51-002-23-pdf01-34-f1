@@ -20,7 +20,7 @@ const NewFinalInvoiceButton = () => {
         </Link>
       </Button>
       <Button asChild>
-        <Link to="/invoices/final/credit-note">
+        <Link to="/invoices/final/nnew">
           <Plus className="mr-2 h-4 w-4" /> Nouvelle facture D'avoir
         </Link>
       </Button>
