@@ -106,7 +106,7 @@ const AppSidebar = () => {
       allowedRoles: [UserRole.ADMIN, UserRole.ACCOUNTANT, UserRole.VIEWER]
     },
     {
-      title: 'créances',
+      title: 'Créances',
       url: '/reports/clients-debt',
       icon: FileSpreadsheet,
       allowedRoles: [UserRole.ADMIN, UserRole.ACCOUNTANT, UserRole.VIEWER]
