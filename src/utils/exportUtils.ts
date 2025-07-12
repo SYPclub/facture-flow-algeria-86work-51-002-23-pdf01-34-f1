@@ -134,7 +134,12 @@ const addHeader = async (pdf: jsPDF, documentType: string, documentNumber: strin
   pdf.setFont("helvetica", "bold");
   pdf.setFontSize(12);
   
-  const docTypeText = `${documentType.toUpperCase()} N°: ${documentNumber}`;
+  const docTypeText = documentNumber.toLowerCase().includes("fd")
+  ? `${documentType.toUpperCase()} D'AVOIR N°: ${documentNumber}`
+  : `${documentType.toUpperCase()} N°: ${documentNumber}`;
+
+
+ // const docTypeText = `${documentType.toUpperCase()} N°: ${documentNumber}`;
   const docTypeWidth = pdf.getStringUnitWidth(docTypeText) * 12 / pdf.internal.scaleFactor;
   const docTypeX = pdf.internal.pageSize.width - 14 - docTypeWidth - 10; // 10 = padding
   const docTypeXX = 14;
