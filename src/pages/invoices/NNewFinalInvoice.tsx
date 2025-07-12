@@ -303,7 +303,7 @@ const NNewFinalInvoice = () => {
           <Link to="/invoices/final">
             <ArrowLeft className="h-4 w-4" />
           </Link>
-        </Button>
+        </Button> 
         <div>
           <h1 className="text-3xl font-bold tracking-tight">
             {proformaId ? 'Convertir en facture finale' : `Nouvelle facture  finale`}
