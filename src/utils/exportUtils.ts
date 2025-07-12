@@ -574,7 +574,7 @@ export const exportDeliveryNoteToPDF = async (deliveryNote: DeliveryNote) => {
     if (deliveryNote.drivername || deliveryNote.truck_id || deliveryNote.delivery_company) {
       const pdfFontSize = 9;
       const linePadding = 5;
-      const rowSpacing = 6;
+      const rowSpacing = 3;
 
       pdf.setFont("helvetica", "normal");
       pdf.setFontSize(pdfFontSize);
