@@ -41,6 +41,7 @@ interface ClientSummary {
 const Etat104Page = () => {
   const [year, setYear] = useState(new Date().getFullYear().toString());
   const [month, setMonth] = useState((new Date().getMonth() + 1).toString().padStart(2, '0'));
+  const [filterMode, setFilterMode] = useState<'monthly' | 'yearly'>('monthly');
   
   const { data: finalInvoices = [], isLoading } = useQuery({
     queryKey: ['finalInvoices'],
@@ -49,10 +50,14 @@ const Etat104Page = () => {
   
   const filteredInvoices = finalInvoices.filter(invoice => {
     const invoiceDate = new Date(invoice.issuedate);
-    return (
-      invoiceDate.getFullYear() === parseInt(year) && 
-      invoiceDate.getMonth() + 1 === parseInt(month)
-    );
+    if (filterMode === 'yearly') {
+      return invoiceDate.getFullYear() === parseInt(year);
+    } else {
+      return (
+        invoiceDate.getFullYear() === parseInt(year) && 
+        invoiceDate.getMonth() + 1 === parseInt(month)
+      );
+    }
   });
   
   const clientSummaries: ClientSummary[] = React.useMemo(() => {
@@ -179,42 +184,59 @@ const Etat104Page = () => {
           <CardDescription>Sélectionner la période pour le rapport de l'État 104</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:max-w-md">
+          <div className="space-y-4">
             <div className="space-y-2">
-              <label className="text-sm font-medium">Year</label>
-              <Select value={year} onValueChange={setYear}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select year" />
+              <label className="text-sm font-medium">Type de filtre</label>
+              <Select value={filterMode} onValueChange={(value: 'monthly' | 'yearly') => setFilterMode(value)}>
+                <SelectTrigger className="max-w-xs">
+                  <SelectValue placeholder="Select filter type" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="2023">2023</SelectItem>
-                  <SelectItem value="2024">2024</SelectItem>
-                  <SelectItem value="2025">2025</SelectItem>
+                  <SelectItem value="monthly">Mensuel</SelectItem>
+                  <SelectItem value="yearly">Annuel</SelectItem>
                 </SelectContent>
               </Select>
             </div>
             
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Mois</label>
-              <Select value={month} onValueChange={setMonth}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select month" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="01">Janvier</SelectItem>
-                  <SelectItem value="02">Février</SelectItem>
-                  <SelectItem value="03">Mars</SelectItem>
-                  <SelectItem value="04">Avril</SelectItem>
-                  <SelectItem value="05">Mai</SelectItem>
-                  <SelectItem value="06">Juin</SelectItem>
-                  <SelectItem value="07">Juillet</SelectItem>
-                  <SelectItem value="08">Août</SelectItem>
-                  <SelectItem value="09">Septembre</SelectItem>
-                  <SelectItem value="10">Octobre</SelectItem>
-                  <SelectItem value="11">Novembre</SelectItem>
-                  <SelectItem value="12">Décembre</SelectItem>
-                </SelectContent>
-              </Select>
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:max-w-md">
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Année</label>
+                <Select value={year} onValueChange={setYear}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select year" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="2023">2023</SelectItem>
+                    <SelectItem value="2024">2024</SelectItem>
+                    <SelectItem value="2025">2025</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              
+              {filterMode === 'monthly' && (
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">Mois</label>
+                  <Select value={month} onValueChange={setMonth}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select month" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="01">Janvier</SelectItem>
+                      <SelectItem value="02">Février</SelectItem>
+                      <SelectItem value="03">Mars</SelectItem>
+                      <SelectItem value="04">Avril</SelectItem>
+                      <SelectItem value="05">Mai</SelectItem>
+                      <SelectItem value="06">Juin</SelectItem>
+                      <SelectItem value="07">Juillet</SelectItem>
+                      <SelectItem value="08">Août</SelectItem>
+                      <SelectItem value="09">Septembre</SelectItem>
+                      <SelectItem value="10">Octobre</SelectItem>
+                      <SelectItem value="11">Novembre</SelectItem>
+                      <SelectItem value="12">Décembre</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              )}
             </div>
           </div>
           
@@ -226,8 +248,12 @@ const Etat104Page = () => {
       
       <Card>
         <CardHeader>
-          <CardTitle>État 104 Report - {month}/{year}</CardTitle>
-          <CardDescription>Résumé mensuel de la déclaration de TVA</CardDescription>
+          <CardTitle>
+            État 104 Report - {filterMode === 'yearly' ? year : `${month}/${year}`}
+          </CardTitle>
+          <CardDescription>
+            {filterMode === 'yearly' ? 'Résumé annuel' : 'Résumé mensuel'} de la déclaration de TVA
+          </CardDescription>
         </CardHeader>
         <CardContent>
           {isLoading ? (
