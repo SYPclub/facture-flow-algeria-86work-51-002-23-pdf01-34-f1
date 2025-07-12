@@ -133,10 +133,17 @@ const addHeader = async (pdf: jsPDF, documentType: string, documentNumber: strin
   pdf.setTextColor(255, 255, 255);
   pdf.setFont("helvetica", "bold");
   pdf.setFontSize(12);
-  
-  const docTypeText = documentNumber.toLowerCase().includes("fd")
-  ? `${documentType.toUpperCase()} D'AVOIR N°: ${documentNumber}`
-  : `${documentType.toUpperCase()} N°: ${documentNumber}`;
+  const isCreditNote = documentNumber.toLowerCase().includes("fd");
+
+  const cleanedNumber = isCreditNote
+    ? documentNumber.replace(/FD/gi, "").trim()
+    : documentNumber;
+
+  const docTypeText = isCreditNote
+    ? `${documentType.toUpperCase()} D'AVOIR N°: ${cleanedNumber}`
+    : `${documentType.toUpperCase()} N°: ${documentNumber}`;
+    
+ // const docTypeText = documentNumber.toLowerCase().includes("fd")  ? `${documentType.toUpperCase()} D'AVOIR N°: ${documentNumber}`  : `${documentType.toUpperCase()} N°: ${documentNumber}`;
 
 
  // const docTypeText = `${documentType.toUpperCase()} N°: ${documentNumber}`;
