@@ -574,7 +574,7 @@ export const exportDeliveryNoteToPDF = async (deliveryNote: DeliveryNote) => {
     if (deliveryNote.drivername || deliveryNote.truck_id || deliveryNote.delivery_company) {
       const pdfFontSize = 9;
       const linePadding = 5;
-      const rowSpacing = 3;
+      const rowSpacing = 4;
 
       pdf.setFont("helvetica", "normal");
       pdf.setFontSize(pdfFontSize);
@@ -609,10 +609,10 @@ export const exportDeliveryNoteToPDF = async (deliveryNote: DeliveryNote) => {
       drawRoundedRect(pdf, boxX, boxY, tableWidth, tableHeight, 3, lightPurple);
 
       // Add title
-      pdf.setFont("helvetica", "bold");
-      pdf.setFontSize(10);
-      pdf.setTextColor("#4F46E5"); // darkPurple
-      pdf.text("", boxX + 2, boxY + 6);
+      
+      
+      
+      
 
       // Draw content rows
       pdf.setFont("helvetica", "normal");
