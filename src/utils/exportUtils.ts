@@ -180,7 +180,7 @@ const addClientInfo = (pdf: jsPDF, client: Client | undefined, invoiceDetails: a
   drawRoundedRect(pdf, 14, startY, 180, 40, 3, lightBlue,borderColor);
   
   // Left side: Client info
-  pdf.setTextColor(darkBlue);
+  pdf.setTextColor(borderColor);
   pdf.setFontSize(11);
   pdf.setFont("helvetica", "bold");
   pdf.text(`Client: ${String(client?.name)?.toUpperCase() ?? 'Client Name'}`, 20, startY + 7);
