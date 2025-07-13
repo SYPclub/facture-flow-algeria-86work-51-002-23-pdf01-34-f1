@@ -688,7 +688,7 @@ export const exportEtat104ToPDF = async (
   const companyInfo = await fetchCompanyInfo();
   
   // Define colors for report
-  const primaryColor = "#3B82F6";  // Blue
+  const primaryColor = "#89aadfff";  // Blue
   const secondaryColor = "#6366F1"; // Indigo
   
   // Add colored header banner
