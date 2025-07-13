@@ -546,7 +546,7 @@ const ProformaDetail = () => {
             </Link>
           </Button>
           <h1 className="text-3xl font-bold tracking-tight">
-            {isEditMode ? `Edit Proforma: ${proforma.number}` : `Proforma Invoice: ${proforma.number}`}
+            {isEditMode ? `Modifier  Proforma: ${proforma.number}` : `Proforma : ${proforma.number}`}
           </h1>
         </div>
         {!isEditMode && (

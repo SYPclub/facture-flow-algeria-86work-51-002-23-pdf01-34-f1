@@ -513,7 +513,7 @@ const FinalInvoiceDetail = () => {
             </Link>
           </Button>
           <h1 className="text-3xl font-bold tracking-tight">
-            {isEditMode ? `Edit Invoice: ${invoice.number}` : `Invoice: ${invoice.number}`}
+            {isEditMode ? `Modifier facture: ${invoice.number}` : `Facture: ${invoice.number}`}
           </h1>
         </div>
         {!isEditMode && (
