@@ -76,7 +76,7 @@ const addHeader = async (pdf: jsPDF, documentType: string, documentNumber: strin
    
   //  Colors
   const primaryColor = "#98adcaff";  // Blue
-  const secondaryColor = "#6366F1"; // Indigo
+  const secondaryColor = "#8b8df0ff"; // Indigo
   const accentColor = "#F59E0B";   // Amber
   const lightGray = "#F3F4F6";     // Light gray for background
   const darkGray = "#374151";      // Dark gray for text
