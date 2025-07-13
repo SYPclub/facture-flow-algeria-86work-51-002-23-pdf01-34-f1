@@ -140,8 +140,8 @@ const addHeader = async (pdf: jsPDF, documentType: string, documentNumber: strin
     : documentNumber;
 
   const docTypeText = isCreditNote
-    ? `${documentType.toUpperCase()} D'AVOIR N°: ${cleanedNumber}      Date: ${formatDate(invoiceDetails.issuedate)}`
-    : `${documentType.toUpperCase()} N°: ${documentNumber}      Date: ${formatDate(invoiceDetails.issuedate)}`;
+    ? `${documentType.toUpperCase()} D'AVOIR N°: ${cleanedNumber}     Date: ${formatDate(invoiceDetails.issuedate)}`
+    : `${documentType.toUpperCase()} N°: ${documentNumber}     Date: ${formatDate(invoiceDetails.issuedate)}`;
     
  // const docTypeText = documentNumber.toLowerCase().includes("fd")  ? `${documentType.toUpperCase()} D'AVOIR N°: ${documentNumber}`  : `${documentType.toUpperCase()} N°: ${documentNumber}`;
 
