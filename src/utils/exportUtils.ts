@@ -171,7 +171,7 @@ const addClientInfo = (pdf: jsPDF, client: Client | undefined, invoiceDetails: a
   pdf.setTextColor(70, 70, 70);
   pdf.setFontSize(11);
     // Colors
-  const lightBlue = "#f8edeb";  // Light blue background
+  const lightBlue = "#f8edeb";  // Light blue background 
   const darkBlue = "#E63946";   // Dark blue for accent
   const darkGray = "#374151";   // Dark gray for text
   const borderColor = "#1D3557"; 
