@@ -169,7 +169,7 @@ const addClientInfo = (pdf: jsPDF, client: Client | undefined, invoiceDetails: a
   const darkGray = "#374151";   // Dark gray for text
   const borderColor = "#1D3557"; 
   // Client section box with light blue background
-  drawRoundedRect(pdf, 14, startY, 180, 40, 3, lightBlue,borderColor);
+  drawRoundedRect(pdf, 14, startY, 180, 40, 3, '',borderColor);
   
   // Left side: Client info
   pdf.setTextColor(borderColor);
@@ -246,18 +246,18 @@ const addStylizedTable = (pdf: jsPDF, headers: string[], rows: any[][], startY: 
       fillColor: [241, 250, 238] // lightGray in RGB
     },
     margin: { left: 14, right: 14 },
-    //didDrawPage: function(data) {
+    didDrawPage: function(data) {
       
       
       // Add subtle footer line
-     // pdf.setDrawColor(220, 220, 220);
-      //pdf.line(
-       // data.settings.margin.left,
-      //  pdf.internal.pageSize.height - 15,
-      //  pdf.internal.pageSize.width - data.settings.margin.right,
-       // pdf.internal.pageSize.height - 15
-    //  );
-    //}
+      pdf.setDrawColor(220, 220, 220);
+      pdf.line(
+        data.settings.margin.left,
+        pdf.internal.pageSize.height - 15,
+        pdf.internal.pageSize.width - data.settings.margin.right,
+        pdf.internal.pageSize.height - 15
+      );
+    }
   });
   
   return (pdf as any).lastAutoTable.finalY;
@@ -266,7 +266,7 @@ const addStylizedTable = (pdf: jsPDF, headers: string[], rows: any[][], startY: 
 // Add totals section with styled design
 const addTotals = (pdf: jsPDF, invoice: any, startY: number, tdiscount: number) => {
   const primaryColor = "#003049";  // Blue
-  const lightGray = "#f8edeb";     // Light gray for background
+  const lightGray = "#F1FAEE";     // Light gray for background
   const darkGray = "#374151";      // Dark gray for text
   const borderColor = "#1D3557"; 
 
