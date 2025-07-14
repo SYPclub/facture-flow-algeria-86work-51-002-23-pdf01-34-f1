@@ -173,7 +173,7 @@ const addClientInfo = (pdf: jsPDF, client: Client | undefined, invoiceDetails: a
   const borderColor = "#1D3557"; 
   // Client section box with light blue background
   pdf.setFillColor(255, 255, 255); // Set fill to white (RGB for white)
-  drawRoundedRect(pdf, 14, startY, 180, 40, 3);
+  drawRoundedRect(pdf, 14, startY, 180, 40, 3, '', borderColor);  // Pass empty string for no fill color
   
   // Left side: Client info
   pdf.setTextColor(borderColor);
