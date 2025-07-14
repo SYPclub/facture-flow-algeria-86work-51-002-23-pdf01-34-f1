@@ -82,7 +82,7 @@ const addHeader = async (pdf: jsPDF, documentType: string, documentNumber: strin
   if (logoBase641) {
       try {
         // Add logo to the left of the company name
-        pdf.addImage(logoBase641, 'JPEG', 10, 5, 200, 40); // Adjust dimensions as needed
+        pdf.addImage(logoBase641, 'JPEG', 12, 3, 180, 40); // Adjust dimensions as needed
       } catch (error) {
         console.error('Error adding logo:', error);
       }
@@ -117,7 +117,7 @@ const addHeader = async (pdf: jsPDF, documentType: string, documentNumber: strin
     
   ];
   
-  pdf.text(companyDetails, 14, 45);
+  pdf.text(companyDetails, 40, 45);
   pdf.setDrawColor(70,70,70);
       pdf.line(
         12,
