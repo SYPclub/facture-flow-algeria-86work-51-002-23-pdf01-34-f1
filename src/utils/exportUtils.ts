@@ -273,7 +273,7 @@ const addStylizedTable = (pdf: jsPDF, headers: string[], rows: any[][], startY: 
 // Add totals section with styled design
 const addTotals = (pdf: jsPDF, invoice: any, startY: number, tdiscount: number) => {
   const primaryColor = "#003049";  // Blue
-  const lightGray = "#F1FAEE";     // Light gray for background
+  const lightGray = "#f8edeb";     // Light gray for background
   const darkGray = "#374151";      // Dark gray for text
   const borderColor = "#1D3557"; 
 
