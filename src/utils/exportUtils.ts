@@ -273,7 +273,7 @@ const addStylizedTable = (pdf: jsPDF, headers: string[], rows: any[][], startY: 
 // Add totals section with styled design
 const addTotals = (pdf: jsPDF, invoice: any, startY: number, tdiscount: number) => {
   const primaryColor = "#003049";  // Blue
-  const lightGray = "#F1FAEE";     // Light gray for background
+  const lightGray = "#ffffffff";     // Light gray for background
   const darkGray = "#374151";      // Dark gray for text
   const borderColor = "#1D3557"; 
 
@@ -352,7 +352,7 @@ const addNotes = (pdf: jsPDF, notes: string | undefined, startY: number) => {
 };
 
 const addAmountInWords = (pdf: jsPDF, amount: number, startY: number) => {
-  const lightGreen = "#457B9D";  // Light green background
+  const lightGreen = "#457b9d7e";  // Light green background
   const darkGreen = "#003049";   // Text color
   
   // Set font properties first to calculate text width
