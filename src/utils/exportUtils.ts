@@ -231,7 +231,7 @@ const addClientInfo = (pdf: jsPDF, client: Client | undefined, invoiceDetails: a
 // Helper for adding stylized table
 const addStylizedTable = (pdf: jsPDF, headers: string[], rows: any[][], startY: number) => {
   const primaryColor = "#3B82F6";  // Blue
-  const lightGray = "#F9FAFB";     // Very light gray for alternating rows
+  const lightGray = "#f8edeb";     // Very light gray for alternating rows
   
   autoTable(pdf, {
     startY: startY,
