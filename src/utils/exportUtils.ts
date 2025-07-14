@@ -78,7 +78,7 @@ const addHeader = async (pdf: jsPDF, documentType: string, documentNumber: strin
   const primaryColor = "#1D3557";  // Blue
   const secondaryColor = "#6366F1"; // Indigo
   const accentColor = "#F59E0B";   // Amber
-  const lightGray = "#F3F4F6";     // Light gray for background
+  const lightGray = "#f8edeb";     // Light gray for background
   const darkGray = "#374151";      // Dark gray for text
   if (logoBase64) {
       try {
@@ -273,7 +273,7 @@ const addStylizedTable = (pdf: jsPDF, headers: string[], rows: any[][], startY: 
 // Add totals section with styled design
 const addTotals = (pdf: jsPDF, invoice: any, startY: number, tdiscount: number) => {
   const primaryColor = "#003049";  // Blue
-  const lightGray = "#f4fff0ff";     // Light gray for background
+  const lightGray = "#f8edeb";     // Light gray for background
   const darkGray = "#374151";      // Dark gray for text
   const borderColor = "#1D3557"; 
 
