@@ -82,7 +82,7 @@ const addHeader = async (pdf: jsPDF, documentType: string, documentNumber: strin
   if (logoBase641) {
       try {
         // Add logo to the left of the company name
-        pdf.addImage(logoBase641, 'JPEG', 1, 5, 180, 40); // Adjust dimensions as needed
+        pdf.addImage(logoBase641, 'JPEG', 1, 10, 180, 40); // Adjust dimensions as needed
       } catch (error) {
         console.error('Error adding logo:', error);
       }
@@ -111,14 +111,13 @@ const addHeader = async (pdf: jsPDF, documentType: string, documentNumber: strin
   pdf.setTextColor(70, 70, 70);
   
   const companyDetails = [
-    `${companyInfo?.address || 'Company Address'}  `,
-    `RC: ${companyInfo?.commerceRegNumber || 'N/A'}`,
-    `NIF: ${companyInfo?.taxid || 'N/A'}`,
-    `NIS: 002004020004183`, `RIB: 00300325000240230052 Badr agence Ain Beida`,
+    
+    
+     `RC: ${companyInfo?.commerceRegNumber || 'N/A'} - NIF: ${companyInfo?.taxid || 'N/A'} - NIS: 002004020004183 - RIB: 00300325000240230052`,
     
   ];
   
-  pdf.text(companyDetails, 14, 27);
+  pdf.text(companyDetails, 14, 45);
   pdf.setDrawColor(70,70,70);
       pdf.line(
         12,
