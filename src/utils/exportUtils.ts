@@ -46,7 +46,9 @@ const formatDate = (dateString: string) => {
 
 // Draw rounded rectangle with fill and border
 const drawRoundedRect = (pdf: jsPDF, x: number, y: number, width: number, height: number, radius: number, fill: string, stroke?: string) => {
-  pdf.setFillColor(hexToRgb(fill).r, hexToRgb(fill).g, hexToRgb(fill).b);
+  // Handle fill color - Default to white if empty string is passed
+  const fillColor = fill ? hexToRgb(fill) : { r: 255, g: 255, b: 255 }; // Default to white if no fill color
+  pdf.setFillColor(fillColor.r, fillColor.g, fillColor.b);
   
   if (stroke) {
     pdf.setDrawColor(hexToRgb(stroke).r, hexToRgb(stroke).g, hexToRgb(stroke).b);
@@ -56,6 +58,7 @@ const drawRoundedRect = (pdf: jsPDF, x: number, y: number, width: number, height
   // Draw rounded rectangle
   pdf.roundedRect(x, y, width, height, radius, radius, stroke ? 'FD' : 'F');
 };
+
 
 // Convert hex to RGB
 const hexToRgb = (hex: string) => {
@@ -170,7 +173,7 @@ const addClientInfo = (pdf: jsPDF, client: Client | undefined, invoiceDetails: a
   const borderColor = "#1D3557"; 
   // Client section box with light blue background
   pdf.setFillColor(255, 255, 255); // Set fill to white (RGB for white)
-  drawRoundedRect(pdf, 14, startY, 180, 40, 3, '', borderColor);
+  drawRoundedRect(pdf, 14, startY, 180, 40, 3);
   
   // Left side: Client info
   pdf.setTextColor(borderColor);
