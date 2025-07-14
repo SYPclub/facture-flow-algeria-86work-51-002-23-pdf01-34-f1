@@ -171,7 +171,7 @@ const addClientInfo = (pdf: jsPDF, client: Client | undefined, invoiceDetails: a
   pdf.setTextColor(70, 70, 70);
   pdf.setFontSize(11);
     // Colors
-  const lightBlue = "#F1FAEE";  // Light blue background
+  const lightBlue = "#ffffffff";  // Light blue background
   const darkBlue = "#E63946";   // Dark blue for accent
   const darkGray = "#374151";   // Dark gray for text
   const borderColor = "#1D3557"; 
@@ -273,7 +273,7 @@ const addStylizedTable = (pdf: jsPDF, headers: string[], rows: any[][], startY: 
 // Add totals section with styled design
 const addTotals = (pdf: jsPDF, invoice: any, startY: number, tdiscount: number) => {
   const primaryColor = "#003049";  // Blue
-  const lightGray = "#F1FAEE";     // Light gray for background
+  const lightGray = "#f4fff0ff";     // Light gray for background
   const darkGray = "#374151";      // Dark gray for text
   const borderColor = "#1D3557"; 
 
