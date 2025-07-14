@@ -78,7 +78,7 @@ const addHeader = async (pdf: jsPDF, documentType: string, documentNumber: strin
   const primaryColor = "#1D3557";  // Blue
   const secondaryColor = "#6366F1"; // Indigo
   const accentColor = "#F59E0B";   // Amber
-  const lightGray = "#f8edeb";     // Light gray for background
+  const lightGray = "#F3F4F6";     // Light gray for background
   const darkGray = "#374151";      // Dark gray for text
   if (logoBase64) {
       try {
@@ -171,7 +171,7 @@ const addClientInfo = (pdf: jsPDF, client: Client | undefined, invoiceDetails: a
   pdf.setTextColor(70, 70, 70);
   pdf.setFontSize(11);
     // Colors
-  const lightBlue = "#ffffffff";  // Light blue background
+  const lightBlue = "#f8edeb";  // Light blue background
   const darkBlue = "#E63946";   // Dark blue for accent
   const darkGray = "#374151";   // Dark gray for text
   const borderColor = "#1D3557"; 
@@ -231,7 +231,7 @@ const addClientInfo = (pdf: jsPDF, client: Client | undefined, invoiceDetails: a
 // Helper for adding stylized table
 const addStylizedTable = (pdf: jsPDF, headers: string[], rows: any[][], startY: number) => {
   const primaryColor = "#3B82F6";  // Blue
-  const lightGray = "#f8edeb";     // Very light gray for alternating rows
+  const lightGray = "#F9FAFB";     // Very light gray for alternating rows
   
   autoTable(pdf, {
     startY: startY,
@@ -273,7 +273,7 @@ const addStylizedTable = (pdf: jsPDF, headers: string[], rows: any[][], startY: 
 // Add totals section with styled design
 const addTotals = (pdf: jsPDF, invoice: any, startY: number, tdiscount: number) => {
   const primaryColor = "#003049";  // Blue
-  const lightGray = "#f8edeb";     // Light gray for background
+  const lightGray = "#F1FAEE";     // Light gray for background
   const darkGray = "#374151";      // Dark gray for text
   const borderColor = "#1D3557"; 
 
