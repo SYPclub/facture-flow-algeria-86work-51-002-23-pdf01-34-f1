@@ -140,7 +140,7 @@ const AppSidebar = () => {
             "text-xl font-bold text-primary transition-opacity duration-200",
             state === "collapsed" && "opacity-0"
           )}>
-            FactureFlow
+            SarlUniverSable
           </h2>
           {state === "collapsed" && (
             <FileText className="h-6 w-6 text-primary mx-auto" />
